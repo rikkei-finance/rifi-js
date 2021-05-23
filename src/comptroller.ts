@@ -14,8 +14,8 @@ import { CallOptions, TrxResponse } from './types';
  *
  * @param {any[]} markets An array of strings of markets to enter, meaning use
  *     those supplied assets as collateral.
- * @param {CallOptions} [options] Call options and Ethers.js overrides for the 
- *     transaction. A passed `gasLimit` will be used in both the `approve` (if 
+ * @param {CallOptions} [options] Call options and Ethers.js overrides for the
+ *     transaction. A passed `gasLimit` will be used in both the `approve` (if
  *     not supressed) and `mint` transactions.
  *
  * @returns {object} Returns an Ethers.js transaction object of the enterMarkets
@@ -25,7 +25,7 @@ import { CallOptions, TrxResponse } from './types';
  *
  * ```
  * const compound = new Compound(window.ethereum);
- * 
+ *
  * (async function () {
  *   const trx = await compound.enterMarkets(Compound.ETH); // Use [] for multiple
  *   console.log('Ethers.js transaction object', trx);
@@ -35,12 +35,12 @@ import { CallOptions, TrxResponse } from './types';
 export async function enterMarkets(
   markets: string | string[] = [],
   options: CallOptions = {}
-) : Promise<TrxResponse> {
+): Promise<TrxResponse> {
   await netId(this);
   const errorPrefix = 'Compound [enterMarkets] | ';
 
   if (typeof markets === 'string') {
-    markets = [ markets ];
+    markets = [markets];
   }
 
   if (!Array.isArray(markets)) {
@@ -61,7 +61,7 @@ export async function enterMarkets(
   }
 
   const comptrollerAddress = address[this._network.name].Comptroller;
-  const parameters = [ addresses ];
+  const parameters = [addresses];
 
   const trxOptions: CallOptions = {
     _compoundProvider: this._provider,
@@ -76,8 +76,8 @@ export async function enterMarkets(
  * Exits the user's address from a Compound Protocol market.
  *
  * @param {string} market A string of the symbol of the market to exit.
- * @param {CallOptions} [options] Call options and Ethers.js overrides for the 
- *     transaction. A passed `gasLimit` will be used in both the `approve` (if 
+ * @param {CallOptions} [options] Call options and Ethers.js overrides for the
+ *     transaction. A passed `gasLimit` will be used in both the `approve` (if
  *     not supressed) and `mint` transactions.
  *
  * @returns {object} Returns an Ethers.js transaction object of the exitMarket
@@ -87,7 +87,7 @@ export async function enterMarkets(
  *
  * ```
  * const compound = new Compound(window.ethereum);
- * 
+ *
  * (async function () {
  *   const trx = await compound.exitMarket(Compound.ETH);
  *   console.log('Ethers.js transaction object', trx);
@@ -97,7 +97,7 @@ export async function enterMarkets(
 export async function exitMarket(
   market: string,
   options: CallOptions = {}
-) : Promise<TrxResponse> {
+): Promise<TrxResponse> {
   await netId(this);
   const errorPrefix = 'Compound [exitMarket] | ';
 
@@ -116,7 +116,7 @@ export async function exitMarket(
   const cTokenAddress = address[this._network.name][market];
 
   const comptrollerAddress = address[this._network.name].Comptroller;
-  const parameters = [ cTokenAddress ];
+  const parameters = [cTokenAddress];
 
   const trxOptions: CallOptions = {
     _compoundProvider: this._provider,
@@ -125,4 +125,86 @@ export async function exitMarket(
   };
 
   return eth.trx(comptrollerAddress, 'exitMarket', parameters, trxOptions);
+}
+
+
+/**
+ * Exits the user's address from a Compound Protocol market.
+ *
+ * @param {string} market A string of the symbol of the market to exit.
+ * @param {CallOptions} [options] Call options and Ethers.js overrides for the
+ *     transaction. A passed `gasLimit` will be used in both the `approve` (if
+ *     not supressed) and `mint` transactions.
+ *
+ * @returns {object} Returns an Ethers.js transaction object of the exitMarket
+ *     transaction.
+ *
+ * @example
+ *
+ * ```
+ * const compound = new Compound(window.ethereum);
+ *
+ * (async function () {
+ *   const trx = await compound.exitMarket(Compound.ETH);
+ *   console.log('Ethers.js transaction object', trx);
+ * })().catch(console.error);
+ * ```
+ */
+export async function getCollateralFactor(
+  market: string,
+  options: CallOptions = {}
+): Promise<TrxResponse> {
+  await netId(this);
+  const errorPrefix = 'Rifi [getCollateralFactor] | ';
+
+  if (typeof market !== 'string' || market === '') {
+    throw Error(errorPrefix + 'Argument `market` must be a string of a cToken market name.');
+  }
+
+  if (market[0] !== 'c') {
+    market = 'c' + market;
+  }
+
+  if (!cTokens.includes(market)) {
+    throw Error(errorPrefix + 'Provided market `' + market + '` is not a recognized cToken.');
+  }
+
+  const cTokenAddress = address[this._network.name][market];
+
+  const comptrollerAddress = address[this._network.name].Comptroller;
+  const parameters = [cTokenAddress];
+
+  const trxOptions: CallOptions = {
+    _compoundProvider: this._provider,
+    abi: abi.Comptroller,
+    ...options
+  };
+
+  return eth.trx(comptrollerAddress, 'markets', parameters, trxOptions);
+}
+
+export async function checkMembership(
+  accountAddr: string,
+  cTokenName: string,
+  options: CallOptions = {}
+): Promise<TrxResponse> {
+  await netId(this);
+  const errorPrefix = 'Rifi [checkMembership] | ';
+
+  if (!cTokens.includes(cTokenName)) {
+    throw Error(`${errorPrefix}"${cTokenName}" is not a recognized cToken.`);
+  }
+
+  const cTokenAddress = address[this._network.name][cTokenName];
+
+  const comptrollerAddress = address[this._network.name].Comptroller;
+  const parameters = [accountAddr, cTokenAddress];
+
+  const trxOptions: CallOptions = {
+    _compoundProvider: this._provider,
+    abi: abi.Comptroller,
+    ...options
+  };
+
+  return eth.trx(comptrollerAddress, 'checkMembership', parameters, trxOptions);
 }

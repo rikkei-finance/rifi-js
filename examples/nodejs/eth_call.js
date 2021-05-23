@@ -1,7 +1,7 @@
 // Example of calling JSON RPC's eth_call with Compound.js
 const Compound = require('../../dist/nodejs/index.js');
 
-const cEthAddress = Compound.util.getAddress(Compound.cETH);
+const cEthAddress = Compound.util.getAddress(Compound.cBNB);
 
 (async function() {
 

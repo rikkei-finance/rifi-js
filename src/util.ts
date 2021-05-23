@@ -165,7 +165,7 @@ export function request(options: any) : Promise<any> {
 /* eslint-enable */
 
 /**
- * Gets the contract address of the named contract. This method supports 
+ * Gets the contract address of the named contract. This method supports
  *     contracts used by the Compound Protocol.
  *
  * @param {string} contract The name of the contract.
@@ -184,7 +184,7 @@ export function getAddress(contract: string, network='mainnet') : string {
 }
 
 /**
- * Gets a contract ABI as a JavaScript array. This method supports 
+ * Gets a contract ABI as a JavaScript array. This method supports
  *     contracts used by the Compound Protocol.
  *
  * @param {string} contract The name of the contract.
@@ -214,7 +214,8 @@ export function getAbi(contract: string): AbiType[] {
  */
 export function getNetNameWithChainId(chainId: number) : string {
   const networks = {
-    1: 'mainnet',
+    56: 'mainnet',
+    97: 'testnet',
     3: 'ropsten',
     4: 'rinkeby',
     5: 'goerli',

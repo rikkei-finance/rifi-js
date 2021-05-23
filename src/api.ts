@@ -13,6 +13,14 @@ import {
   GovernanceServiceRequest,
 } from './types';
 
+import {
+  address,
+  cTokens,
+  underlyings,
+  decimals,
+  names,
+} from './constants';
+
 // import { version } from '../package.json';
 
 // let userPlatform;
@@ -26,7 +34,7 @@ import {
 //   ) {
 //     userPlatform = 'react-native';
 //   } else if (
-//     typeof navigator !== 'undefined' && 
+//     typeof navigator !== 'undefined' &&
 //     navigator.userAgent.toLowerCase().indexOf('electron') > -1
 //   ) {
 //     userPlatform = 'electron-js';
@@ -54,7 +62,7 @@ import {
  *     "addresses": "0xB61C5971d9c0472befceFfbE662555B78284c307",
  *     "network": "ropsten"
  *   });
- * 
+ *
  *   let daiBorrowBalance = 0;
  *   if (Object.isExtensible(account) && account.accounts) {
  *     account.accounts.forEach((acc) => {
@@ -65,18 +73,18 @@ import {
  *       });
  *     });
  *   }
- * 
+ *
  *   console.log('daiBorrowBalance', daiBorrowBalance);
  * })().catch(console.error);
  * ```
  */
-export function account(options: AccountServiceRequest) : Promise<APIResponse> {
+export function account(options: AccountServiceRequest): Promise<APIResponse> {
   return queryApi(options, 'account', '/api/v2/account');
 }
 
 /**
  * Makes a request to the CTokenService API. The cToken API retrieves
- *     information about cToken contract interaction. For more details, see the 
+ *     information about cToken contract interaction. For more details, see the
  *     Compound API documentation.
  *
  * @param {object} options A JavaScript object of API request parameters.
@@ -90,12 +98,12 @@ export function account(options: AccountServiceRequest) : Promise<APIResponse> {
  *   const cDaiData = await Compound.api.cToken({
  *     "addresses": Compound.util.getAddress(Compound.cDAI)
  *   });
- * 
+ *
  *   console.log('cDaiData', cDaiData); // JavaScript Object
  * })().catch(console.error);
  * ```
  */
-export function cToken(options: CTokenServiceRequest) : Promise<APIResponse> {
+export function cToken(options: CTokenServiceRequest): Promise<APIResponse> {
   return queryApi(options, 'cToken', '/api/v2/ctoken');
 }
 
@@ -118,18 +126,18 @@ export function cToken(options: CTokenServiceRequest) : Promise<APIResponse> {
  *     "max_block_timestamp": 1598320674,
  *     "num_buckets": 10,
  *   });
- * 
+ *
  *   console.log('cUsdcMarketData', cUsdcMarketData); // JavaScript Object
  * })().catch(console.error);
  * ```
  */
-export function marketHistory(options: MarketHistoryServiceRequest) : Promise<APIResponse> {
+export function marketHistory(options: MarketHistoryServiceRequest): Promise<APIResponse> {
   return queryApi(options, 'Market History', '/api/v2/market_history/graph');
 }
 
 /**
  * Makes a request to the GovernanceService API. The Governance Service includes
- *     three endpoints to retrieve information about COMP accounts. For more 
+ *     three endpoints to retrieve information about COMP accounts. For more
  *     details, see the Compound API documentation.
  *
  * @param {object} options A JavaScript object of API request parameters.
@@ -146,12 +154,12 @@ export function marketHistory(options: MarketHistoryServiceRequest) : Promise<AP
  *   const proposal = await Compound.api.governance(
  *     { "proposal_ids": [ 20 ] }, 'proposals'
  *   );
- * 
+ *
  *   console.log('proposal', proposal); // JavaScript Object
  * })().catch(console.error);
  * ```
  */
-export function governance(options: GovernanceServiceRequest, endpoint: string) : Promise<APIResponse> {
+export function governance(options: GovernanceServiceRequest, endpoint: string): Promise<APIResponse> {
   if (endpoint === 'proposals') {
     endpoint = '/api/v2/governance/proposals';
   } else if (endpoint === 'voteReceipts') {
@@ -163,7 +171,7 @@ export function governance(options: GovernanceServiceRequest, endpoint: string) 
   return queryApi(options, 'GovernanceService', endpoint);
 }
 
-function queryApi(options: APIRequest, name: string, path: string) : Promise<APIResponse> {
+function queryApi(options: APIRequest, name: string, path: string): Promise<APIResponse> {
   return new Promise((resolve, reject) => {
     const errorPrefix = `Compound [api] [${name}] | `;
     let responseCode, responseMessage;
@@ -200,4 +208,44 @@ function queryApi(options: APIRequest, name: string, path: string) : Promise<API
       reject({ error: errorMessage, responseCode, responseMessage });
     });
   });
+}
+
+export async function getSupportTokens(network: string) {
+  const tokens = {
+    cToken: [],
+  };
+
+  cTokens.forEach((symbol, i) => {
+    const uSymbol = underlyings[i];
+
+    const token = {
+      borrow_cap: { value: '0' },
+      borrow_rate: { value: '0' },
+      cash: { value: '0' },
+      collateral_factor: { value: '0' },
+      comp_borrow_apy: null,
+      comp_supply_apy: null,
+      exchange_rate: { value: '0' },
+      interest_rate_model_address: '0x',
+      name: names[symbol],
+      number_of_borrowers: 0,
+      number_of_suppliers: 0,
+      reserve_factor: { value: '0', },
+      reserves: { value: '0', },
+      supply_rate: { value: '0', },
+      symbol,
+      token_address: address[network][symbol],
+      total_borrows: { value: '0' },
+      total_supply: { value: '0' },
+      decimals: decimals[symbol] || 8,
+      underlying_address: address[network][uSymbol] ? address[network][uSymbol] : null,
+      underlying_name: names[uSymbol],
+      underlying_decimals: decimals[uSymbol] || 18,
+      underlying_price: { value: '1' },
+      underlying_symbol: uSymbol,
+    };
+    tokens.cToken.push(token);
+  });
+
+  return tokens;
 }

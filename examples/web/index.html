@@ -2,10 +2,10 @@
 <html>
 <head>
   <!-- USE CDN, PUBLIC BUILD -->
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@compound-finance/compound-js@latest/dist/browser/compound.min.js"></script>
+  <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@compound-finance/compound-js@latest/dist/browser/compound.min.js"></script> -->
 
   <!-- USE LOCAL BUILD (be sure `npm install`) -->
-  <!-- <script type="text/javascript" src="../../dist/browser/compound.min.js"></script> -->
+  <script type="text/javascript" src="../../dist/browser/compound.min.js"></script>
 
   <link rel="stylesheet"
       href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.2/build/styles/default.min.css">
@@ -44,7 +44,7 @@
     </p>
 
     &nbsp;
-    
+
     <p>
         Run <a href="https://www.trufflesuite.com/ganache">Ganache</a> with a <b>fork of main net</b> on your local machine and set MetaMask to <b>Localhost 8545</b> to test writing transactions.
     </p>
@@ -289,7 +289,7 @@ const ethCallExample = () => {
   spin(ethCallContent);
 
   // mainnet
-  const cEthAddress = '0x4ddc2d193948926d02f9b1fe9e1daa0718270ed5';
+  const cEthAddress = '0x21DBf57b40d803756875CE6C9966be7C894ea3e8';
 
   (async function() {
 
@@ -310,7 +310,7 @@ const ethCallExample = () => {
 };
 
 
-/** 
+/**
  * Run ganache-cli in another command line window before running this script. Be
  *     sure to fork mainnet.
 
@@ -324,7 +324,7 @@ const ethSendTransactionExample = () => {
   spin(ethSendTransactionContent);
 
   const oneEthInWei = '1000000000000000000';
-  const cEthAddress = '0x4ddc2d193948926d02f9b1fe9e1daa0718270ed5';
+  const cEthAddress = '0x21DBf57b40d803756875CE6C9966be7C894ea3e8';
   const provider = window.ethereum;
 
   (async function() {
@@ -353,7 +353,7 @@ const ethSendTransactionExample = () => {
 }
 
 
-/** 
+/**
  * Run ganache-cli in another command line window before running this script. Be
  *     sure to fork mainnet.
 
@@ -374,7 +374,7 @@ const supplyExample = () => {
   (async function() {
 
     console.log('Supplying ETH to the Compound protocol...');
-    const trx = await compound.supply(Compound.ETH, 1);
+    const trx = await compound.supply(Compound.ETH, 100);
     supplyContent.innerText = 'Success, see the developer console for the Ethers.js transaction object.';
     console.log('Ethers.js transaction object', trx);
 
@@ -384,7 +384,7 @@ const supplyExample = () => {
   }).finally(() => { unspin(supplyContent) });
 };
 
-/** 
+/**
  * Run ganache-cli in another command line window before running this script. Be
  *     sure to fork mainnet.
 
@@ -447,7 +447,7 @@ const enterMarketExample = () => {
 };
 
 
-/** 
+/**
  * Run ganache-cli in another command line window before running this script. Be
  *     sure to fork mainnet.
 
@@ -480,7 +480,7 @@ const borrowExample = () => {
 };
 
 
-/** 
+/**
  * Run ganache-cli in another command line window before running this script. Be
  *     sure to fork mainnet.
 

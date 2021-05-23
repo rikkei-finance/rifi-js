@@ -13,7 +13,7 @@ import * as priceFeed from './priceFeed';
 import * as comp from './comp';
 import * as gov from './gov';
 import * as api from './api';
-import { constants, decimals } from './constants';
+import { constants, decimals, abi } from './constants';
 import { Provider, CompoundOptions, CompoundInstance } from './types';
 
 // Turn off Ethers.js warnings
@@ -29,18 +29,18 @@ ethers.utils.Logger.setLogLevel(ethers.utils.Logger.levels.ERROR);
  * @example
  * ```
  * var compound = new Compound(window.ethereum); // web browser
- * 
+ *
  * var compound = new Compound('http://127.0.0.1:8545'); // HTTP provider
- * 
+ *
  * var compound = new Compound(); // Uses Ethers.js fallback mainnet (for testing only)
- * 
+ *
  * var compound = new Compound('ropsten'); // Uses Ethers.js fallback (for testing only)
- * 
+ *
  * // Init with private key (server side)
  * var compound = new Compound('https://mainnet.infura.io/v3/_your_project_id_', {
  *   privateKey: '0x_your_private_key_', // preferably with environment variable
  * });
- * 
+ *
  * // Init with HD mnemonic (server side)
  * var compound = new Compound('mainnet' {
  *   mnemonic: 'clutch captain shoe...', // preferably with environment variable
@@ -49,9 +49,9 @@ ethers.utils.Logger.setLogLevel(ethers.utils.Logger.levels.ERROR);
  *
  * @returns {object} Returns an instance of the Compound.js SDK.
  */
-const Compound = function(
+const Compound = function (
   provider: Provider | string = 'mainnet', options: CompoundOptions = {}
-) : CompoundInstance {
+): CompoundInstance {
   const originalProvider = provider;
 
   options.provider = provider || options.provider;

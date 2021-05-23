@@ -32,7 +32,7 @@ const server = ganache.server({
   default_balance_ether: 10000,
 });
 
-server.listen(8545, (err, blockchain) => console.error);
+server.listen(7545, (err, blockchain) => console.error);
 
 const unlockedAccounts = server.provider.manager.state.unlocked_accounts;
 const publicKeys = Object.keys(unlockedAccounts);

@@ -31,7 +31,11 @@ export default [{
     commonjs({
       namedExports: { Compound: ['Compound'] },
     }),
-    minify({ comments: false }),
+    minify({
+      comments: false,
+      mangle: false,
+      evaluate: false
+    }),
     json(),
   ],
   external: [

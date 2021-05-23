@@ -15,7 +15,7 @@ function validateAsset(
   asset: string,
   argument: string,
   errorPrefix: string
-) : (boolean | string | number)[] {
+): (boolean | string | number)[] {
   if (typeof asset !== 'string' || asset.length < 1) {
     throw Error(errorPrefix + 'Argument `' + argument + '` must be a non-empty string.');
   }
@@ -47,12 +47,12 @@ async function cTokenExchangeRate(
   cTokenAddress: string,
   cTokenName: string,
   underlyingDecimals: number
-) : Promise<number> {
+): Promise<number> {
   const address = cTokenAddress;
   const method = 'exchangeRateCurrent';
   const options = {
     _compoundProvider: this._provider,
-    abi: cTokenName === constants.cETH ? abi.cEther : abi.cErc20,
+    abi: cTokenName === constants.cBNB ? abi.cEther : abi.cErc20,
   };
   const exchangeRateCurrent = await eth.read(address, method, [], options);
   const mantissa = 18 + underlyingDecimals - 8; // cToken always 8 decimals
@@ -77,22 +77,22 @@ async function cTokenExchangeRate(
  * ```
  * const compound = new Compound(window.ethereum);
  * let price;
- * 
+ *
  * (async function () {
- * 
+ *
  *   price = await compound.getPrice(Compound.WBTC);
  *   console.log('WBTC in USD', price); // 6 decimals, see Open Price Feed docs
- * 
+ *
  *   price = await compound.getPrice(Compound.BAT, Compound.USDC); // supports cTokens too
  *   console.log('BAT in USDC', price);
- * 
+ *
  * })().catch(console.error);
  * ```
  */
 export async function getPrice(
   asset: string,
-  inAsset: string = constants.USDC
-) : Promise<number> {
+  inAsset: string = constants.BUSD
+): Promise<number> {
   await netId(this);
   const errorPrefix = 'Compound [getPrice] | ';
 
@@ -112,8 +112,8 @@ export async function getPrice(
     abi: abi.PriceFeed,
   };
 
-  const assetUnderlyingPrice = await eth.read(priceFeedAddress, 'price', [ underlyingName ], trxOptions);
-  const inAssetUnderlyingPrice =  await eth.read(priceFeedAddress, 'price', [ inAssetUnderlyingName ], trxOptions);
+  const assetUnderlyingPrice = await eth.read(priceFeedAddress, 'price', [underlyingName], trxOptions);
+  const inAssetUnderlyingPrice = await eth.read(priceFeedAddress, 'price', [inAssetUnderlyingName], trxOptions);
 
   let assetCTokensInUnderlying, inAssetCTokensInUnderlying;
 
@@ -141,4 +141,25 @@ export async function getPrice(
   }
 
   return result;
+}
+
+export async function getUnderlyingPrice(
+  asset: string
+): Promise<number> {
+  await netId(this);
+  const errorPrefix = 'Rifi [getUnderlyingPrice] | ';
+
+  const [
+    , , cTokenAddress, , , underlyingDecimals
+  ] = validateAsset.bind(this)(asset, 'asset', errorPrefix);
+
+  const priceFeedAddress = address[this._network.name].PriceFeed;
+  const trxOptions: CallOptions = {
+    _compoundProvider: this._provider,
+    abi: abi.PriceFeed,
+  };
+
+  const assetUnderlyingPrice = await eth.read(priceFeedAddress, 'getUnderlyingPrice', [cTokenAddress], trxOptions);
+
+  return assetUnderlyingPrice * 10 ** -parseInt(underlyingDecimals);
 }
