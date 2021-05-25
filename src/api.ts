@@ -1,6 +1,6 @@
 /**
  * @file API
- * @desc These methods facilitate HTTP requests to the Compound API.
+ * @desc These methods facilitate HTTP requests to the Rifi API.
  */
 
 import { request } from './util';
@@ -8,14 +8,14 @@ import {
   APIRequest,
   APIResponse,
   AccountServiceRequest,
-  CTokenServiceRequest,
+  RTokenServiceRequest,
   MarketHistoryServiceRequest,
   GovernanceServiceRequest,
 } from './types';
 
 import {
   address,
-  cTokens,
+  rTokens,
   underlyings,
   decimals,
   names,
@@ -48,7 +48,7 @@ import {
 /**
  * Makes a request to the AccountService API. The Account API retrieves
  *     information for various accounts which have interacted with the protocol.
- *     For more details, see the Compound API documentation.
+ *     For more details, see the Rifi API documentation.
  *
  * @param {object} options A JavaScript object of API request parameters.
  *
@@ -58,7 +58,7 @@ import {
  *
  * ```
  * (async function() {
- *   const account = await Compound.api.account({
+ *   const account = await Rifi.api.account({
  *     "addresses": "0xB61C5971d9c0472befceFfbE662555B78284c307",
  *     "network": "ropsten"
  *   });
@@ -67,7 +67,7 @@ import {
  *   if (Object.isExtensible(account) && account.accounts) {
  *     account.accounts.forEach((acc) => {
  *       acc.tokens.forEach((tok) => {
- *         if (tok.symbol === Compound.cDAI) {
+ *         if (tok.symbol === Rifi.rDAI) {
  *           daiBorrowBalance = +tok.borrow_balance_underlying.value;
  *         }
  *       });
@@ -83,9 +83,9 @@ export function account(options: AccountServiceRequest): Promise<APIResponse> {
 }
 
 /**
- * Makes a request to the CTokenService API. The cToken API retrieves
- *     information about cToken contract interaction. For more details, see the
- *     Compound API documentation.
+ * Makes a request to the RTokenService API. The rToken API retrieves
+ *     information about rToken contract interaction. For more details, see the
+ *     Rifi API documentation.
  *
  * @param {object} options A JavaScript object of API request parameters.
  *
@@ -95,21 +95,21 @@ export function account(options: AccountServiceRequest): Promise<APIResponse> {
  *
  * ```
  * (async function() {
- *   const cDaiData = await Compound.api.cToken({
- *     "addresses": Compound.util.getAddress(Compound.cDAI)
+ *   const cDaiData = await Rifi.api.rToken({
+ *     "addresses": Rifi.util.getAddress(Rifi.rDAI)
  *   });
  *
  *   console.log('cDaiData', cDaiData); // JavaScript Object
  * })().catch(console.error);
  * ```
  */
-export function cToken(options: CTokenServiceRequest): Promise<APIResponse> {
-  return queryApi(options, 'cToken', '/api/v2/ctoken');
+export function rToken(options: RTokenServiceRequest): Promise<APIResponse> {
+  return queryApi(options, 'rToken', '/api/v2/rtoken');
 }
 
 /**
  * Makes a request to the MarketHistoryService API. The market history service
- *     retrieves information about a market. For more details, see the Compound
+ *     retrieves information about a market. For more details, see the Rifi
  *     API documentation.
  *
  * @param {object} options A JavaScript object of API request parameters.
@@ -120,8 +120,8 @@ export function cToken(options: CTokenServiceRequest): Promise<APIResponse> {
  *
  * ```
  * (async function() {
- *   const cUsdcMarketData = await Compound.api.marketHistory({
- *     "asset": Compound.util.getAddress(Compound.cUSDC),
+ *   const cUsdcMarketData = await Rifi.api.marketHistory({
+ *     "asset": Rifi.util.getAddress(Rifi.rUSDC),
  *     "min_block_timestamp": 1559339900,
  *     "max_block_timestamp": 1598320674,
  *     "num_buckets": 10,
@@ -137,8 +137,8 @@ export function marketHistory(options: MarketHistoryServiceRequest): Promise<API
 
 /**
  * Makes a request to the GovernanceService API. The Governance Service includes
- *     three endpoints to retrieve information about COMP accounts. For more
- *     details, see the Compound API documentation.
+ *     three endpoints to retrieve information about RIFI accounts. For more
+ *     details, see the Rifi API documentation.
  *
  * @param {object} options A JavaScript object of API request parameters.
  * @param {string} endpoint A string of the name of the corresponding governance
@@ -151,7 +151,7 @@ export function marketHistory(options: MarketHistoryServiceRequest): Promise<API
  *
  * ```
  * (async function() {
- *   const proposal = await Compound.api.governance(
+ *   const proposal = await Rifi.api.governance(
  *     { "proposal_ids": [ 20 ] }, 'proposals'
  *   );
  *
@@ -173,16 +173,16 @@ export function governance(options: GovernanceServiceRequest, endpoint: string):
 
 function queryApi(options: APIRequest, name: string, path: string): Promise<APIResponse> {
   return new Promise((resolve, reject) => {
-    const errorPrefix = `Compound [api] [${name}] | `;
+    const errorPrefix = `Rifi [api] [${name}] | `;
     let responseCode, responseMessage;
 
     request({
-      hostname: 'https://api.compound.finance',
+      hostname: 'https://api.rifi.finance',
       path,
       method: 'POST',
       headers: {
         'Content-type': 'application/json',
-        // 'compound-js': `[${version}]_[${userPlatform}]`,
+        // 'rifi-js': `[${version}]_[${userPlatform}]`,
       },
       body: options
     }).then((response) => {
@@ -194,7 +194,7 @@ function queryApi(options: APIRequest, name: string, path: string): Promise<APIR
       if (responseCode >= 200 && responseCode <= 299) {
         resolve(responseBody);
       } else {
-        throw 'Invalid request made to the Compound API.';
+        throw 'Invalid request made to the Rifi API.';
       }
     }).catch((error) => {
       let errorMessage = '';
@@ -212,10 +212,10 @@ function queryApi(options: APIRequest, name: string, path: string): Promise<APIR
 
 export async function getSupportTokens(network: string) {
   const tokens = {
-    cToken: [],
+    rToken: [],
   };
 
-  cTokens.forEach((symbol, i) => {
+  rTokens.forEach((symbol, i) => {
     const uSymbol = underlyings[i];
 
     const token = {
@@ -244,7 +244,7 @@ export async function getSupportTokens(network: string) {
       underlying_price: { value: '1' },
       underlying_symbol: uSymbol,
     };
-    tokens.cToken.push(token);
+    tokens.rToken.push(token);
   });
 
   return tokens;

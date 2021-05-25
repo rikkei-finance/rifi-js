@@ -1,5 +1,5 @@
 const assert = require('assert');
-const Compound = require('../src/index.ts');
+const Rifi = require('../src/index.ts');
 const ethers = require('ethers');
 const providerUrl = 'http://localhost:8545';
 
@@ -12,7 +12,7 @@ const patchedSignature = '0x5d86ab46e1f827f07e9eb6a5955eaa2219e93f64a8c8406ace0d
 
 const signTypedDataV4Parameter = JSON.stringify({
   "domain": {
-    "name": "Compound",
+    "name": "Rifi",
     "chainId": 1,
     "verifyingContract": "0xc00e94Cb662C3520282E6f5717214004A7f26888"
   },
@@ -80,11 +80,11 @@ module.exports = function suite() {
       }
     }
 
-    const compound = new Compound(window.ethereum);
+    const rifi = new Rifi(window.ethereum);
 
-    compound._provider.getAddress = () => Promise.resolve(patchedAddress);
+    rifi._provider.getAddress = () => Promise.resolve(patchedAddress);
 
-    const delegateSignature = await compound.createDelegateSignature(
+    const delegateSignature = await rifi.createDelegateSignature(
       patchedAddress
     );
 
@@ -100,11 +100,11 @@ module.exports = function suite() {
   });
 
   it('runs EIP712.sign as Node.js', async function () {
-    const compound = new Compound(providerUrl, {
+    const rifi = new Rifi(providerUrl, {
       privateKey: patchedPrivateKey
     });
 
-    const delegateSignature = await compound.createDelegateSignature(
+    const delegateSignature = await rifi.createDelegateSignature(
       patchedAddress
     );
 

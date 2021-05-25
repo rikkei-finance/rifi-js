@@ -1,6 +1,6 @@
 const assert = require('assert');
 const ethers = require('ethers');
-const Compound = require('../src/index.ts');
+const Rifi = require('../src/index.ts');
 const providerUrl = 'http://localhost:8545';
 
 const unlockedAddress = '0xa0df350d2637096571F7A701CBc1C5fdE30dF76A';
@@ -10,15 +10,15 @@ module.exports = function suite([ publicKeys, privateKeys ]) {
 
   const acc1 = { address: publicKeys[0], privateKey: privateKeys[0] };
 
-  const compound = new Compound(providerUrl, {
+  const rifi = new Rifi(providerUrl, {
     privateKey: acc1.privateKey
   });
 
   it('runs gov.castVote', async function () {
     let address, method, params, votingIsClosed;
 
-    const nonspy = Compound.eth.trx;
-    Compound.eth.trx = function() {
+    const nonspy = Rifi.eth.trx;
+    Rifi.eth.trx = function() {
       address = arguments[0];
       method = arguments[1];
       params = arguments[2];
@@ -26,7 +26,7 @@ module.exports = function suite([ publicKeys, privateKeys ]) {
     }
 
     try {
-      const voteTrx = await compound.castVote(20, true, {
+      const voteTrx = await rifi.castVote(20, true, {
         gasLimit: ethers.utils.parseUnits('100000', 'wei')
       });
       const receipt = await voteTrx.wait(1);
@@ -34,7 +34,7 @@ module.exports = function suite([ publicKeys, privateKeys ]) {
       votingIsClosed = err.error.error.data.stack.includes('GovernorAlpha::_castVote: voting is closed');
     }
 
-    const addressExpected = Compound.util.getAddress('GovernorAlpha');
+    const addressExpected = Rifi.util.getAddress('GovernorAlpha');
     const methodExpected = 'castVote';
     const paramsExpected = [ 20, true ];
 
@@ -46,18 +46,18 @@ module.exports = function suite([ publicKeys, privateKeys ]) {
   });
 
   it('fails gov.castVote bad proposalId', async function () {
-    const errorMessage = 'Compound [castVote] | Argument `proposalId` must be an integer.';
+    const errorMessage = 'Rifi [castVote] | Argument `proposalId` must be an integer.';
     try {
-      const voteTrx = await compound.castVote(null, true); // bad proposalId
+      const voteTrx = await rifi.castVote(null, true); // bad proposalId
     } catch (e) {
       assert.equal(e.message, errorMessage);
     }
   });
 
   it('fails gov.castVote bad support', async function () {
-    const errorMessage = 'Compound [castVote] | Argument `support` must be a boolean.';
+    const errorMessage = 'Rifi [castVote] | Argument `support` must be a boolean.';
     try {
-      const voteTrx = await compound.castVote(11, 'abc'); // bad support
+      const voteTrx = await rifi.castVote(11, 'abc'); // bad support
     } catch (e) {
       assert.equal(e.message, errorMessage);
     }
@@ -66,8 +66,8 @@ module.exports = function suite([ publicKeys, privateKeys ]) {
   it('runs gov.castVoteBySig', async function () {
     let address, method, params, votingIsClosed;
 
-    const nonspy = Compound.eth.trx;
-    Compound.eth.trx = function() {
+    const nonspy = Rifi.eth.trx;
+    Rifi.eth.trx = function() {
       address = arguments[0];
       method = arguments[1];
       params = arguments[2];
@@ -83,7 +83,7 @@ module.exports = function suite([ publicKeys, privateKeys ]) {
     };
 
     try {
-      const trx = await compound.castVoteBySig(
+      const trx = await rifi.castVoteBySig(
         proposalId,
         support,
         voteSignature,
@@ -94,7 +94,7 @@ module.exports = function suite([ publicKeys, privateKeys ]) {
       votingIsClosed = error.error.data.stack.includes('GovernorAlpha::_castVote: voting is closed');
     }
 
-    const addressExpected = Compound.util.getAddress('GovernorAlpha');
+    const addressExpected = Rifi.util.getAddress('GovernorAlpha');
     const methodExpected = 'castVoteBySig';
     const paramsExpected = [
       20,
@@ -123,9 +123,9 @@ module.exports = function suite([ publicKeys, privateKeys ]) {
       v: '0x1c'
     };
 
-    const errorMessage = 'Compound [castVoteBySig] | Argument `proposalId` must be an integer.';
+    const errorMessage = 'Rifi [castVoteBySig] | Argument `proposalId` must be an integer.';
     try {
-      const trx = await compound.castVoteBySig(
+      const trx = await rifi.castVoteBySig(
         proposalId, // bad proposalId
         support,
         voteSignature
@@ -144,9 +144,9 @@ module.exports = function suite([ publicKeys, privateKeys ]) {
       v: '0x1c'
     };
 
-    const errorMessage = 'Compound [castVoteBySig] | Argument `support` must be a boolean.';
+    const errorMessage = 'Rifi [castVoteBySig] | Argument `support` must be a boolean.';
     try {
-      const trx = await compound.castVoteBySig(
+      const trx = await rifi.castVoteBySig(
         proposalId,
         support, // bad support
         voteSignature
@@ -161,9 +161,9 @@ module.exports = function suite([ publicKeys, privateKeys ]) {
     const support = true;
     const voteSignature = 'abc';
 
-    const errorMessage = 'Compound [castVoteBySig] | Argument `signature` must be an object that contains the v, r, and s pieces of an EIP-712 signature.';
+    const errorMessage = 'Rifi [castVoteBySig] | Argument `signature` must be an object that contains the v, r, and s pieces of an EIP-712 signature.';
     try {
-      const trx = await compound.castVoteBySig(
+      const trx = await rifi.castVoteBySig(
         proposalId,
         support,
         voteSignature // bad signature
@@ -174,11 +174,11 @@ module.exports = function suite([ publicKeys, privateKeys ]) {
   });
 
   it('runs gov.createVoteSignature', async function () {
-    const _compound = new Compound(providerUrl, {
+    const _rifi = new Rifi(providerUrl, {
       privateKey: unlockedPk
     });
 
-    const voteSignature = await _compound.createVoteSignature(
+    const voteSignature = await _rifi.createVoteSignature(
       20,
       true
     );

@@ -17,7 +17,7 @@ import {
  } from './types';
 
 /**
- * Submit a vote on a Compound Governance proposal.
+ * Submit a vote on a Rifi Governance proposal.
  *
  * @param {string} proposalId The ID of the proposal to vote on. This is an
  *     auto-incrementing integer in the Governor Alpha contract.
@@ -32,10 +32,10 @@ import {
  * @example
  *
  * ```
- * const compound = new Compound(window.ethereum);
- * 
+ * const rifi = new Rifi(window.ethereum);
+ *
  * (async function() {
- *   const castVoteTx = await compound.castVote(12, true);
+ *   const castVoteTx = await rifi.castVote(12, true);
  *   console.log('Ethers.js transaction object', castVoteTx);
  * })().catch(console.error);
  * ```
@@ -47,7 +47,7 @@ export async function castVote(
 ) : Promise<TrxResponse> {
   await netId(this);
 
-  const errorPrefix = 'Compound [castVote] | ';
+  const errorPrefix = 'Rifi [castVote] | ';
 
   if (typeof proposalId !== 'number') {
     throw Error(errorPrefix + 'Argument `proposalId` must be an integer.');
@@ -59,7 +59,7 @@ export async function castVote(
 
   const governorAddress = address[this._network.name].GovernorAlpha;
   const trxOptions: CallOptions = options;
-  trxOptions._compoundProvider =  this._provider;
+  trxOptions._rifiProvider =  this._provider;
   trxOptions.abi =  abi.GovernorAlpha;
   const parameters = [ proposalId, support ];
   const method = 'castVote';
@@ -68,7 +68,7 @@ export async function castVote(
 }
 
 /**
- * Submit a vote on a Compound Governance proposal using an EIP-712 signature.
+ * Submit a vote on a Rifi Governance proposal using an EIP-712 signature.
  *
  * @param {string} proposalId The ID of the proposal to vote on. This is an
  *     auto-incrementing integer in the Governor Alpha contract.
@@ -84,10 +84,10 @@ export async function castVote(
  *
  * @example
  * ```
- * const compound = new Compound(window.ethereum);
- * 
+ * const rifi = new Rifi(window.ethereum);
+ *
  * (async function() {
- *   const castVoteTx = await compound.castVoteBySig(
+ *   const castVoteTx = await rifi.castVoteBySig(
  *     12,
  *     true,
  *     {
@@ -108,7 +108,7 @@ export async function castVoteBySig(
 ) : Promise<TrxResponse> {
   await netId(this);
 
-  const errorPrefix = 'Compound [castVoteBySig] | ';
+  const errorPrefix = 'Rifi [castVoteBySig] | ';
 
   if (typeof proposalId !== 'number') {
     throw Error(errorPrefix + 'Argument `proposalId` must be an integer.');
@@ -124,13 +124,13 @@ export async function castVoteBySig(
     !signature.r ||
     !signature.s
   ) {
-    throw Error(errorPrefix + 'Argument `signature` must be an object that ' + 
+    throw Error(errorPrefix + 'Argument `signature` must be an object that ' +
       'contains the v, r, and s pieces of an EIP-712 signature.');
   }
 
   const governorAddress = address[this._network.name].GovernorAlpha;
   const trxOptions: CallOptions = options;
-  trxOptions._compoundProvider = this._provider;
+  trxOptions._rifiProvider = this._provider;
   trxOptions.abi = abi.GovernorAlpha;
   const { v, r, s } = signature;
   const parameters = [ proposalId, support, v, r, s ];
@@ -140,9 +140,9 @@ export async function castVoteBySig(
 }
 
 /**
- * Create a vote signature for a Compound Governance proposal using EIP-712.
- *     This can be used to create an 'empty ballot' without burning gas. The 
- *     signature can then be sent to someone else to post to the blockchain. 
+ * Create a vote signature for a Rifi Governance proposal using EIP-712.
+ *     This can be used to create an 'empty ballot' without burning gas. The
+ *     signature can then be sent to someone else to post to the blockchain.
  *     The recipient can post one signature using the `castVoteBySig` method.
  *
  * @param {string} proposalId The ID of the proposal to vote on. This is an
@@ -151,19 +151,19 @@ export async function castVoteBySig(
  *     proposal vote. To create an 'empty ballot' call this method twice using
  *     `true` and then `false` for this parameter.
  *
- * @returns {object} Returns an object that contains the `v`, `r`, and `s` 
+ * @returns {object} Returns an object that contains the `v`, `r`, and `s`
  *     components of an Ethereum signature as hexadecimal strings.
  *
  * @example
  * ```
- * const compound = new Compound(window.ethereum);
+ * const rifi = new Rifi(window.ethereum);
  *
  * (async () => {
  *
- *   const voteForSignature = await compound.createVoteSignature(20, true);
+ *   const voteForSignature = await rifi.createVoteSignature(20, true);
  *   console.log('voteForSignature', voteForSignature);
  *
- *   const voteAgainstSignature = await compound.createVoteSignature(20, false);
+ *   const voteAgainstSignature = await rifi.createVoteSignature(20, false);
  *   console.log('voteAgainstSignature', voteAgainstSignature);
  *
  * })().catch(console.error);
@@ -180,7 +180,7 @@ export async function createVoteSignature(
   const chainId = this._network.id;
 
   const domain: EIP712Domain = {
-    name: 'Compound Governor Alpha',
+    name: 'Rifi Governor Alpha',
     chainId,
     verifyingContract: governorAddress
   };

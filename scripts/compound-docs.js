@@ -80,14 +80,14 @@ function markdownify(block, functionName) {
   let title = functionName.toTitleCase();
 
   // handle special cases
-  if (functionName === 'cToken') {
-    id = 'cToken';
-    title = 'cToken';
+  if (functionName === 'rToken') {
+    id = 'rToken';
+    title = 'rToken';
   }
 
   if (functionName === 'function') {
     id = 'constructor';
-    title = 'Compound Constructor';
+    title = 'Rifi Constructor';
   }
 
   if (title === 'Get Abi') {
@@ -196,15 +196,15 @@ function getAllFilePaths(srcPath, resultPaths) {
 
 let intro = '';
 intro += '<section id="introduction" name="Introduction">\n\n';
-intro += '# Compound.js\n\n';
+intro += '# Rifi.js\n\n';
 intro += '## Introduction\n\n';
-intro += '[Compound.js](https://github.com/compound-finance/compound-js) is a ';
-intro += 'JavaScript SDK for Ethereum and the Compound Protocol. It wraps ';
+intro += '[Rifi.js](https://github.com/rikkei-finance/rifi-js) is a ';
+intro += 'JavaScript SDK for Ethereum and the Rifi Protocol. It wraps ';
 intro += 'around Ethers.js, which is its only dependency. It is designed for ';
 intro += 'both the web browser and Node.js.\n\n';
 intro += 'The SDK is currently in open beta. For bugs reports and feature ';
 intro += 'requests, either create an issue in the GitHub repository or send a';
-intro += ' message in the Development channel of the Compound Discord.\n\n';
+intro += ' message in the Development channel of the Rifi Discord.\n\n';
 intro += '</section>\n\n';
 
 const srcDir = './src/';

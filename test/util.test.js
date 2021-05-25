@@ -5,7 +5,7 @@ module.exports = function suite() {
 
   it('runs util.getAddress', async function () {
     const cEthAddress = '0x4ddc2d193948926d02f9b1fe9e1daa0718270ed5';
-    const result = util.getAddress('cETH');
+    const result = util.getAddress('rETH');
 
     const expectedAddress = cEthAddress.toLowerCase();
 
@@ -13,7 +13,7 @@ module.exports = function suite() {
   });
 
   it('runs util.getAbi', async function () {
-    const result = util.getAbi('cEther');
+    const result = util.getAbi('rBinance');
 
     const isArray = Array.isArray(result);
 

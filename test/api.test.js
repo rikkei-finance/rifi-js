@@ -21,16 +21,16 @@ module.exports = function suite() {
     assert.equal(error, expectedError);
   });
 
-  it('runs api.cToken', async function () {
+  it('runs api.rToken', async function () {
     const cDaiMainnetAddress = '0x5d3a536e4d6dbd6114cc1ead35777bab948e3643';
-    const response = await api.cToken({
+    const response = await api.rToken({
       "addresses": cDaiMainnetAddress
     });
 
-    const name = response.cToken[0].name;
+    const name = response.rToken[0].name;
     const error = response.error;
 
-    const expectedName = 'Compound Dai';
+    const expectedName = 'Rifi Dai';
     const expectedError = null;
 
     assert.equal(name, expectedName);
@@ -103,7 +103,7 @@ module.exports = function suite() {
   });
 
   it('fails api returns 500', async function () {
-    const expectedErrorMessage = 'Compound [api] [Market History] | Invalid request made to the Compound API.';
+    const expectedErrorMessage = 'Rifi [api] [Market History] | Invalid request made to the Rifi API.';
 
     let errorMessage;
     try {

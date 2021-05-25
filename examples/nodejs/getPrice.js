@@ -1,21 +1,21 @@
-// Example of fetching prices from the Compound protocol's open price feed using
-// Compound.js
-const Compound = require('../../dist/nodejs/index.js');
-const compound = new Compound();
+// Example of fetching prices from the Rifi protocol's open price feed using
+// Rifi.js
+const Rifi = require('../../dist/nodejs/index.js');
+const rifi = new Rifi();
 
 let price;
 (async function() {
 
-  price = await compound.getPrice(Compound.BAT);
+  price = await rifi.getPrice(Rifi.BAT);
   console.log('BAT in USDC', price);
 
-  price = await compound.getPrice(Compound.cBAT);
-  console.log('cBAT in USDC', price);
+  price = await rifi.getPrice(Rifi.rBAT);
+  console.log('rBAT in USDC', price);
 
-  price = await compound.getPrice(Compound.BAT, Compound.cUSDC);
-  console.log('BAT in cUSDC', price);
+  price = await rifi.getPrice(Rifi.BAT, Rifi.rUSDC);
+  console.log('BAT in rUSDC', price);
 
-  price = await compound.getPrice(Compound.BAT, Compound.ETH);
+  price = await rifi.getPrice(Rifi.BAT, Rifi.ETH);
   console.log('BAT in ETH', price);
 
 })().catch(console.error);

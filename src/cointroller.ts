@@ -1,16 +1,16 @@
 /**
- * @file Comptroller
- * @desc These methods facilitate interactions with the Comptroller smart
+ * @file Cointroller
+ * @desc These methods facilitate interactions with the Cointroller smart
  *     contract.
  */
 
 import * as eth from './eth';
 import { netId } from './helpers';
-import { address, abi, cTokens } from './constants';
+import { address, abi, rTokens } from './constants';
 import { CallOptions, TrxResponse } from './types';
 
 /**
- * Enters the user's address into Compound Protocol markets.
+ * Enters the user's address into Rifi Protocol markets.
  *
  * @param {any[]} markets An array of strings of markets to enter, meaning use
  *     those supplied assets as collateral.
@@ -24,10 +24,10 @@ import { CallOptions, TrxResponse } from './types';
  * @example
  *
  * ```
- * const compound = new Compound(window.ethereum);
+ * const rifi = new Rifi(window.ethereum);
  *
  * (async function () {
- *   const trx = await compound.enterMarkets(Compound.ETH); // Use [] for multiple
+ *   const trx = await rifi.enterMarkets(Rifi.ETH); // Use [] for multiple
  *   console.log('Ethers.js transaction object', trx);
  * })().catch(console.error);
  * ```
@@ -37,7 +37,7 @@ export async function enterMarkets(
   options: CallOptions = {}
 ): Promise<TrxResponse> {
   await netId(this);
-  const errorPrefix = 'Compound [enterMarkets] | ';
+  const errorPrefix = 'Rifi [enterMarkets] | ';
 
   if (typeof markets === 'string') {
     markets = [markets];
@@ -49,31 +49,31 @@ export async function enterMarkets(
 
   const addresses = [];
   for (let i = 0; i < markets.length; i++) {
-    if (markets[i][0] !== 'c') {
-      markets[i] = 'c' + markets[i];
+    if (markets[i][0] !== 'r') {
+      markets[i] = 'r' + markets[i];
     }
 
-    if (!cTokens.includes(markets[i])) {
-      throw Error(errorPrefix + 'Provided market `' + markets[i] + '` is not a recognized cToken.');
+    if (!rTokens.includes(markets[i])) {
+      throw Error(errorPrefix + 'Provided market `' + markets[i] + '` is not a recognized rToken.');
     }
 
     addresses.push(address[this._network.name][markets[i]]);
   }
 
-  const comptrollerAddress = address[this._network.name].Comptroller;
+  const cointrollerAddress = address[this._network.name].Cointroller;
   const parameters = [addresses];
 
   const trxOptions: CallOptions = {
-    _compoundProvider: this._provider,
-    abi: abi.Comptroller,
+    _rifiProvider: this._provider,
+    abi: abi.Cointroller,
     ...options
   };
 
-  return eth.trx(comptrollerAddress, 'enterMarkets', parameters, trxOptions);
+  return eth.trx(cointrollerAddress, 'enterMarkets', parameters, trxOptions);
 }
 
 /**
- * Exits the user's address from a Compound Protocol market.
+ * Exits the user's address from a Rifi Protocol market.
  *
  * @param {string} market A string of the symbol of the market to exit.
  * @param {CallOptions} [options] Call options and Ethers.js overrides for the
@@ -86,10 +86,10 @@ export async function enterMarkets(
  * @example
  *
  * ```
- * const compound = new Compound(window.ethereum);
+ * const rifi = new Rifi(window.ethereum);
  *
  * (async function () {
- *   const trx = await compound.exitMarket(Compound.ETH);
+ *   const trx = await rifi.exitMarket(Rifi.ETH);
  *   console.log('Ethers.js transaction object', trx);
  * })().catch(console.error);
  * ```
@@ -99,37 +99,37 @@ export async function exitMarket(
   options: CallOptions = {}
 ): Promise<TrxResponse> {
   await netId(this);
-  const errorPrefix = 'Compound [exitMarket] | ';
+  const errorPrefix = 'Rifi [exitMarket] | ';
 
   if (typeof market !== 'string' || market === '') {
-    throw Error(errorPrefix + 'Argument `market` must be a string of a cToken market name.');
+    throw Error(errorPrefix + 'Argument `market` must be a string of a rToken market name.');
   }
 
-  if (market[0] !== 'c') {
-    market = 'c' + market;
+  if (market[0] !== 'r') {
+    market = 'r' + market;
   }
 
-  if (!cTokens.includes(market)) {
-    throw Error(errorPrefix + 'Provided market `' + market + '` is not a recognized cToken.');
+  if (!rTokens.includes(market)) {
+    throw Error(errorPrefix + 'Provided market `' + market + '` is not a recognized rToken.');
   }
 
-  const cTokenAddress = address[this._network.name][market];
+  const rTokenAddress = address[this._network.name][market];
 
-  const comptrollerAddress = address[this._network.name].Comptroller;
-  const parameters = [cTokenAddress];
+  const cointrollerAddress = address[this._network.name].Cointroller;
+  const parameters = [rTokenAddress];
 
   const trxOptions: CallOptions = {
-    _compoundProvider: this._provider,
-    abi: abi.Comptroller,
+    _rifiProvider: this._provider,
+    abi: abi.Cointroller,
     ...options
   };
 
-  return eth.trx(comptrollerAddress, 'exitMarket', parameters, trxOptions);
+  return eth.trx(cointrollerAddress, 'exitMarket', parameters, trxOptions);
 }
 
 
 /**
- * Exits the user's address from a Compound Protocol market.
+ * Exits the user's address from a Rifi Protocol market.
  *
  * @param {string} market A string of the symbol of the market to exit.
  * @param {CallOptions} [options] Call options and Ethers.js overrides for the
@@ -142,10 +142,10 @@ export async function exitMarket(
  * @example
  *
  * ```
- * const compound = new Compound(window.ethereum);
+ * const rifi = new Rifi(window.ethereum);
  *
  * (async function () {
- *   const trx = await compound.exitMarket(Compound.ETH);
+ *   const trx = await rifi.exitMarket(Rifi.ETH);
  *   console.log('Ethers.js transaction object', trx);
  * })().catch(console.error);
  * ```
@@ -158,53 +158,53 @@ export async function getCollateralFactor(
   const errorPrefix = 'Rifi [getCollateralFactor] | ';
 
   if (typeof market !== 'string' || market === '') {
-    throw Error(errorPrefix + 'Argument `market` must be a string of a cToken market name.');
+    throw Error(errorPrefix + 'Argument `market` must be a string of a rToken market name.');
   }
 
-  if (market[0] !== 'c') {
-    market = 'c' + market;
+  if (market[0] !== 'r') {
+    market = 'r' + market;
   }
 
-  if (!cTokens.includes(market)) {
-    throw Error(errorPrefix + 'Provided market `' + market + '` is not a recognized cToken.');
+  if (!rTokens.includes(market)) {
+    throw Error(errorPrefix + 'Provided market `' + market + '` is not a recognized rToken.');
   }
 
-  const cTokenAddress = address[this._network.name][market];
+  const rTokenAddress = address[this._network.name][market];
 
-  const comptrollerAddress = address[this._network.name].Comptroller;
-  const parameters = [cTokenAddress];
+  const cointrollerAddress = address[this._network.name].Cointroller;
+  const parameters = [rTokenAddress];
 
   const trxOptions: CallOptions = {
-    _compoundProvider: this._provider,
-    abi: abi.Comptroller,
+    _rifiProvider: this._provider,
+    abi: abi.Cointroller,
     ...options
   };
 
-  return eth.trx(comptrollerAddress, 'markets', parameters, trxOptions);
+  return eth.trx(cointrollerAddress, 'markets', parameters, trxOptions);
 }
 
 export async function checkMembership(
   accountAddr: string,
-  cTokenName: string,
+  rTokenName: string,
   options: CallOptions = {}
 ): Promise<TrxResponse> {
   await netId(this);
   const errorPrefix = 'Rifi [checkMembership] | ';
 
-  if (!cTokens.includes(cTokenName)) {
-    throw Error(`${errorPrefix}"${cTokenName}" is not a recognized cToken.`);
+  if (!rTokens.includes(rTokenName)) {
+    throw Error(`${errorPrefix}"${rTokenName}" is not a recognized rToken.`);
   }
 
-  const cTokenAddress = address[this._network.name][cTokenName];
+  const rTokenAddress = address[this._network.name][rTokenName];
 
-  const comptrollerAddress = address[this._network.name].Comptroller;
-  const parameters = [accountAddr, cTokenAddress];
+  const cointrollerAddress = address[this._network.name].Cointroller;
+  const parameters = [accountAddr, rTokenAddress];
 
   const trxOptions: CallOptions = {
-    _compoundProvider: this._provider,
-    abi: abi.Comptroller,
+    _rifiProvider: this._provider,
+    abi: abi.Cointroller,
     ...options
   };
 
-  return eth.trx(comptrollerAddress, 'checkMembership', parameters, trxOptions);
+  return eth.trx(cointrollerAddress, 'checkMembership', parameters, trxOptions);
 }

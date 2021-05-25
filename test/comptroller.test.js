@@ -1,19 +1,19 @@
 const assert = require('assert');
 const ethers = require('ethers');
-const comptroller = require('../src/comptroller.ts');
-const Compound = require('../src/index.ts');
+const cointroller = require('../src/cointroller.ts');
+const Rifi = require('../src/index.ts');
 const providerUrl = 'http://localhost:8545';
 
 module.exports = function suite([ publicKeys, privateKeys ]) {
 
   const acc1 = { address: publicKeys[0], privateKey: privateKeys[0] };
 
-  const compound = new Compound(providerUrl, {
+  const rifi = new Rifi(providerUrl, {
     privateKey: acc1.privateKey
   });
 
-  it('runs comptroller.enterMarkets single asset', async function () {
-    const trx = await compound.enterMarkets(Compound.ETH);
+  it('runs cointroller.enterMarkets single asset', async function () {
+    const trx = await rifi.enterMarkets(Rifi.ETH);
     const receipt = await trx.wait(1);
 
     const numEvents = receipt.events.length;
@@ -26,9 +26,9 @@ module.exports = function suite([ publicKeys, privateKeys ]) {
     assert.equal(event, eventExpected);
   });
 
-  it('runs comptroller.enterMarkets multiple assets', async function () {
-    const trx = await compound.enterMarkets(
-      [ Compound.DAI, Compound.USDC, Compound.UNI ]
+  it('runs cointroller.enterMarkets multiple assets', async function () {
+    const trx = await rifi.enterMarkets(
+      [ Rifi.DAI, Rifi.USDC, Rifi.UNI ]
     );
     const receipt = await trx.wait(1);
 
@@ -42,29 +42,29 @@ module.exports = function suite([ publicKeys, privateKeys ]) {
     assert.equal(event, eventExpected);
   });
 
-  it('fails comptroller.enterMarkets cToken string', async function () {
-    const errorMessage = 'Compound [enterMarkets] | Argument `markets` must be an array or string.';
+  it('fails cointroller.enterMarkets rToken string', async function () {
+    const errorMessage = 'Rifi [enterMarkets] | Argument `markets` must be an array or string.';
     try {
-      const trx = await compound.enterMarkets(null);
+      const trx = await rifi.enterMarkets(null);
     } catch (e) {
       assert.equal(e.message, errorMessage);
     }
   });
 
-  it('fails comptroller.enterMarkets invalid cToken', async function () {
-    const errorMessage = 'Compound [enterMarkets] | Provided market `cbadctokenname` is not a recognized cToken.';
+  it('fails cointroller.enterMarkets invalid rToken', async function () {
+    const errorMessage = 'Rifi [enterMarkets] | Provided market `cbadrtokenname` is not a recognized rToken.';
     try {
-      const trx = await compound.enterMarkets(['USDC', 'badctokenname']);
+      const trx = await rifi.enterMarkets(['USDC', 'badrtokenname']);
     } catch (e) {
       assert.equal(e.message, errorMessage);
     }
   });
 
-  it('runs comptroller.exitMarket', async function () {
-    const enterMarketsTrx = await compound.enterMarkets(Compound.ETH);
+  it('runs cointroller.exitMarket', async function () {
+    const enterMarketsTrx = await rifi.enterMarkets(Rifi.ETH);
     await enterMarketsTrx.wait(1);
 
-    const trx = await compound.exitMarket(Compound.ETH);
+    const trx = await rifi.exitMarket(Rifi.ETH);
     const receipt = await trx.wait(1);
 
     const numEvents = receipt.events.length;
@@ -77,19 +77,19 @@ module.exports = function suite([ publicKeys, privateKeys ]) {
     assert.equal(event, eventExpected);
   });
 
-  it('fails comptroller.exitMarket cToken string', async function () {
-    const errorMessage = 'Compound [exitMarket] | Argument `market` must be a string of a cToken market name.';
+  it('fails cointroller.exitMarket rToken string', async function () {
+    const errorMessage = 'Rifi [exitMarket] | Argument `market` must be a string of a rToken market name.';
     try {
-      const trx = await compound.exitMarket(null);
+      const trx = await rifi.exitMarket(null);
     } catch (e) {
       assert.equal(e.message, errorMessage);
     }
   });
 
-  it('fails comptroller.exitMarket invalid cToken', async function () {
-    const errorMessage = 'Compound [exitMarket] | Provided market `cbadctokenname` is not a recognized cToken.';
+  it('fails cointroller.exitMarket invalid rToken', async function () {
+    const errorMessage = 'Rifi [exitMarket] | Provided market `cbadrtokenname` is not a recognized rToken.';
     try {
-      const trx = await compound.exitMarket('badctokenname');
+      const trx = await rifi.exitMarket('badrtokenname');
     } catch (e) {
       assert.equal(e.message, errorMessage);
     }

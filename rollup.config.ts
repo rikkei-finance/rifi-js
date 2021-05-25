@@ -4,7 +4,7 @@ import commonjs from 'rollup-plugin-commonjs';
 import minify from 'rollup-plugin-babel-minify';
 import json from '@rollup/plugin-json';
 
-const BrowserBuildPath = './dist/browser/compound.min.js';
+const BrowserBuildPath = './dist/browser/rifi.min.js';
 
 export default [{
   input: './dist/nodejs/index.js',
@@ -12,7 +12,7 @@ export default [{
     if (message.code === 'MISSING_NODE_BUILTINS') return;
   },
   output: {
-    name: 'Compound',
+    name: 'Rifi',
     file: BrowserBuildPath,
     format: 'iife',
     sourcemap: false,
@@ -24,12 +24,10 @@ export default [{
   plugins: [
     resolve({
       preferBuiltins: true,
-      jsnext: true,
-      main: true,
       browser: true,
     }),
     commonjs({
-      namedExports: { Compound: ['Compound'] },
+      namedExports: { Rifi: ['Rifi'] },
     }),
     minify({
       comments: false,

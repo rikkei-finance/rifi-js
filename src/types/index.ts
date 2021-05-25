@@ -12,11 +12,11 @@ import { BigNumber } from '@ethersproject/bignumber/lib/bignumber';
 
 // =-=-=-=-=-= /src/index.ts =-=-=-=-=-=
 
-export interface CompoundInstance {
+export interface RifiInstance {
   _networkPromise: Promise<ProviderNetwork>;
 }
 
-export interface CompoundOptions {
+export interface RifiOptions {
   privateKey?: string;
   mnemonic?: string;
   provider?: Provider | string;
@@ -43,7 +43,7 @@ export interface AbiItem {
 }
 
 export interface CallOptions {
-  _compoundProvider?: Provider;
+  _rifiProvider?: Provider;
   abi?: string | string[] | AbiItem[];
   provider?: Provider | string;
   network?: string;
@@ -57,6 +57,7 @@ export interface CallOptions {
   privateKey?: string;
   mnemonic?: string;
   mantissa?: boolean;
+  maxRepay?: boolean;
   // blockNumber?: string;
   // id?: number;
 }
@@ -147,7 +148,7 @@ export interface AccountServiceRequest {
   network?: string;
 }
 
-export interface CTokenServiceRequest {
+export interface RTokenServiceRequest {
   addresses?: string[] | string;
   block_number?: number;
   block_timestamp?: number;
@@ -174,7 +175,7 @@ export interface GovernanceServiceRequest {
 }
 
 export type APIRequest = AccountServiceRequest |
-  CTokenServiceRequest | MarketHistoryServiceRequest | GovernanceServiceRequest;
+  RTokenServiceRequest | MarketHistoryServiceRequest | GovernanceServiceRequest;
 
 
 // =-=-=-=-=-= /src/EIP712.ts =-=-=-=-=-=

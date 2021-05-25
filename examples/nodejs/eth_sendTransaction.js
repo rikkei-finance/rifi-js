@@ -1,5 +1,5 @@
-/** 
- * Example of calling JSON RPC's eth_sendTransaction with Compound.js
+/**
+ * Example of calling JSON RPC's eth_sendTransaction with Rifi.js
  *
  * Run ganache-cli in another command line window before running this script. Be
  *     sure to fork mainnet.
@@ -11,19 +11,19 @@ ganache-cli \
 
  */
 
-const Compound = require('../../dist/nodejs/index.js');
+const Rifi = require('../../dist/nodejs/index.js');
 
 const oneEthInWei = '1000000000000000000';
-const cEthAddress = Compound.util.getAddress(Compound.cETH);
+const cEthAddress = Rifi.util.getAddress(Rifi.rETH);
 const provider = 'http://localhost:8545';
 const privateKey = '0xb8c1b5c1d81f9475fdf2e334517d29f733bdfa40682207571b12fc1142cbf329';
 // const mnemonic = 'clutch captain shoe salt awake harvest setup primary inmate ugly among become';
 
 (async function() {
-  console.log('Supplying ETH to the Compound Protocol...');
+  console.log('Supplying ETH to the Rifi Protocol...');
 
-  // Mint some cETH by supplying ETH to the Compound Protocol
-  const trx = await Compound.eth.trx(
+  // Mint some rETH by supplying ETH to the Rifi Protocol
+  const trx = await Rifi.eth.trx(
     cEthAddress,
     'function mint() payable',
     [],

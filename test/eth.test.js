@@ -32,7 +32,7 @@ module.exports = function suite([ publicKeys, privateKeys ]) {
   });
 
   it('runs eth.trx', async function () {
-    // Mint some cETH by supplying ETH to the Compound Protocol
+    // Mint some rETH by supplying ETH to the Rifi Protocol
     const cEthMainnetAddress = '0x4ddc2d193948926d02f9b1fe9e1daa0718270ed5';
     const trx = await eth.trx(
       cEthMainnetAddress,

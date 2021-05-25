@@ -1,11 +1,11 @@
-// Example of fetching a Compound protocol contract address with Compound.js
-const Compound = require('../../dist/nodejs/index.js');
+// Example of fetching a Rifi protocol contract address with Rifi.js
+const Rifi = require('../../dist/nodejs/index.js');
 
-const batAddress = Compound.util.getAddress(Compound.BAT);
-const cbatAddress = Compound.util.getAddress(Compound.cBAT);
-const cEthAddressRopsten = Compound.util.getAddress(Compound.cETH, 'ropsten');
+const batAddress = Rifi.util.getAddress(Rifi.BAT);
+const cbatAddress = Rifi.util.getAddress(Rifi.rBAT);
+const cEthAddressRopsten = Rifi.util.getAddress(Rifi.rETH, 'ropsten');
 
 console.log('BAT (mainnet)', batAddress);
-console.log('cBAT (mainnet)', cbatAddress);
+console.log('rBAT (mainnet)', cbatAddress);
 
-console.log('cETH (ropsten)', cEthAddressRopsten);
+console.log('rETH (ropsten)', cEthAddressRopsten);

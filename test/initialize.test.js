@@ -1,5 +1,5 @@
 const assert = require('assert');
-const Compound = require('../src/index.ts');
+const Rifi = require('../src/index.ts');
 
 // Mocked browser `window.ethereum` as unlocked account '0xa0df35...'
 const window = { ethereum: require('./window.ethereum.json') };
@@ -10,49 +10,49 @@ const unlockedMnemonic = 'clutch captain shoe salt awake harvest setup primary i
 
 module.exports = function suite() {
 
-  it('initializes compound with ethers default provider', async function () {
-    const compound = new Compound();
+  it('initializes rifi with ethers default provider', async function () {
+    const rifi = new Rifi();
 
     const expectedType = 'object';
 
-    assert.equal(typeof compound, expectedType);
+    assert.equal(typeof rifi, expectedType);
   });
 
-  it('initializes compound with JSON RPC URL', async function () {
-    const compound = new Compound(providerUrl);
+  it('initializes rifi with JSON RPC URL', async function () {
+    const rifi = new Rifi(providerUrl);
 
     const expectedType = 'object';
 
-    assert.equal(typeof compound, expectedType);
+    assert.equal(typeof rifi, expectedType);
   });
 
-  it('initializes compound with mnemonic', async function () {
-    const compound = new Compound(providerUrl, {
+  it('initializes rifi with mnemonic', async function () {
+    const rifi = new Rifi(providerUrl, {
       mnemonic: unlockedMnemonic
     });
 
     const expectedType = 'object';
 
-    assert.equal(typeof compound, expectedType);
+    assert.equal(typeof rifi, expectedType);
   });
 
-  it('initializes compound with private key', async function () {
-    const compound = new Compound(providerUrl, {
+  it('initializes rifi with private key', async function () {
+    const rifi = new Rifi(providerUrl, {
       privateKey: unlockedPrivateKey
     });
 
     const expectedType = 'object';
 
-    assert.equal(typeof compound, expectedType);
+    assert.equal(typeof rifi, expectedType);
   });
 
-  it('initializes compound as web3', async function () {
+  it('initializes rifi as web3', async function () {
     window.ethereum.send = function (request, callback) {}
-    const compound = new Compound(window.ethereum);
+    const rifi = new Rifi(window.ethereum);
 
     const expectedType = 'object';
 
-    assert.equal(typeof compound, expectedType);
+    assert.equal(typeof rifi, expectedType);
   });
 
 }

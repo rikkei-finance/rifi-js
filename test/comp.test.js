@@ -1,16 +1,16 @@
 const assert = require('assert');
 const ethers = require('ethers');
-const comp = require('../src/comp.ts');
-const Compound = require('../src/index.ts');
+const rifi = require('../src/rifi.ts');
+const Rifi = require('../src/index.ts');
 const providerUrl = 'http://localhost:8545';
 
 const unlockedAddress = '0xa0df350d2637096571F7A701CBc1C5fdE30dF76A';
 const unlockedPk = '0xb8c1b5c1d81f9475fdf2e334517d29f733bdfa40682207571b12fc1142cbf329';
 
-function getNonce (address, compAddress, _providerUrl) {
+function getNonce (address, rifiAddress, _providerUrl) {
   return new Promise((resolve, reject) => {
-    Compound.eth.read(
-      compAddress,
+    Rifi.eth.read(
+      rifiAddress,
       'function nonces(address) returns (uint)',
       [ address ],
       { provider: _providerUrl }
@@ -22,73 +22,73 @@ module.exports = function suite([ publicKeys, privateKeys ]) {
 
   const acc1 = { address: publicKeys[0], privateKey: privateKeys[0] };
 
-  const compound = new Compound(providerUrl, {
+  const rifi = new Rifi(providerUrl, {
     privateKey: acc1.privateKey
   });
 
-  it('runs comp.getCompBalance', async function () {
-    const bal = await comp.getCompBalance(acc1.address, providerUrl);
+  it('runs rifi.getRifiBalance', async function () {
+    const bal = await rifi.getRifiBalance(acc1.address, providerUrl);
 
     const expected = 0;
     assert.equal(bal, expected);
   });
 
-  it('fails comp.getCompBalance address string', async function () {
-    const errorMessage = 'Compound [getCompBalance] | Argument `_address` must be a string.';
+  it('fails rifi.getRifiBalance address string', async function () {
+    const errorMessage = 'Rifi [getRifiBalance] | Argument `_address` must be a string.';
 
     try {
-      await comp.getCompBalance(1, providerUrl);
+      await rifi.getRifiBalance(1, providerUrl);
     } catch (e) {
       assert.equal(e.message, errorMessage);
     }
   });
 
-  it('fails comp.getCompBalance address invalid', async function () {
-    const errorMessage = 'Compound [getCompBalance] | Argument `_address` must be a valid Ethereum address.';
+  it('fails rifi.getRifiBalance address invalid', async function () {
+    const errorMessage = 'Rifi [getRifiBalance] | Argument `_address` must be a valid Ethereum address.';
 
     try {
-      await comp.getCompBalance('bad_ethereum_address', providerUrl);
+      await rifi.getRifiBalance('bad_ethereum_address', providerUrl);
     } catch (e) {
       assert.equal(e.message, errorMessage);
     }
   });
 
-  it('runs comp.getCompAccrued', async function () {
-    const accrued = await comp.getCompAccrued(acc1.address, providerUrl);
+  it('runs rifi.getRifiAccrued', async function () {
+    const accrued = await rifi.getRifiAccrued(acc1.address, providerUrl);
 
     const expected = 0;
     assert.equal(accrued, expected);
   });
 
-  it('fails comp.getCompAccrued address string', async function () {
-    const errorMessage = 'Compound [getCompAccrued] | Argument `_address` must be a string.';
+  it('fails rifi.getRifiAccrued address string', async function () {
+    const errorMessage = 'Rifi [getRifiAccrued] | Argument `_address` must be a string.';
 
     try {
-      await comp.getCompAccrued(1, providerUrl);
+      await rifi.getRifiAccrued(1, providerUrl);
     } catch (e) {
       assert.equal(e.message, errorMessage);
     }
   });
 
-  it('fails comp.getCompAccrued address invalid', async function () {
-    const errorMessage = 'Compound [getCompAccrued] | Argument `_address` must be a valid Ethereum address.';
+  it('fails rifi.getRifiAccrued address invalid', async function () {
+    const errorMessage = 'Rifi [getRifiAccrued] | Argument `_address` must be a valid Ethereum address.';
 
     try {
-      await comp.getCompAccrued('bad_ethereum_address', providerUrl);
+      await rifi.getRifiAccrued('bad_ethereum_address', providerUrl);
     } catch (e) {
       assert.equal(e.message, errorMessage);
     }
   });
 
 
-  it('runs comp.claimComp', async function () {
+  it('runs rifi.claimRifi', async function () {
     let txReceipt;
 
     try {
-      const claimCompTx = await compound.claimComp({
+      const claimRifiTx = await rifi.claimRifi({
         gasLimit: ethers.utils.parseUnits('1000000', 'wei') // set when prices were unusually high
       });
-      txReceipt = await claimCompTx.wait(1);
+      txReceipt = await claimRifiTx.wait(1);
     } catch (error) {
       console.error('error', error);
       console.error('txReceipt', txReceipt);
@@ -104,8 +104,8 @@ module.exports = function suite([ publicKeys, privateKeys ]) {
     assert.equal(events, expectedEvents);
   });
 
-  it('runs comp.delegate', async function () {
-    const delegateTx = await compound.delegate(acc1.address);
+  it('runs rifi.delegate', async function () {
+    const delegateTx = await rifi.delegate(acc1.address);
     const txReceipt = await delegateTx.wait(1);
 
     const event = txReceipt.events[0].event;
@@ -118,33 +118,33 @@ module.exports = function suite([ publicKeys, privateKeys ]) {
     assert.equal(delegatee, expectedDelegatee);
   });
 
-  it('fails comp.delegate address string', async function () {
-    const errorMessage = 'Compound [delegate] | Argument `_address` must be a string.';
+  it('fails rifi.delegate address string', async function () {
+    const errorMessage = 'Rifi [delegate] | Argument `_address` must be a string.';
 
     try {
-      await comp.delegate(1, providerUrl);
+      await rifi.delegate(1, providerUrl);
     } catch (e) {
       assert.equal(e.message, errorMessage);
     }
   });
 
-  it('fails comp.delegate address invalid', async function () {
-    const errorMessage = 'Compound [delegate] | Argument `_address` must be a valid Ethereum address.';
+  it('fails rifi.delegate address invalid', async function () {
+    const errorMessage = 'Rifi [delegate] | Argument `_address` must be a valid Ethereum address.';
 
     try {
-      await comp.delegate('bad_ethereum_address', providerUrl);
+      await rifi.delegate('bad_ethereum_address', providerUrl);
     } catch (e) {
       assert.equal(e.message, errorMessage);
     }
   });
 
-  it('runs comp.createDelegateSignature', async function () {
-    const _compound = new Compound(providerUrl, {
+  it('runs rifi.createDelegateSignature', async function () {
+    const _rifi = new Rifi(providerUrl, {
       privateKey: unlockedPk
     });
 
     const expiry = 10e9;
-    const delegateSignature = await _compound.createDelegateSignature(
+    const delegateSignature = await _rifi.createDelegateSignature(
       unlockedAddress,
       expiry
     );
@@ -160,16 +160,16 @@ module.exports = function suite([ publicKeys, privateKeys ]) {
     assert.equal(delegateSignature.v, expectedSignature.v);
   });
 
-  it('runs comp.delegateBySig', async function () {
-    const compAddress = Compound.util.getAddress(Compound.COMP);
-    const nonce = +(await getNonce(acc1.address, compAddress, providerUrl)).toString();
+  it('runs rifi.delegateBySig', async function () {
+    const rifiAddress = Rifi.util.getAddress(Rifi.RIFI);
+    const nonce = +(await getNonce(acc1.address, rifiAddress, providerUrl)).toString();
     const expiry = 10e9;
-    const signature = await compound.createDelegateSignature(
+    const signature = await rifi.createDelegateSignature(
       acc1.address,
       expiry
     );
 
-    const delegateTx = await compound.delegateBySig(
+    const delegateTx = await rifi.delegateBySig(
       acc1.address,
       nonce,
       expiry,
@@ -184,10 +184,10 @@ module.exports = function suite([ publicKeys, privateKeys ]) {
     assert.equal(toDelegate, expectedToDelegate);
   });
 
-  it('fails comp.delegateBySig address string', async function () {
-    const errorMessage = 'Compound [delegateBySig] | Argument `_address` must be a string.';
+  it('fails rifi.delegateBySig address string', async function () {
+    const errorMessage = 'Rifi [delegateBySig] | Argument `_address` must be a string.';
     try {
-      const delegateTx = await compound.delegateBySig(
+      const delegateTx = await rifi.delegateBySig(
         123, // bad
         1,
         10e9,
@@ -202,10 +202,10 @@ module.exports = function suite([ publicKeys, privateKeys ]) {
     }
   });
 
-  it('fails comp.delegateBySig address invalid', async function () {
-    const errorMessage = 'Compound [delegateBySig] | Argument `_address` must be a valid Ethereum address.';
+  it('fails rifi.delegateBySig address invalid', async function () {
+    const errorMessage = 'Rifi [delegateBySig] | Argument `_address` must be a valid Ethereum address.';
     try {
-      const delegateTx = await compound.delegateBySig(
+      const delegateTx = await rifi.delegateBySig(
         '0xbadaddress', // bad
         1,
         10e9,
@@ -220,10 +220,10 @@ module.exports = function suite([ publicKeys, privateKeys ]) {
     }
   });
 
-  it('fails comp.delegateBySig nonce', async function () {
-    const errorMessage = 'Compound [delegateBySig] | Argument `nonce` must be an integer.';
+  it('fails rifi.delegateBySig nonce', async function () {
+    const errorMessage = 'Rifi [delegateBySig] | Argument `nonce` must be an integer.';
     try {
-      const delegateTx = await compound.delegateBySig(
+      const delegateTx = await rifi.delegateBySig(
         '0xa0df350d2637096571F7A701CBc1C5fdE30dF76A',
         'abc', // bad
         10e9,
@@ -238,10 +238,10 @@ module.exports = function suite([ publicKeys, privateKeys ]) {
     }
   });
 
-  it('fails comp.delegateBySig expiry', async function () {
-    const errorMessage = 'Compound [delegateBySig] | Argument `expiry` must be an integer.';
+  it('fails rifi.delegateBySig expiry', async function () {
+    const errorMessage = 'Rifi [delegateBySig] | Argument `expiry` must be an integer.';
     try {
-      const delegateTx = await compound.delegateBySig(
+      const delegateTx = await rifi.delegateBySig(
         '0xa0df350d2637096571F7A701CBc1C5fdE30dF76A',
         1,
         null, // bad
@@ -256,10 +256,10 @@ module.exports = function suite([ publicKeys, privateKeys ]) {
     }
   });
 
-  it('fails comp.delegateBySig signature', async function () {
-    const errorMessage = 'Compound [delegateBySig] | Argument `signature` must be an object that contains the v, r, and s pieces of an EIP-712 signature.';
+  it('fails rifi.delegateBySig signature', async function () {
+    const errorMessage = 'Rifi [delegateBySig] | Argument `signature` must be an object that contains the v, r, and s pieces of an EIP-712 signature.';
     try {
-      const delegateTx = await compound.delegateBySig(
+      const delegateTx = await rifi.delegateBySig(
         '0xa0df350d2637096571F7A701CBc1C5fdE30dF76A',
         1,
         10e9,

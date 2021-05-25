@@ -42,7 +42,7 @@ function _ethJsonRpc(
 ): Promise<any> {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return new Promise<any>((resolve, reject) => {
-    const provider = options._compoundProvider || _createProvider(options);
+    const provider = options._rifiProvider || _createProvider(options);
 
     const overrides = {
       gasPrice: options.gasPrice,
@@ -119,18 +119,18 @@ function _ethJsonRpc(
  *
  * @example
  * ```
- * const cEthAddress = Compound.util.getAddress(Compound.cETH);
+ * const cEthAddress = Rifi.util.getAddress(Rifi.rETH);
  *
  * (async function() {
  *
- *   const srpb = await Compound.eth.read(
+ *   const srpb = await Rifi.eth.read(
  *     cEthAddress,
  *     'function supplyRatePerBlock() returns (uint256)',
  *     // [], // [optional] parameters
  *     // {}  // [optional] call options, provider, network, plus Ethers.js "overrides"
  *   );
  *
- *   console.log('cETH market supply rate per block:', srpb.toString());
+ *   console.log('rETH market supply rate per block:', srpb.toString());
  *
  * })().catch(console.error);
  * ```
@@ -169,10 +169,10 @@ export function read(
  * const provider = window.ethereum;
  *
  * (async function() {
- *   console.log('Supplying ETH to the Compound Protocol...');
+ *   console.log('Supplying ETH to the Rifi Protocol...');
  *
- *   // Mint some cETH by supplying ETH to the Compound Protocol
- *   const trx = await Compound.eth.trx(
+ *   // Mint some rETH by supplying ETH to the Rifi Protocol
+ *   const trx = await Rifi.eth.trx(
  *     cEthAddress,
  *     'function mint() payable',
  *     [],
@@ -200,7 +200,7 @@ export function trx(
 }
 
 /**
- * This helps the Compound.js constructor discover which Ethereum network the
+ * This helps the Rifi.js constructor discover which Ethereum network the
  *     developer wants to use.
  *
  * @param {Provider | string} [provider] Optional Ethereum network provider.
@@ -260,7 +260,7 @@ export async function getProviderNetwork(
  * ```
  * (async function () {
  *
- *   balance = await Compound.eth.getBalance(myAddress, provider);
+ *   balance = await Rifi.eth.getBalance(myAddress, provider);
  *   console.log('My ETH Balance', +balance);
  *
  * })().catch(console.error);

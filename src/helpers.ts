@@ -1,19 +1,19 @@
-import { CompoundInstance } from './types';
+import { RifiInstance } from './types';
 
 /**
  * This function acts like a decorator for all methods that interact with the
- *     blockchain. In order to use the correct Compound Protocol addresses, the
- *     Compound.js SDK must know which network its provider points to. This
+ *     blockchain. In order to use the correct Rifi Protocol addresses, the
+ *     Rifi.js SDK must know which network its provider points to. This
  *     function holds up a transaction until the main constructor has determined
  *     the network ID.
  *
  * @hidden
  *
- * @param {Compound} _compound The instance of the Compound.js SDK.
+ * @param {Rifi} _rifi The instance of the Rifi.js SDK.
  *
  */
-export async function netId(_compound: CompoundInstance): Promise<void> {
-  if (_compound._networkPromise) {
-    await _compound._networkPromise;
+export async function netId(_rifi: RifiInstance): Promise<void> {
+  if (_rifi._networkPromise) {
+    await _rifi._networkPromise;
   }
 }

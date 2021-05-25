@@ -1,14 +1,14 @@
 {
-  "name": "@compound-finance/compound-js",
+  "name": "@rikkei-finance/rifi-js",
   "version": "0.2.6",
-  "author": "Compound Labs, Inc.",
-  "description": "A JavaScript SDK for Ethereum and the Compound Protocol.",
+  "author": "Rifi Labs, Inc.",
+  "description": "A JavaScript SDK for Ethereum and the Rifi Protocol.",
   "license": "BSD-3-Clause",
   "main": "dist/nodejs/index.js",
   "scripts": {
     "lint": "./node_modules/.bin/eslint ./src/*.ts",
     "build": "npm run lint && ./node_modules/.bin/tsc && npm run rollup",
-    "docs": "node ./scripts/compound-docs.js",
+    "docs": "node ./scripts/rifi-docs.js",
     "prepare": "npm run build",
     "publish_patch": "npm version patch && npm publish --access public",
     "publish_minor": "npm version minor && npm publish --access public",
@@ -20,13 +20,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/compound-finance/compound-js.git"
+    "url": "https://github.com/rikkei-finance/rifi-js.git"
   },
   "keywords": [
-    "compound",
-    "compound.js",
-    "compound finance",
-    "compound protocol",
+    "rifi",
+    "rifi.js",
+    "rifi finance",
+    "rifi protocol",
     "decentralized finance",
     "defi",
     "ethereum"

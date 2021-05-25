@@ -2,10 +2,10 @@
 <html>
 <head>
   <!-- USE CDN, PUBLIC BUILD -->
-  <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@compound-finance/compound-js@latest/dist/browser/compound.min.js"></script> -->
+  <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@rikkei-finance/rifi-js@latest/dist/browser/rifi.min.js"></script> -->
 
   <!-- USE LOCAL BUILD (be sure `npm install`) -->
-  <script type="text/javascript" src="../../dist/browser/compound.min.js"></script>
+  <script type="text/javascript" src="../../dist/browser/rifi.min.js"></script>
 
   <link rel="stylesheet"
       href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.2/build/styles/default.min.css">
@@ -34,13 +34,13 @@
     @keyframes spin { to { -webkit-transform: rotate(360deg); } }
     @-webkit-keyframes spin { to { -webkit-transform: rotate(360deg); } }
   </style>
-  <title>Compound.js Examples</title>
+  <title>Rifi.js Examples</title>
 </head>
 <body>
   <div class="container">
-    <h1>Compound.js Examples [Alpha]</h1>
+    <h1>Rifi.js Examples [Alpha]</h1>
     <p>
-      Code examples for client interaction with the <a href="https://compound.finance/">Compound</a> protocol via Compound.js.
+      Code examples for client interaction with the <a href="https://rifi.finance/">Rifi</a> protocol via Rifi.js.
     </p>
 
     &nbsp;
@@ -61,7 +61,7 @@
 
     <div class="item">
       <h2>Ethereum Read (JSON RPC eth_call)</h2>
-      <p>Generic Ethereum blockchain read with JSON RPC. This example fetches the supply rate per block for cETH using the <b>read</b> method.</p>
+      <p>Generic Ethereum blockchain read with JSON RPC. This example fetches the supply rate per block for rETH using the <b>read</b> method.</p>
       <button id="eth-call-button">Get Supply Rate Per Block</button>
       <br />
       <div id="eth-call-content"></div>
@@ -70,14 +70,14 @@ const cEthAddress = '0x4ddc2d193948926d02f9b1fe9e1daa0718270ed5';
 
 (async function() {
 
-  const srpb = await Compound.eth.read(
+  const srpb = await Rifi.eth.read(
     cEthAddress,
     'function supplyRatePerBlock() returns (uint256)',
     // [], // [optional] parameters
     // {}  // [optional] call options, provider, network, plus Ethers.js "overrides"
   );
 
-  console.log('cETH market supply rate per block:', srpb.toString());
+  console.log('rETH market supply rate per block:', srpb.toString());
 
 })().catch(console.error);</code></pre>
     </div>
@@ -86,7 +86,7 @@ const cEthAddress = '0x4ddc2d193948926d02f9b1fe9e1daa0718270ed5';
 
     <div class="item">
       <h2>Ethereum Send Transaction (JSON RPC eth_sendTransaction)</h2>
-      <p>Create and send an Ethereum transaction with JSON RPC. This button's transaction transfers your Ether to the Compound protocol using the <b>trx</b> method.</p>
+      <p>Create and send an Ethereum transaction with JSON RPC. This button's transaction transfers your Ether to the Rifi protocol using the <b>trx</b> method.</p>
       <button id="eth-sendTransaction-button">Supply 1 ETH</button>
       <br />
       <div id="eth-sendTransaction-content"></div>
@@ -95,10 +95,10 @@ const cEthAddress = '0x4ddc2d193948926d02f9b1fe9e1daa0718270ed5';
 const provider = window.ethereum;
 
 (async function() {
-  console.log('Supplying ETH to the Compound Protocol...');
+  console.log('Supplying ETH to the Rifi Protocol...');
 
-  // Mint some cETH by supplying ETH to the Compound Protocol
-  const trx = await Compound.eth.trx(
+  // Mint some rETH by supplying ETH to the Rifi Protocol
+  const trx = await Rifi.eth.trx(
     cEthAddress,
     'function mint() payable',
     [],
@@ -118,19 +118,19 @@ const provider = window.ethereum;
 
     <div class="item">
       <h2>Supply</h2>
-      <p>This button's transaction transfers your Ether to the Compound protocol using the <b>supply</b> method.</p>
+      <p>This button's transaction transfers your Ether to the Rifi protocol using the <b>supply</b> method.</p>
       <button id="supply-button">Supply 1 ETH</button>
       <br />
       <div id="supply-content"></div>
-      <pre><code class="js">const compound = new Compound(window.ethereum);
+      <pre><code class="js">const rifi = new Rifi(window.ethereum);
 
 // Ethers.js overrides are an optional 3rd parameter for `supply`
 // const trxOptions = { gasLimit: 250000, mantissa: false };
 
 (async function() {
 
-  console.log('Supplying ETH to the Compound protocol...');
-  const trx = await compound.supply(Compound.ETH, 1);
+  console.log('Supplying ETH to the Rifi protocol...');
+  const trx = await rifi.supply(Rifi.ETH, 1);
   console.log('Ethers.js transaction object', trx);
 
 })().catch(console.error);</code></pre>
@@ -140,16 +140,16 @@ const provider = window.ethereum;
 
     <div class="item">
       <h2>Redeem</h2>
-      <p>This button's transaction redeems your Ether from the Compound protocol using the <b>redeem</b> method.</p>
+      <p>This button's transaction redeems your Ether from the Rifi protocol using the <b>redeem</b> method.</p>
       <button id="redeem-button">Redeem 1 ETH</button>
       <br />
       <div id="redeem-content"></div>
-      <pre><code class="js">const compound = new Compound(window.ethereum);
+      <pre><code class="js">const rifi = new Rifi(window.ethereum);
 
 (async function() {
 
   console.log('Redeeming ETH...');
-  const trx = await compound.redeem(Compound.ETH, 1); // also accepts cToken args
+  const trx = await rifi.redeem(Rifi.ETH, 1); // also accepts rToken args
   console.log('Ethers.js transaction object', trx);
 
 })().catch(console.error);
@@ -164,17 +164,17 @@ const provider = window.ethereum;
       <button id="enter-market-button">Enter ETH Market</button>
       <br />
       <div id="enter-market-content"></div>
-      <pre><code class="js">const compound = new Compound(window.ethereum);
+      <pre><code class="js">const rifi = new Rifi(window.ethereum);
 
 (async function() {
 
   console.log('Entering ETH market (use as collateral)...');
-  const trx = await compound.enterMarkets(Compound.ETH); // also accepts []
+  const trx = await rifi.enterMarkets(Rifi.ETH); // also accepts []
 
   console.log('Ethers.js transaction object', trx);
 
   // Exit a market (string argument of only 1 market at a time)
-  // const trx = await compound.exitMarket(Compound.ETH);
+  // const trx = await rifi.exitMarket(Rifi.ETH);
 
 })().catch(console.error);</code></pre>
     </div>
@@ -187,7 +187,7 @@ const provider = window.ethereum;
       <button id="borrow-button">Borrow 32 Dai</button>
       <br />
       <div id="borrow-content"></div>
-      <pre><code class="js">const compound = new Compound(window.ethereum);
+      <pre><code class="js">const rifi = new Rifi(window.ethereum);
 
 (async function() {
 
@@ -195,7 +195,7 @@ const provider = window.ethereum;
   const trxOptions = { mantissa: true };
 
   console.log('Borrowing 32 Dai...');
-  const trx = await compound.borrow(Compound.DAI, daiScaledUp, trxOptions);
+  const trx = await rifi.borrow(Rifi.DAI, daiScaledUp, trxOptions);
 
   console.log('Ethers.js transaction object', trx);
 
@@ -210,13 +210,13 @@ const provider = window.ethereum;
       <button id="repay-borrow-button">Repay 32 Dai</button>
       <br />
       <div id="repay-borrow-content"></div>
-      <pre><code class="js">const compound = new Compound(window.ethereum);
+      <pre><code class="js">const rifi = new Rifi(window.ethereum);
 
 (async function() {
 
   console.log('Repaying Dai borrow...');
   const address = null; // set this to any address to repayBorrowBehalf
-  const trx = await compound.repayBorrow(Compound.DAI, 32, address);
+  const trx = await rifi.repayBorrow(Rifi.DAI, 32, address);
 
   console.log('Ethers.js transaction object', trx);
 
@@ -233,8 +233,8 @@ const provider = window.ethereum;
       <div id="get-price-content"></div>
       <pre><code class="js">(async function() {
 
-  // Accepts 2 args, cTokens or underlyings. Second arg defaults to USDC.
-  const price = await compound.getPrice(Compound.BAT);
+  // Accepts 2 args, rTokens or underlyings. Second arg defaults to USDC.
+  const price = await rifi.getPrice(Rifi.BAT);
   console.log('BAT in USDC', price);
 
 })().catch(console.error);</code></pre>
@@ -245,11 +245,11 @@ const provider = window.ethereum;
     <div class="item">
       <h2>Get Address</h2>
       <p>Fetches a relevant contract address using <b>getAddress</b> method.</p>
-      <button id="get-address-button">Get cETH Address</button>
+      <button id="get-address-button">Get rETH Address</button>
       <br />
       <div id="get-address-content"></div>
-      <pre><code class="js">// Accepts cTokens or underlyings. Second arg defaults to main net.
-const cEthAddressRopsten = Compound.util.getAddress(Compound.cETH, 'ropsten');</code></pre>
+      <pre><code class="js">// Accepts rTokens or underlyings. Second arg defaults to main net.
+const cEthAddressRopsten = Rifi.util.getAddress(Rifi.rETH, 'ropsten');</code></pre>
     </div>
 
     &nbsp;
@@ -293,7 +293,7 @@ const ethCallExample = () => {
 
   (async function() {
 
-    const srpb = await Compound.eth.read(
+    const srpb = await Rifi.eth.read(
       cEthAddress,
       'function supplyRatePerBlock() returns (uint256)',
       // [], // [optional] parameters
@@ -301,7 +301,7 @@ const ethCallExample = () => {
     );
 
     ethCallContent.innerText = srpb.toString();
-    console.log('cETH market supply rate per block:', srpb.toString());
+    console.log('rETH market supply rate per block:', srpb.toString());
 
   })().catch((err) => {
     ethCallContent.innerText = 'Error occured; See developer console for details.';
@@ -328,10 +328,10 @@ const ethSendTransactionExample = () => {
   const provider = window.ethereum;
 
   (async function() {
-    console.log('Supplying ETH to the Compound Protocol...');
+    console.log('Supplying ETH to the Rifi Protocol...');
 
-    // Mint some cETH by supplying ETH to the Compound Protocol
-    const trx = await Compound.eth.trx(
+    // Mint some rETH by supplying ETH to the Rifi Protocol
+    const trx = await Rifi.eth.trx(
       cEthAddress,
       'function mint() payable',
       [],
@@ -366,15 +366,15 @@ ganache-cli \
 const supplyExample = () => {
   spin(supplyContent);
 
-  const compound = new Compound(window.ethereum);
+  const rifi = new Rifi(window.ethereum);
 
   // Ethers.js overrides are an optional 3rd parameter for `supply`
   // const trxOptions = { gasLimit: 250000, mantissa: false };
 
   (async function() {
 
-    console.log('Supplying ETH to the Compound protocol...');
-    const trx = await compound.supply(Compound.ETH, 100);
+    console.log('Supplying ETH to the Rifi protocol...');
+    const trx = await rifi.supply(Rifi.ETH, 100);
     supplyContent.innerText = 'Success, see the developer console for the Ethers.js transaction object.';
     console.log('Ethers.js transaction object', trx);
 
@@ -397,12 +397,12 @@ ganache-cli \
 const redeemExample = () => {
   spin(redeemContent);
 
-  const compound = new Compound(window.ethereum);
+  const rifi = new Rifi(window.ethereum);
 
   (async function() {
 
     console.log('Redeeming ETH...');
-    const trx = await compound.redeem(Compound.ETH, 1); // also accepts cToken args
+    const trx = await rifi.redeem(Rifi.ETH, 1); // also accepts rToken args
     console.log('Ethers.js transaction object', trx);
     redeemContent.innerText = 'Success, see the developer console for the Ethers.js transaction object.';
 
@@ -426,17 +426,17 @@ ganache-cli \
 const enterMarketExample = () => {
   spin(enterMarketContent);
 
-  const compound = new Compound(window.ethereum);
+  const rifi = new Rifi(window.ethereum);
 
   (async function() {
 
     console.log('Entering ETH market (use as collateral)...');
-    const trx = await compound.enterMarkets(Compound.ETH); // also accepts []
+    const trx = await rifi.enterMarkets(Rifi.ETH); // also accepts []
 
     console.log('Ethers.js transaction object', trx);
 
     // Exit a market (string parameter of only 1 market at a time)
-    // const trx = await compound.exitMarket(Compound.ETH);
+    // const trx = await rifi.exitMarket(Rifi.ETH);
 
     enterMarketContent.innerText = 'Success, see the developer console for the Ethers.js transaction object.';
 
@@ -460,7 +460,7 @@ ganache-cli \
 const borrowExample = () => {
   spin(borrowContent);
 
-  const compound = new Compound(window.ethereum);
+  const rifi = new Rifi(window.ethereum);
 
   (async function() {
 
@@ -468,7 +468,7 @@ const borrowExample = () => {
     const trxOptions = { mantissa: true };
 
     console.log('Borrowing 32 Dai...');
-    const trx = await compound.borrow(Compound.DAI, daiScaledUp, trxOptions);
+    const trx = await rifi.borrow(Rifi.DAI, daiScaledUp, trxOptions);
 
     borrowContent.innerText = 'Success, see the developer console for the Ethers.js transaction object.';
     console.log('Ethers.js transaction object', trx);
@@ -493,13 +493,13 @@ ganache-cli \
 const repayBorrowExample = () => {
   spin(repayBorrowContent);
 
-  const compound = new Compound(window.ethereum);
+  const rifi = new Rifi(window.ethereum);
 
   (async function() {
 
     console.log('Repaying Dai borrow...');
     const address = null; // set this to any address to repayBorrowBehalf
-    const trx = await compound.repayBorrow(Compound.DAI, 32, address);
+    const trx = await rifi.repayBorrow(Rifi.DAI, 32, address);
 
     repayBorrowContent.innerText = 'Success, see the developer console for the Ethers.js transaction object.';
     console.log('Ethers.js transaction object', trx);
@@ -515,12 +515,12 @@ const repayBorrowExample = () => {
 const getPriceExample = () => {
   spin(getPriceContent);
 
-  const compound = new Compound();
+  const rifi = new Rifi();
 
   (async function() {
 
-    // Accepts 2 args, cTokens or underlyings. Second arg defaults to USDC.
-    const price = await compound.getPrice(Compound.BAT);
+    // Accepts 2 args, rTokens or underlyings. Second arg defaults to USDC.
+    const price = await rifi.getPrice(Rifi.BAT);
     console.log('BAT in USDC', price);
 
     getPriceContent.innerText = price.toString();
@@ -536,12 +536,12 @@ const getPriceExample = () => {
 const getAddressExample = () => {
   spin(getAddressContent);
 
-  const compound = new Compound();
+  const rifi = new Rifi();
 
   (async function() {
 
-    // Accepts cTokens or underlyings. Second arg defaults to main net.
-    const cEthAddressRopsten = Compound.util.getAddress(Compound.cETH, 'ropsten');
+    // Accepts rTokens or underlyings. Second arg defaults to main net.
+    const cEthAddressRopsten = Rifi.util.getAddress(Rifi.rETH, 'ropsten');
 
     getAddressContent.innerText = cEthAddressRopsten.toString();
 

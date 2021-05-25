@@ -1,6 +1,6 @@
 /**
- * @file cToken
- * @desc These methods facilitate interactions with the cToken smart
+ * @file rToken
+ * @desc These methods facilitate interactions with the rToken smart
  *     contracts.
  */
 
@@ -8,13 +8,13 @@ import { ethers } from 'ethers';
 import * as eth from './eth';
 import { netId } from './helpers';
 import {
-  constants, address, abi, decimals, underlyings, cTokens
+  constants, address, abi, decimals, underlyings, rTokens
 } from './constants';
 import { BigNumber } from '@ethersproject/bignumber/lib/bignumber';
 import { CallOptions, TrxResponse } from './types';
 
 /**
- * Supplies the user's Ethereum asset to the Compound Protocol.
+ * Supplies the user's Ethereum asset to the Rifi Protocol.
  *
  * @param {string} asset A string of the asset to supply.
  * @param {number | string | BigNumber} amount A string, number, or BigNumber
@@ -33,15 +33,15 @@ import { CallOptions, TrxResponse } from './types';
  * @example
  *
  * ```
- * const compound = new Compound(window.ethereum);
+ * const rifi = new Rifi(window.ethereum);
  *
  * // Ethers.js overrides are an optional 3rd parameter for `supply`
  * // const trxOptions = { gasLimit: 250000, mantissa: false };
  *
  * (async function() {
  *
- *   console.log('Supplying ETH to the Compound Protocol...');
- *   const trx = await compound.supply(Compound.ETH, 1);
+ *   console.log('Supplying ETH to the Rifi Protocol...');
+ *   const trx = await rifi.supply(Rifi.ETH, 1);
  *   console.log('Ethers.js transaction object', trx);
  *
  * })().catch(console.error);
@@ -54,12 +54,12 @@ export async function supply(
   options: CallOptions = {}
 ): Promise<TrxResponse> {
   await netId(this);
-  const errorPrefix = 'Compound [supply] | ';
+  const errorPrefix = 'Rifi [supply] | ';
 
-  const cTokenName = 'c' + asset;
-  const cTokenAddress = address[this._network.name][cTokenName];
+  const rTokenName = 'r' + asset;
+  const rTokenAddress = address[this._network.name][rTokenName];
 
-  if (!cTokenAddress || !underlyings.includes(asset)) {
+  if (!rTokenAddress || !underlyings.includes(asset)) {
     throw Error(errorPrefix + 'Argument `asset` cannot be supplied.');
   }
 
@@ -73,20 +73,21 @@ export async function supply(
 
   if (!options.mantissa) {
     amount = +amount;
-    amount = amount * Math.pow(10, decimals[asset]);
+    // amount = amount * Math.pow(10, decimals[asset]);
+    amount = ethers.utils.parseUnits(amount.toString(), decimals[asset]);
   }
 
   amount = ethers.BigNumber.from(amount.toString());
 
-  if (cTokenName === constants.cBNB) {
-    options.abi = abi.cEther;
+  if (rTokenName === constants.rBNB) {
+    options.abi = abi.rBinance;
   } else {
-    options.abi = abi.cErc20;
+    options.abi = abi.rBep20;
   }
 
-  options._compoundProvider = this._provider;
+  options._rifiProvider = this._provider;
 
-  if (cTokenName !== constants.cBNB && noApprove !== true) {
+  if (rTokenName !== constants.rBNB && noApprove !== true) {
     const underlyingAddress = address[this._network.name][asset];
     let userAddress = this._provider.address;
 
@@ -98,7 +99,7 @@ export async function supply(
     const allowance = await eth.read(
       underlyingAddress,
       'allowance',
-      [userAddress, cTokenAddress],
+      [userAddress, rTokenAddress],
       options
     );
 
@@ -109,31 +110,31 @@ export async function supply(
       await eth.trx(
         underlyingAddress,
         'approve',
-        [cTokenAddress, amount],
+        [rTokenAddress, amount],
         options
       );
     }
   }
 
   const parameters = [];
-  if (cTokenName === constants.cBNB) {
+  if (rTokenName === constants.rBNB) {
     options.value = amount;
   } else {
     parameters.push(amount);
   }
 
-  return eth.trx(cTokenAddress, 'mint', parameters, options);
+  return eth.trx(rTokenAddress, 'mint', parameters, options);
 }
 
 /**
- * Redeems the user's Ethereum asset from the Compound Protocol.
+ * Redeems the user's Ethereum asset from the Rifi Protocol.
  *
- * @param {string} asset A string of the asset to redeem, or its cToken name.
+ * @param {string} asset A string of the asset to redeem, or its rToken name.
  * @param {number | string | BigNumber} amount A string, number, or BigNumber
  *     object of the amount of an asset to redeem. Use the `mantissa` boolean in
  *     the `options` parameter to indicate if this value is scaled up (so there
  *     are no decimals) or in its natural scale. This can be an amount of
- *     cTokens or underlying asset (use the `asset` parameter to specify).
+ *     rTokens or underlying asset (use the `asset` parameter to specify).
  * @param {CallOptions} [options] Call options and Ethers.js overrides for the
  *     transaction.
  *
@@ -143,12 +144,12 @@ export async function supply(
  * @example
  *
  * ```
- * const compound = new Compound(window.ethereum);
+ * const rifi = new Rifi(window.ethereum);
  *
  * (async function() {
  *
  *   console.log('Redeeming ETH...');
- *   const trx = await compound.redeem(Compound.ETH, 1); // also accepts cToken args
+ *   const trx = await rifi.redeem(Rifi.ETH, 1); // also accepts rToken args
  *   console.log('Ethers.js transaction object', trx);
  *
  * })().catch(console.error);
@@ -160,20 +161,20 @@ export async function redeem(
   options: CallOptions = {}
 ): Promise<TrxResponse> {
   await netId(this);
-  const errorPrefix = 'Compound [redeem] | ';
+  const errorPrefix = 'Rifi [redeem] | ';
 
   if (typeof asset !== 'string' || asset.length < 1) {
     throw Error(errorPrefix + 'Argument `asset` must be a non-empty string.');
   }
 
-  const assetIsCToken = asset[0] === 'c';
+  const assetIsRToken = asset[0] === 'r';
 
-  const cTokenName = assetIsCToken ? asset : 'c' + asset;
-  const cTokenAddress = address[this._network.name][cTokenName];
+  const rTokenName = assetIsRToken ? asset : 'r' + asset;
+  const rTokenAddress = address[this._network.name][rTokenName];
 
-  const underlyingName = assetIsCToken ? asset.slice(1, asset.length) : asset;
+  const underlyingName = assetIsRToken ? asset.slice(1, asset.length) : asset;
 
-  if (!cTokens.includes(cTokenName) || !underlyings.includes(underlyingName)) {
+  if (!rTokens.includes(rTokenName) || !underlyings.includes(underlyingName)) {
     throw Error(errorPrefix + 'Argument `asset` is not supported.');
   }
 
@@ -187,24 +188,25 @@ export async function redeem(
 
   if (!options.mantissa) {
     amount = +amount;
-    amount = amount * Math.pow(10, decimals[asset]);
+    // amount = amount * Math.pow(10, decimals[asset]);
+    amount = ethers.utils.parseUnits(amount.toString(), decimals[asset]);
   }
 
   amount = ethers.BigNumber.from(amount.toString());
 
   const trxOptions: CallOptions = {
     ...options,
-    _compoundProvider: this._provider,
-    abi: cTokenName === constants.cBNB ? abi.cEther : abi.cErc20,
+    _rifiProvider: this._provider,
+    abi: rTokenName === constants.rBNB ? abi.rBinance : abi.rBep20,
   };
   const parameters = [amount];
-  const method = assetIsCToken ? 'redeem' : 'redeemUnderlying';
+  const method = assetIsRToken ? 'redeem' : 'redeemUnderlying';
 
-  return eth.trx(cTokenAddress, method, parameters, trxOptions);
+  return eth.trx(rTokenAddress, method, parameters, trxOptions);
 }
 
 /**
- * Borrows an Ethereum asset from the Compound Protocol for the user. The user's
+ * Borrows an Ethereum asset from the Rifi Protocol for the user. The user's
  *     address must first have supplied collateral and entered a corresponding
  *     market.
  *
@@ -223,7 +225,7 @@ export async function redeem(
  * @example
  *
  * ```
- * const compound = new Compound(window.ethereum);
+ * const rifi = new Rifi(window.ethereum);
  *
  * (async function() {
  *
@@ -231,7 +233,7 @@ export async function redeem(
  *   const trxOptions = { mantissa: true };
  *
  *   console.log('Borrowing 32 Dai...');
- *   const trx = await compound.borrow(Compound.DAI, daiScaledUp, trxOptions);
+ *   const trx = await rifi.borrow(Rifi.DAI, daiScaledUp, trxOptions);
  *
  *   console.log('Ethers.js transaction object', trx);
  *
@@ -244,12 +246,12 @@ export async function borrow(
   options: CallOptions = {}
 ): Promise<TrxResponse> {
   await netId(this);
-  const errorPrefix = 'Compound [borrow] | ';
+  const errorPrefix = 'Rifi [borrow] | ';
 
-  const cTokenName = 'c' + asset;
-  const cTokenAddress = address[this._network.name][cTokenName];
+  const rTokenName = 'r' + asset;
+  const rTokenAddress = address[this._network.name][rTokenName];
 
-  if (!cTokenAddress || !underlyings.includes(asset)) {
+  if (!rTokenAddress || !underlyings.includes(asset)) {
     throw Error(errorPrefix + 'Argument `asset` cannot be borrowed.');
   }
 
@@ -263,19 +265,20 @@ export async function borrow(
 
   if (!options.mantissa) {
     amount = +amount;
-    amount = amount * Math.pow(10, decimals[asset]);
+    // amount = amount * Math.pow(10, decimals[asset]);
+    amount = ethers.utils.parseUnits(amount.toString(), decimals[asset]);
   }
 
   amount = ethers.BigNumber.from(amount.toString());
 
   const trxOptions: CallOptions = {
     ...options,
-    _compoundProvider: this._provider,
+    _rifiProvider: this._provider,
   };
   const parameters = [amount];
-  trxOptions.abi = cTokenName === constants.cBNB ? abi.cEther : abi.cErc20;
+  trxOptions.abi = rTokenName === constants.rBNB ? abi.rBinance : abi.rBep20;
 
-  return eth.trx(cTokenAddress, 'borrow', parameters, trxOptions);
+  return eth.trx(rTokenAddress, 'borrow', parameters, trxOptions);
 }
 
 /**
@@ -304,13 +307,13 @@ export async function borrow(
  * @example
  *
  * ```
- * const compound = new Compound(window.ethereum);
+ * const rifi = new Rifi(window.ethereum);
  *
  * (async function() {
  *
  *   console.log('Repaying Dai borrow...');
  *   const address = null; // set this to any address to repayBorrowBehalf
- *   const trx = await compound.repayBorrow(Compound.DAI, 32, address);
+ *   const trx = await rifi.repayBorrow(Rifi.DAI, 32, address);
  *
  *   console.log('Ethers.js transaction object', trx);
  *
@@ -325,14 +328,16 @@ export async function repayBorrow(
   options: CallOptions = {}
 ): Promise<TrxResponse> {
   await netId(this);
-  const errorPrefix = 'Compound [repayBorrow] | ';
+  const errorPrefix = 'Rifi [repayBorrow] | ';
 
-  const cTokenName = 'c' + asset;
-  const cTokenAddress = address[this._network.name][cTokenName];
+  const rTokenName = 'r' + asset;
+  const rTokenAddress = address[this._network.name][rTokenName];
 
-  if (!cTokenAddress || !underlyings.includes(asset)) {
+  if (!rTokenAddress || !underlyings.includes(asset)) {
     throw Error(errorPrefix + 'Argument `asset` is not supported.');
   }
+
+  let contractAddress = rTokenAddress;
 
   if (
     typeof amount !== 'number' &&
@@ -342,32 +347,45 @@ export async function repayBorrow(
     throw Error(errorPrefix + 'Argument `amount` must be a string, number, or BigNumber.');
   }
 
-  const method = ethers.utils.isAddress(borrower) ? 'repayBorrowBehalf' : 'repayBorrow';
+  let method = ethers.utils.isAddress(borrower) ? 'repayBorrowBehalf' : 'repayBorrow';
   if (borrower && method === 'repayBorrow') {
     throw Error(errorPrefix + 'Invalid `borrower` address.');
   }
+
   if (!options.mantissa) {
     amount = +amount;
-    //  amount = amount * Math.pow(10, decimals[asset]);
+    // amount = amount * Math.pow(10, decimals[asset]);
     amount = ethers.utils.parseUnits(amount.toString(), decimals[asset]);
   }
+
+  if (options.maxRepay === true) {
+    if (rTokenName === constants.rBNB) {
+      amount = +amount * 1.01;
+      amount = ethers.utils.parseUnits(amount.toString(), decimals[asset]);
+      contractAddress = address[this._network.name]['Maximillion'];
+      method = 'repayBehalf';
+    } else {
+      amount = '0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff';
+    }
+  }
+
   amount = ethers.BigNumber.from(amount.toString());
   const trxOptions: CallOptions = {
     ...options,
-    _compoundProvider: this._provider,
+    _rifiProvider: this._provider,
   };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const parameters: any[] = method === 'repayBorrowBehalf' ? [borrower] : [];
-  if (cTokenName === constants.cBNB) {
+  const parameters: any[] = method.indexOf('Behalf') !== -1 ? [borrower] : [];
+  if (rTokenName === constants.rBNB) {
     trxOptions.value = amount;
-    trxOptions.abi = abi.cEther;
+    trxOptions.abi = options.maxRepay ? abi.Maximillion : abi.rBinance;
   } else {
     parameters.push(amount);
-    trxOptions.abi = abi.cErc20;
+    trxOptions.abi = abi.rBep20;
   }
 
-  if (cTokenName !== constants.cBNB && noApprove !== true) {
+  if (rTokenName !== constants.rBNB && noApprove !== true) {
     const underlyingAddress = address[this._network.name][asset];
     const userAddress = this._provider.address;
 
@@ -375,7 +393,7 @@ export async function repayBorrow(
     const allowance = await eth.read(
       underlyingAddress,
       'allowance',
-      [userAddress, cTokenAddress],
+      [userAddress, rTokenAddress],
       trxOptions
     );
 
@@ -386,13 +404,13 @@ export async function repayBorrow(
       await eth.trx(
         underlyingAddress,
         'approve',
-        [cTokenAddress, amount],
+        [rTokenAddress, amount],
         trxOptions
       );
     }
   }
 
-  return eth.trx(cTokenAddress, method, parameters, trxOptions);
+  return eth.trx(contractAddress, method, parameters, trxOptions);
 }
 
 const READ_FUNCTIONS = [
@@ -406,7 +424,7 @@ const READ_FUNCTIONS = [
 ];
 
 /**
- * Supplies the user's Ethereum asset to the Compound Protocol.
+ * Supplies the user's Ethereum asset to the Rifi Protocol.
  *
  * @param {string} asset A string of the asset to supply.
  * @param {number | string | BigNumber} amount A string, number, or BigNumber
@@ -425,15 +443,15 @@ const READ_FUNCTIONS = [
  * @example
  *
  * ```
- * const compound = new Compound(window.ethereum);
+ * const rifi = new Rifi(window.ethereum);
  *
  * // Ethers.js overrides are an optional 3rd parameter for `supply`
  * // const trxOptions = { gasLimit: 250000, mantissa: false };
  *
  * (async function() {
  *
- *   console.log('Supplying ETH to the Compound Protocol...');
- *   const trx = await compound.supply(Compound.ETH, 1);
+ *   console.log('Supplying ETH to the Rifi Protocol...');
+ *   const trx = await rifi.supply(Rifi.ETH, 1);
  *   console.log('Ethers.js transaction object', trx);
  *
  * })().catch(console.error);
@@ -442,7 +460,7 @@ const READ_FUNCTIONS = [
 
 export async function tokenRead(
   func: string,
-  cTokenName: string,
+  rTokenName: string,
   parameters = [],
   options: CallOptions = {}
 ): Promise<TrxResponse> {
@@ -454,69 +472,69 @@ export async function tokenRead(
 
   await netId(this);
 
-  const cTokenAddress = address[this._network.name][cTokenName];
+  const rTokenAddress = address[this._network.name][rTokenName];
 
-  if (!cTokenAddress || cTokenName[0] !== 'c') {
-    throw Error(`${errorPrefix}Cannot call ${func} on "${cTokenName}".`);
+  if (!rTokenAddress || rTokenName[0] !== 'r') {
+    throw Error(`${errorPrefix}Cannot call ${func} on "${rTokenName}".`);
   }
 
-  if (cTokenName === constants.cBNB) {
-    options.abi = abi.cEther;
+  if (rTokenName === constants.rBNB) {
+    options.abi = abi.rBinance;
   } else {
-    options.abi = abi.cErc20;
+    options.abi = abi.rBep20;
   }
 
-  options._compoundProvider = this._provider;
+  options._rifiProvider = this._provider;
 
-  return eth.trx(cTokenAddress, func, parameters, options);
+  return eth.trx(rTokenAddress, func, parameters, options);
 }
 
 export async function getBalanceOf(
-  cTokenName: string,
+  rTokenName: string,
   accountAddr: string,
   options: CallOptions = {}
 ): Promise<TrxResponse> {
   await netId(this);
   const errorPrefix = 'Rifi [getBalanceOf] | ';
 
-  const cTokenAddress = address[this._network.name][cTokenName];
+  const rTokenAddress = address[this._network.name][rTokenName];
 
-  if (!cTokenAddress || cTokenName[0] !== 'c') {
-    throw Error(`${errorPrefix}Cannot get balance on "${cTokenName}".`);
+  if (!rTokenAddress || rTokenName[0] !== 'r') {
+    throw Error(`${errorPrefix}Cannot get balance on "${rTokenName}".`);
   }
 
-  if (cTokenName === constants.cBNB) {
-    options.abi = abi.cEther;
+  if (rTokenName === constants.rBNB) {
+    options.abi = abi.rBinance;
   } else {
-    options.abi = abi.cErc20;
+    options.abi = abi.rBep20;
   }
 
-  options._compoundProvider = this._provider;
+  options._rifiProvider = this._provider;
 
-  return eth.trx(cTokenAddress, 'balanceOf', [accountAddr], options);
+  return eth.trx(rTokenAddress, 'balanceOf', [accountAddr], options);
 }
 
 export async function getBorrowBalanceOf(
-  cTokenName: string,
+  rTokenName: string,
   accountAddr: string,
   options: CallOptions = {}
 ): Promise<TrxResponse> {
   await netId(this);
   const errorPrefix = 'Rifi [getBalanceOf] | ';
 
-  const cTokenAddress = address[this._network.name][cTokenName];
+  const rTokenAddress = address[this._network.name][rTokenName];
 
-  if (!cTokenAddress || cTokenName[0] !== 'c') {
-    throw Error(`${errorPrefix}Cannot get balance on "${cTokenName}".`);
+  if (!rTokenAddress || rTokenName[0] !== 'r') {
+    throw Error(`${errorPrefix}Cannot get balance on "${rTokenName}".`);
   }
 
-  if (cTokenName === constants.cBNB) {
-    options.abi = abi.cEther;
+  if (rTokenName === constants.rBNB) {
+    options.abi = abi.rBinance;
   } else {
-    options.abi = abi.cErc20;
+    options.abi = abi.rBep20;
   }
 
-  options._compoundProvider = this._provider;
+  options._rifiProvider = this._provider;
 
-  return eth.trx(cTokenAddress, 'borrowBalanceStored', [accountAddr], options);
+  return eth.trx(rTokenAddress, 'borrowBalanceStored', [accountAddr], options);
 }
