@@ -64,7 +64,7 @@ function _ethJsonRpc(
       contract = new ethers.Contract(address, abi, provider);
     } else {
       // Assumes `method` is a string of the member definition
-      abi = [ method ];
+      abi = [method];
       contract = new ethers.Contract(address, abi, provider);
       method = Object.keys(contract.functions)[1];
     }
@@ -73,8 +73,8 @@ function _ethJsonRpc(
       contract[method].apply(null, parameters).then((result) => {
         resolve(result);
       }).catch((error) => {
-        try { delete parameters[parameters.length-1].privateKey } catch(e) {}
-        try { delete parameters[parameters.length-1].mnemonic   } catch(e) {}
+        try { delete parameters[parameters.length - 1].privateKey } catch (e) { }
+        try { delete parameters[parameters.length - 1].mnemonic } catch (e) { }
         reject({
           message: 'Error occurred during [eth_sendTransaction]. See {error}.',
           error,
@@ -86,8 +86,8 @@ function _ethJsonRpc(
       contract.callStatic[method].apply(null, parameters).then((result) => {
         resolve(result);
       }).catch((error) => {
-        try { delete parameters[parameters.length-1].privateKey } catch(e) {}
-        try { delete parameters[parameters.length-1].mnemonic   } catch(e) {}
+        try { delete parameters[parameters.length - 1].privateKey } catch (e) { }
+        try { delete parameters[parameters.length - 1].mnemonic } catch (e) { }
         reject({
           message: 'Error occurred during [eth_call]. See {error}.',
           error,
@@ -142,7 +142,7 @@ export function read(
   parameters: any[] = [],
   options: CallOptions = {}
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-) : Promise<any> {
+): Promise<any> {
   return _ethJsonRpc(JsonRpc.EthCall, address, method, parameters, options);
 }
 
@@ -195,7 +195,7 @@ export function trx(
   parameters: any[] = [],
   options: CallOptions = {}
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-) : Promise<any> {
+): Promise<any> {
   return _ethJsonRpc(JsonRpc.EthSendTransaction, address, method, parameters, options);
 }
 
@@ -213,7 +213,7 @@ export function trx(
  */
 export async function getProviderNetwork(
   provider: Provider
-) : Promise<ProviderNetwork> {
+): Promise<ProviderNetwork> {
   let _provider;
   if (provider._isSigner) {
     _provider = provider.provider;
@@ -232,17 +232,15 @@ export async function getProviderNetwork(
 
   let network = ethers.providers.getNetwork(networkId) || { name: 'unknown' };
 
-  if (network.name === 'unknown') {
-    if (networkId === 97) {
-      network = { chainId: 97, name: 'testnet' }
-    } else if (networkId === 56) {
-      network = { chainId: 56, name: 'mainnet' }
-    }
+  if (networkId === 97) {
+    network = { chainId: 97, name: 'testnet' }
+  } else if (networkId === 56) {
+    network = { chainId: 56, name: 'mainnet' }
   }
 
   return {
     id: networkId,
-    name: network.name === 'homestead' ? 'mainnet' : network.name
+    name: network.name,
   };
 }
 
@@ -269,7 +267,7 @@ export async function getProviderNetwork(
 export async function getBalance(
   address: string,
   provider: Provider | string
-) : Promise<string> {
+): Promise<string> {
   let _provider;
   if (typeof provider === 'object' && provider._isSigner) {
     _provider = provider.provider;
@@ -288,7 +286,7 @@ export async function getBalance(
   }
 
   const balance = await providerInstance.send(
-    'eth_getBalance', [ address, 'latest' ]
+    'eth_getBalance', [address, 'latest']
   );
   return balance;
 }
@@ -303,7 +301,7 @@ export async function getBalance(
  *
  * @returns {object} Returns a valid Ethereum network provider object.
  */
-export function _createProvider(options: CallOptions = {}) : Provider {
+export function _createProvider(options: CallOptions = {}): Provider {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let provider: any = options.provider || (options.network || 'mainnet');
   const isADefaultProvider = !!ethers.providers.getNetwork(provider.toString());

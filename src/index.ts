@@ -11,6 +11,7 @@ import * as cointroller from './cointroller';
 import * as rToken from './rToken';
 import * as priceFeed from './priceFeed';
 import * as rifi from './rifi';
+import * as lens from './lens';
 import * as gov from './gov';
 import * as api from './api';
 import { constants, decimals } from './constants';
@@ -65,6 +66,7 @@ const Rifi = function (
     ...rToken,
     ...priceFeed,
     ...gov,
+    ...lens,
     claimRifi: rifi.claimRifi,
     delegate: rifi.delegate,
     delegateBySig: rifi.delegateBySig,

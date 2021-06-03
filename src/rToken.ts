@@ -464,7 +464,7 @@ export async function tokenRead(
   parameters = [],
   options: CallOptions = {}
 ): Promise<TrxResponse> {
-  const errorPrefix = 'Rifi [supplyRatePerBlock] | ';
+  const errorPrefix = 'Rifi [tokenRead] | ';
 
   if (READ_FUNCTIONS.indexOf(func) === -1) {
     throw Error(`${errorPrefix}Invalid function name.`);

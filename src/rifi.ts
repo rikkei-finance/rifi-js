@@ -71,8 +71,8 @@ function toChecksumAddress(_address) {
  */
 export async function getRifiBalance(
   _address: string,
-  _provider : Provider | string='mainnet'
-) : Promise<string> {
+  _provider: Provider | string = 'mainnet'
+): Promise<string> {
   const provider = await eth._createProvider({ provider: _provider });
   const net = await eth.getProviderNetwork(provider);
 
@@ -84,12 +84,12 @@ export async function getRifiBalance(
 
   try {
     _address = toChecksumAddress(_address);
-  } catch(e) {
+  } catch (e) {
     throw Error(errorPrefix + 'Argument `_address` must be a valid Ethereum address.');
   }
 
   const rifiAddress = address[net.name].RIFI;
-  const parameters = [ _address ];
+  const parameters = [_address];
   const trxOptions: CallOptions = {
     _rifiProvider: provider,
     abi: abi.RIFI,
@@ -120,8 +120,8 @@ export async function getRifiBalance(
  */
 export async function getRifiAccrued(
   _address: string,
-  _provider : Provider | string='mainnet'
-) : Promise<string> {
+  _provider: Provider | string = 'mainnet'
+) {
   const provider = await eth._createProvider({ provider: _provider });
   const net = await eth.getProviderNetwork(provider);
 
@@ -133,21 +133,20 @@ export async function getRifiAccrued(
 
   try {
     _address = toChecksumAddress(_address);
-  } catch(e) {
+  } catch (e) {
     throw Error(errorPrefix + 'Argument `_address` must be a valid Ethereum address.');
   }
 
   const lensAddress = address[net.name].RifiLens;
   const rifiAddress = address[net.name].RIFI;
   const cointrollerAddress = address[net.name].Cointroller;
-  const parameters = [ rifiAddress, cointrollerAddress, _address ];
+  const parameters = [rifiAddress, cointrollerAddress, _address];
   const trxOptions: CallOptions = {
     _rifiProvider: provider,
     abi: abi.RifiLens,
   };
 
-  const result = await eth.read(lensAddress, 'getRifiBalanceMetadataExt', parameters, trxOptions);
-  return result.allocated.toString();
+  return eth.read(lensAddress, 'getRifiBalanceMetadataExt', parameters, trxOptions);
 }
 
 /**
@@ -175,7 +174,7 @@ export async function getRifiAccrued(
  */
 export async function claimRifi(
   options: CallOptions = {}
-) : Promise<TrxResponse> {
+): Promise<TrxResponse> {
   await netId(this);
 
   try {
@@ -191,11 +190,11 @@ export async function claimRifi(
       _rifiProvider: this._provider,
       abi: abi.Cointroller,
     };
-    const parameters = [ userAddress ];
+    const parameters = [userAddress];
     const method = 'claimRifi(address)';
 
     return eth.trx(cointrollerAddress, method, parameters, trxOptions);
-  } catch(e) {
+  } catch (e) {
     const errorPrefix = 'Rifi [claimRifi] | ';
     e.message = errorPrefix + e.message;
     return e;
@@ -229,7 +228,7 @@ export async function claimRifi(
 export async function delegate(
   _address: string,
   options: CallOptions = {}
-) : Promise<TrxResponse> {
+): Promise<TrxResponse> {
   await netId(this);
 
   const errorPrefix = 'Rifi [delegate] | ';
@@ -240,7 +239,7 @@ export async function delegate(
 
   try {
     _address = toChecksumAddress(_address);
-  } catch(e) {
+  } catch (e) {
     throw Error(errorPrefix + 'Argument `_address` must be a valid Ethereum address.');
   }
 
@@ -250,7 +249,7 @@ export async function delegate(
     _rifiProvider: this._provider,
     abi: abi.RIFI,
   };
-  const parameters = [ _address ];
+  const parameters = [_address];
   const method = 'delegate';
 
   return eth.trx(rifiAddress, method, parameters, trxOptions);
@@ -300,7 +299,7 @@ export async function delegateBySig(
   expiry: number,
   signature: Signature = { v: '', r: '', s: '' },
   options: CallOptions = {}
-) : Promise<TrxResponse> {
+): Promise<TrxResponse> {
   await netId(this);
 
   const errorPrefix = 'Rifi [delegateBySig] | ';
@@ -311,7 +310,7 @@ export async function delegateBySig(
 
   try {
     _address = toChecksumAddress(_address);
-  } catch(e) {
+  } catch (e) {
     throw Error(errorPrefix + 'Argument `_address` must be a valid Ethereum address.');
   }
 
@@ -340,7 +339,7 @@ export async function delegateBySig(
     abi: abi.RIFI,
   };
   const { v, r, s } = signature;
-  const parameters = [ _address, nonce, expiry, v, r, s ];
+  const parameters = [_address, nonce, expiry, v, r, s];
   const method = 'delegateBySig';
 
   return eth.trx(rifiAddress, method, parameters, trxOptions);
@@ -375,7 +374,7 @@ export async function delegateBySig(
 export async function createDelegateSignature(
   delegatee: string,
   expiry = 10e9
-) : Promise<Signature> {
+): Promise<Signature> {
   await netId(this);
 
   const provider = this._provider;
@@ -392,7 +391,7 @@ export async function createDelegateSignature(
   const nonce = +(await eth.read(
     rifiAddress,
     'function nonces(address) returns (uint)',
-    [ userAddress ],
+    [userAddress],
     { provider: originalProvider }
   )).toString();
 
