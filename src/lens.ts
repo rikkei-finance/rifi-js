@@ -9,6 +9,7 @@ import { address, abi, rTokens } from './constants';
 import {
   CallOptions,
 } from './types';
+import { BigNumber } from '@ethersproject/bignumber';
 
 const LENS_FUNCTIONS = [
   'rTokenMetadata',
@@ -64,22 +65,28 @@ async function readLens(
 
 interface TokenMetadata {
   rToken: string,
-  exchangeRateCurrent: number,
-  supplyRatePerBlock: number,
-  borrowRatePerBlock: number,
-  reserveFactorMantissa: number,
-  totalBorrows: number,
-  totalReserves: number,
-  totalSupply: number,
-  totalCash: number,
+  exchangeRateCurrent: BigNumber,
+  supplyRatePerBlock: BigNumber,
+  borrowRatePerBlock: BigNumber,
+  reserveFactorMantissa: BigNumber,
+  totalBorrows: BigNumber,
+  totalReserves: BigNumber,
+  totalSupply: BigNumber,
+  totalCash: BigNumber,
   isListed: boolean,
-  collateralFactorMantissa: number,
+  collateralFactorMantissa: BigNumber,
   underlyingAssetAddress: string,
-  rTokenDecimals: number,
-  underlyingDecimals: number,
+  rTokenDecimals: BigNumber,
+  underlyingDecimals: BigNumber,
 }
 
-export async function rTokenMetadataAll(options: CallOptions = {}): Promise<TokenMetadata> {
+interface TokenMetadataAll {
+  rTokens: TokenMetadata[],
+  blockNumber: BigNumber,
+  blockTimestamp: BigNumber,
+}
+
+export async function rTokenMetadataAll(options: CallOptions = {}): Promise<TokenMetadataAll> {
   await netId(this);
   const rTokenAddresses = rTokens.map(token => address[this._network.name][token]);
 

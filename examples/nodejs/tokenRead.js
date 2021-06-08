@@ -10,9 +10,10 @@ const rifi = new Rifi(providerUrl, { privateKey });
 const trxOptions = { gasLimit: 250000, mantissa: false };
 
 (async function () {
-  // const metadata = await rifi.rTokenMetadataAll();
-  const metadata = await rifi.rTokenMetadata("rBNB", {
-    gasLimit: 1234567,
-  });
+  const callOptions = {
+    // gasLimit: 1234567,
+  }
+  const metadata = await rifi.rTokenMetadataAll(callOptions);
+  // const metadata = await rifi.rTokenMetadata("rBNB", callOptions);
   console.log("Ethers.js transaction object", metadata);
 })().catch(console.error);
