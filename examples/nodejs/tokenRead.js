@@ -1,3 +1,5 @@
+const { ethers } = require("ethers");
+
 const Rifi = require("../../dist/nodejs/index.js");
 // const privateKey = '0xb8c1b5c1d81f9475fdf2e334517d29f733bdfa40682207571b12fc1142cbf329';
 const privateKey =
@@ -12,8 +14,22 @@ const trxOptions = { gasLimit: 250000, mantissa: false };
 (async function () {
   const callOptions = {
     // gasLimit: 1234567,
-  }
-  const metadata = await rifi.rTokenMetadataAll(callOptions);
+  };
+  // const metadata = await rifi.rTokenMetadataAll(callOptions);
   // const metadata = await rifi.rTokenMetadata("rBNB", callOptions);
-  console.log("Ethers.js transaction object", metadata);
+  // console.log("Ethers.js transaction object", metadata);
+  const decimals = 18;
+  const amount = 0.0000000000000000549232;
+  console.log(amount.toFixed(decimals));
+  const fixedAmout = amount.toFixed(decimals + 1);
+  console.log(fixedAmout);
+  console.log(fixedAmout.substring(0, fixedAmout.length - 1));
+  console.log(
+    ethers.utils.parseUnits(
+      fixedAmout.substring(0, fixedAmout.length - 1),
+      decimals
+    )
+  );
+
+  console.log(Rifi.util.parseUnits(amount, decimals));
 })().catch(console.error);

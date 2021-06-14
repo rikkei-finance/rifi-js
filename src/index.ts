@@ -4,18 +4,18 @@
  * @hidden
  */
 
-import { ethers } from 'ethers';
-import * as eth from './eth';
-import * as util from './util';
-import * as cointroller from './cointroller';
-import * as rToken from './rToken';
-import * as priceFeed from './priceFeed';
-import * as rifi from './rifi';
-import * as lens from './lens';
-import * as gov from './gov';
-import * as api from './api';
-import { constants, decimals } from './constants';
-import { Provider, RifiOptions, RifiInstance } from './types';
+import { ethers } from "ethers";
+import * as eth from "./eth";
+import * as util from "./util";
+import * as cointroller from "./cointroller";
+import * as rToken from "./rToken";
+import * as priceFeed from "./priceFeed";
+import * as rifi from "./rifi";
+import * as lens from "./lens";
+import * as gov from "./gov";
+import * as api from "./api";
+import { constants, decimals } from "./constants";
+import { Provider, RifiOptions, RifiInstance } from "./types";
 
 // Turn off Ethers.js warnings
 ethers.utils.Logger.setLogLevel(ethers.utils.Logger.levels.ERROR);
@@ -51,7 +51,8 @@ ethers.utils.Logger.setLogLevel(ethers.utils.Logger.levels.ERROR);
  * @returns {object} Returns an instance of the Rifi.js SDK.
  */
 const Rifi = function (
-  provider: Provider | string = 'mainnet', options: RifiOptions = {}
+  provider: Provider | string = "mainnet",
+  options: RifiOptions = {}
 ): RifiInstance {
   const originalProvider = provider;
 
@@ -75,10 +76,12 @@ const Rifi = function (
 
   // Instance needs to know which network the provider connects to, so it can
   //     use the correct contract addresses.
-  instance._networkPromise = eth.getProviderNetwork(provider).then((network) => {
-    delete instance._networkPromise;
-    instance._network = network;
-  });
+  instance._networkPromise = eth
+    .getProviderNetwork(provider)
+    .then((network) => {
+      delete instance._networkPromise;
+      instance._network = network;
+    });
 
   return instance;
 };

@@ -3,24 +3,21 @@
  * @desc These methods are helpers for the Rifi class.
  */
 
-import { address, abi } from './constants';
-import { AbiType } from './types';
+import { address, abi } from "./constants";
+import { AbiType } from "./types";
+import { BigNumber, ethers } from "ethers";
 
 /* eslint-disable */
 
 let _request: any;
 let http: any;
 let https: any;
-
 function _nodeJsRequest(options: any) {
   return new Promise<any>((resolve, reject) => {
     let url = options.url || options.hostname;
 
     // Use 'https' if the protocol is not specified in 'options.hostname'
-    if (
-      url.indexOf("http://") !== 0 &&
-      url.indexOf("https://") !== 0
-    ) {
+    if (url.indexOf("http://") !== 0 && url.indexOf("https://") !== 0) {
       url = "https://" + url;
     }
 
@@ -28,9 +25,9 @@ function _nodeJsRequest(options: any) {
     const httpOrHttps = url.indexOf("http://") === 0 ? http : https;
 
     // Remove the 'http://' so the native node.js module will understand
-    options.hostname = url.split('://')[1];
+    options.hostname = url.split("://")[1];
 
-    let body = '';
+    let body = "";
     const req = httpOrHttps.request(options, (res: any) => {
       res.on("data", (bodyBuffer: any) => {
         body += bodyBuffer.toString();
@@ -39,23 +36,23 @@ function _nodeJsRequest(options: any) {
         resolve({
           status: res.statusCode,
           statusText: res.statusMessage,
-          body
+          body,
         });
       });
     });
 
-    req.on('timeout', () => {
+    req.on("timeout", () => {
       req.abort();
       return reject({
         status: 408,
-        statusText: 'Client HTTP request timeout limit reached.'
+        statusText: "Client HTTP request timeout limit reached.",
       });
     });
 
-    req.on('error', (err: any) => {
+    req.on("error", (err: any) => {
       if (req.aborted) return;
 
-      if (err !== null && err.toString() === '[object Object]') {
+      if (err !== null && err.toString() === "[object Object]") {
         console.error(JSON.stringify(err));
       } else {
         console.error(err);
@@ -86,10 +83,7 @@ function _webBrowserRequest(options: any) {
     }
 
     // Use 'https' if the protocol is not specified in 'options.hostname'
-    if (
-      url.indexOf("http://") !== 0 &&
-      url.indexOf("https://") !== 0
-    ) {
+    if (url.indexOf("http://") !== 0 && url.indexOf("https://") !== 0) {
       url = "https://" + url;
     }
 
@@ -98,7 +92,8 @@ function _webBrowserRequest(options: any) {
     for (const header in options.headers) {
       if ({}.hasOwnProperty.call(options.headers, header)) {
         const lcHeader = header.toLowerCase();
-        contentTypeIsSet = lcHeader === "content-type" ? true : contentTypeIsSet;
+        contentTypeIsSet =
+          lcHeader === "content-type" ? true : contentTypeIsSet;
         xhr.setRequestHeader(header, options.headers[header]);
       }
     }
@@ -107,7 +102,7 @@ function _webBrowserRequest(options: any) {
       xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     }
 
-    xhr.onload = function() {
+    xhr.onload = function () {
       let body;
       if (xhr.status >= 100 && xhr.status < 400) {
         try {
@@ -120,12 +115,12 @@ function _webBrowserRequest(options: any) {
         return resolve({
           status: xhr.status,
           statusText: xhr.statusText,
-          body
+          body,
         });
       } else {
         return reject({
           status: xhr.status,
-          statusText: xhr.statusText
+          statusText: xhr.statusText,
         });
       }
     };
@@ -142,8 +137,8 @@ try {
   window;
   _request = _webBrowserRequest;
 } catch (e) {
-  http = require('http');
-  https = require('https');
+  http = require("http");
+  https = require("https");
   _request = _nodeJsRequest;
 }
 
@@ -158,8 +153,8 @@ try {
  * @returns {Promise<object>} Returns a promise and eventually an HTTP response
  *     (JavaScript object).
  */
-export function request(options: any) : Promise<any> {
-  return _request.apply(null, [ options ]);
+export function request(options: any): Promise<any> {
+  return _request.apply(null, [options]);
 }
 
 /* eslint-enable */
@@ -179,7 +174,7 @@ export function request(options: any) : Promise<any> {
  * console.log('rETH Address: ', Rifi.util.getAddress(Rifi.rETH));
  * ```
  */
-export function getAddress(contract: string, network='mainnet') : string {
+export function getAddress(contract: string, network = "mainnet"): string {
   return address[network][contract];
 }
 
@@ -212,14 +207,22 @@ export function getAbi(contract: string): AbiType[] {
  * console.log('Ropsten : ', Rifi.util.getNetNameWithChainId(3));
  * ```
  */
-export function getNetNameWithChainId(chainId: number) : string {
+export function getNetNameWithChainId(chainId: number): string {
   const networks = {
-    56: 'mainnet',
-    97: 'testnet',
-    3: 'ropsten',
-    4: 'rinkeby',
-    5: 'goerli',
-    42: 'kovan',
+    56: "mainnet",
+    97: "testnet",
+    3: "ropsten",
+    4: "rinkeby",
+    5: "goerli",
+    42: "kovan",
   };
   return networks[chainId];
+}
+
+export function parseUnits(value: number, decimals: number): BigNumber {
+  const fixedAmout = (+value || 0).toFixed(decimals + 1);
+  return ethers.utils.parseUnits(
+    fixedAmout.substring(0, fixedAmout.length - 1),
+    decimals
+  );
 }

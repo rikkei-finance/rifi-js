@@ -4,14 +4,20 @@
  *     contracts.
  */
 
-import { ethers } from 'ethers';
-import * as eth from './eth';
-import { netId } from './helpers';
+import { ethers } from "ethers";
+import * as eth from "./eth";
+import { netId } from "./helpers";
 import {
-  constants, address, abi, decimals, underlyings, rTokens
-} from './constants';
-import { BigNumber } from '@ethersproject/bignumber/lib/bignumber';
-import { CallOptions, TrxResponse } from './types';
+  constants,
+  address,
+  abi,
+  decimals,
+  underlyings,
+  rTokens,
+} from "./constants";
+import { BigNumber } from "@ethersproject/bignumber/lib/bignumber";
+import { CallOptions, TrxResponse } from "./types";
+import { parseUnits } from "./util";
 
 /**
  * Supplies the user's Ethereum asset to the Rifi Protocol.
@@ -54,27 +60,29 @@ export async function supply(
   options: CallOptions = {}
 ): Promise<TrxResponse> {
   await netId(this);
-  const errorPrefix = 'Rifi [supply] | ';
+  const errorPrefix = "Rifi [supply] | ";
 
-  const rTokenName = 'r' + asset;
+  const rTokenName = "r" + asset;
   const rTokenAddress = address[this._network.name][rTokenName];
 
   if (!rTokenAddress || !underlyings.includes(asset)) {
-    throw Error(errorPrefix + 'Argument `asset` cannot be supplied.');
+    throw Error(errorPrefix + "Argument `asset` cannot be supplied.");
   }
 
   if (
-    typeof amount !== 'number' &&
-    typeof amount !== 'string' &&
+    typeof amount !== "number" &&
+    typeof amount !== "string" &&
     !ethers.BigNumber.isBigNumber(amount)
   ) {
-    throw Error(errorPrefix + 'Argument `amount` must be a string, number, or BigNumber.');
+    throw Error(
+      errorPrefix + "Argument `amount` must be a string, number, or BigNumber."
+    );
   }
 
   if (!options.mantissa) {
     amount = +amount;
     // amount = amount * Math.pow(10, decimals[asset]);
-    amount = ethers.utils.parseUnits(amount.toString(), decimals[asset]);
+    amount = parseUnits(amount, decimals[asset]);
   }
 
   amount = ethers.BigNumber.from(amount.toString());
@@ -98,7 +106,7 @@ export async function supply(
     // Check allowance
     const allowance = await eth.read(
       underlyingAddress,
-      'allowance',
+      "allowance",
       [userAddress, rTokenAddress],
       options
     );
@@ -109,7 +117,7 @@ export async function supply(
       // ERC-20 approve transaction
       await eth.trx(
         underlyingAddress,
-        'approve',
+        "approve",
         [rTokenAddress, amount],
         options
       );
@@ -123,7 +131,7 @@ export async function supply(
     parameters.push(amount);
   }
 
-  return eth.trx(rTokenAddress, 'mint', parameters, options);
+  return eth.trx(rTokenAddress, "mint", parameters, options);
 }
 
 /**
@@ -161,35 +169,37 @@ export async function redeem(
   options: CallOptions = {}
 ): Promise<TrxResponse> {
   await netId(this);
-  const errorPrefix = 'Rifi [redeem] | ';
+  const errorPrefix = "Rifi [redeem] | ";
 
-  if (typeof asset !== 'string' || asset.length < 1) {
-    throw Error(errorPrefix + 'Argument `asset` must be a non-empty string.');
+  if (typeof asset !== "string" || asset.length < 1) {
+    throw Error(errorPrefix + "Argument `asset` must be a non-empty string.");
   }
 
-  const assetIsRToken = asset[0] === 'r';
+  const assetIsRToken = asset[0] === "r";
 
-  const rTokenName = assetIsRToken ? asset : 'r' + asset;
+  const rTokenName = assetIsRToken ? asset : "r" + asset;
   const rTokenAddress = address[this._network.name][rTokenName];
 
   const underlyingName = assetIsRToken ? asset.slice(1, asset.length) : asset;
 
   if (!rTokens.includes(rTokenName) || !underlyings.includes(underlyingName)) {
-    throw Error(errorPrefix + 'Argument `asset` is not supported.');
+    throw Error(errorPrefix + "Argument `asset` is not supported.");
   }
 
   if (
-    typeof amount !== 'number' &&
-    typeof amount !== 'string' &&
+    typeof amount !== "number" &&
+    typeof amount !== "string" &&
     !ethers.BigNumber.isBigNumber(amount)
   ) {
-    throw Error(errorPrefix + 'Argument `amount` must be a string, number, or BigNumber.');
+    throw Error(
+      errorPrefix + "Argument `amount` must be a string, number, or BigNumber."
+    );
   }
 
   if (!options.mantissa) {
     amount = +amount;
     // amount = amount * Math.pow(10, decimals[asset]);
-    amount = ethers.utils.parseUnits(amount.toString(), decimals[asset]);
+    amount = parseUnits(amount, decimals[asset]);
   }
 
   amount = ethers.BigNumber.from(amount.toString());
@@ -200,7 +210,7 @@ export async function redeem(
     abi: rTokenName === constants.rBNB ? abi.rBinance : abi.rBep20,
   };
   const parameters = [amount];
-  const method = assetIsRToken ? 'redeem' : 'redeemUnderlying';
+  const method = assetIsRToken ? "redeem" : "redeemUnderlying";
 
   return eth.trx(rTokenAddress, method, parameters, trxOptions);
 }
@@ -246,27 +256,29 @@ export async function borrow(
   options: CallOptions = {}
 ): Promise<TrxResponse> {
   await netId(this);
-  const errorPrefix = 'Rifi [borrow] | ';
+  const errorPrefix = "Rifi [borrow] | ";
 
-  const rTokenName = 'r' + asset;
+  const rTokenName = "r" + asset;
   const rTokenAddress = address[this._network.name][rTokenName];
 
   if (!rTokenAddress || !underlyings.includes(asset)) {
-    throw Error(errorPrefix + 'Argument `asset` cannot be borrowed.');
+    throw Error(errorPrefix + "Argument `asset` cannot be borrowed.");
   }
 
   if (
-    typeof amount !== 'number' &&
-    typeof amount !== 'string' &&
+    typeof amount !== "number" &&
+    typeof amount !== "string" &&
     !ethers.BigNumber.isBigNumber(amount)
   ) {
-    throw Error(errorPrefix + 'Argument `amount` must be a string, number, or BigNumber.');
+    throw Error(
+      errorPrefix + "Argument `amount` must be a string, number, or BigNumber."
+    );
   }
 
   if (!options.mantissa) {
     amount = +amount;
     // amount = amount * Math.pow(10, decimals[asset]);
-    amount = ethers.utils.parseUnits(amount.toString(), decimals[asset]);
+    amount = parseUnits(amount, decimals[asset]);
   }
 
   amount = ethers.BigNumber.from(amount.toString());
@@ -278,7 +290,7 @@ export async function borrow(
   const parameters = [amount];
   trxOptions.abi = rTokenName === constants.rBNB ? abi.rBinance : abi.rBep20;
 
-  return eth.trx(rTokenAddress, 'borrow', parameters, trxOptions);
+  return eth.trx(rTokenAddress, "borrow", parameters, trxOptions);
 }
 
 /**
@@ -328,44 +340,49 @@ export async function repayBorrow(
   options: CallOptions = {}
 ): Promise<TrxResponse> {
   await netId(this);
-  const errorPrefix = 'Rifi [repayBorrow] | ';
+  const errorPrefix = "Rifi [repayBorrow] | ";
 
-  const rTokenName = 'r' + asset;
+  const rTokenName = "r" + asset;
   const rTokenAddress = address[this._network.name][rTokenName];
 
   if (!rTokenAddress || !underlyings.includes(asset)) {
-    throw Error(errorPrefix + 'Argument `asset` is not supported.');
+    throw Error(errorPrefix + "Argument `asset` is not supported.");
   }
 
   let contractAddress = rTokenAddress;
 
   if (
-    typeof amount !== 'number' &&
-    typeof amount !== 'string' &&
+    typeof amount !== "number" &&
+    typeof amount !== "string" &&
     !ethers.BigNumber.isBigNumber(amount)
   ) {
-    throw Error(errorPrefix + 'Argument `amount` must be a string, number, or BigNumber.');
+    throw Error(
+      errorPrefix + "Argument `amount` must be a string, number, or BigNumber."
+    );
   }
 
-  let method = ethers.utils.isAddress(borrower) ? 'repayBorrowBehalf' : 'repayBorrow';
-  if (borrower && method === 'repayBorrow') {
-    throw Error(errorPrefix + 'Invalid `borrower` address.');
+  let method = ethers.utils.isAddress(borrower)
+    ? "repayBorrowBehalf"
+    : "repayBorrow";
+  if (borrower && method === "repayBorrow") {
+    throw Error(errorPrefix + "Invalid `borrower` address.");
   }
 
   if (!options.mantissa) {
     amount = +amount;
     // amount = amount * Math.pow(10, decimals[asset]);
-    amount = ethers.utils.parseUnits(amount.toString(), decimals[asset]);
+    amount = parseUnits(amount, decimals[asset]);
   }
 
   if (options.maxRepay === true) {
     if (rTokenName === constants.rBNB) {
       amount = +amount * 1.01;
-      amount = ethers.utils.parseUnits(amount.toString(), decimals[asset]);
-      contractAddress = address[this._network.name]['Maximillion'];
-      method = 'repayBehalf';
+      amount = parseUnits(amount, decimals[asset]);
+      contractAddress = address[this._network.name]["Maximillion"];
+      method = "repayBehalf";
     } else {
-      amount = '0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff';
+      amount =
+        "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff";
     }
   }
 
@@ -376,7 +393,7 @@ export async function repayBorrow(
   };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const parameters: any[] = method.indexOf('Behalf') !== -1 ? [borrower] : [];
+  const parameters: any[] = method.indexOf("Behalf") !== -1 ? [borrower] : [];
   if (rTokenName === constants.rBNB) {
     trxOptions.value = amount;
     trxOptions.abi = options.maxRepay ? abi.Maximillion : abi.rBinance;
@@ -392,7 +409,7 @@ export async function repayBorrow(
     // Check allowance
     const allowance = await eth.read(
       underlyingAddress,
-      'allowance',
+      "allowance",
       [userAddress, rTokenAddress],
       trxOptions
     );
@@ -403,7 +420,7 @@ export async function repayBorrow(
       // ERC-20 approve transaction
       await eth.trx(
         underlyingAddress,
-        'approve',
+        "approve",
         [rTokenAddress, amount],
         trxOptions
       );
@@ -414,13 +431,13 @@ export async function repayBorrow(
 }
 
 const READ_FUNCTIONS = [
-  'borrowRatePerBlock',
-  'exchangeRateStored',
-  'getCash',
-  'supplyRatePerBlock',
-  'totalBorrows',
-  'totalReserves',
-  'totalSupply',
+  "borrowRatePerBlock",
+  "exchangeRateStored",
+  "getCash",
+  "supplyRatePerBlock",
+  "totalBorrows",
+  "totalReserves",
+  "totalSupply",
 ];
 
 /**
@@ -464,7 +481,7 @@ export async function tokenRead(
   parameters = [],
   options: CallOptions = {}
 ): Promise<TrxResponse> {
-  const errorPrefix = 'Rifi [tokenRead] | ';
+  const errorPrefix = "Rifi [tokenRead] | ";
 
   if (READ_FUNCTIONS.indexOf(func) === -1) {
     throw Error(`${errorPrefix}Invalid function name.`);
@@ -474,7 +491,7 @@ export async function tokenRead(
 
   const rTokenAddress = address[this._network.name][rTokenName];
 
-  if (!rTokenAddress || rTokenName[0] !== 'r') {
+  if (!rTokenAddress || rTokenName[0] !== "r") {
     throw Error(`${errorPrefix}Cannot call ${func} on "${rTokenName}".`);
   }
 
@@ -495,11 +512,11 @@ export async function getBalanceOf(
   options: CallOptions = {}
 ): Promise<TrxResponse> {
   await netId(this);
-  const errorPrefix = 'Rifi [getBalanceOf] | ';
+  const errorPrefix = "Rifi [getBalanceOf] | ";
 
   const rTokenAddress = address[this._network.name][rTokenName];
 
-  if (!rTokenAddress || rTokenName[0] !== 'r') {
+  if (!rTokenAddress || rTokenName[0] !== "r") {
     throw Error(`${errorPrefix}Cannot get balance on "${rTokenName}".`);
   }
 
@@ -511,7 +528,7 @@ export async function getBalanceOf(
 
   options._rifiProvider = this._provider;
 
-  return eth.trx(rTokenAddress, 'balanceOf', [accountAddr], options);
+  return eth.trx(rTokenAddress, "balanceOf", [accountAddr], options);
 }
 
 export async function getBorrowBalanceOf(
@@ -520,11 +537,11 @@ export async function getBorrowBalanceOf(
   options: CallOptions = {}
 ): Promise<TrxResponse> {
   await netId(this);
-  const errorPrefix = 'Rifi [getBalanceOf] | ';
+  const errorPrefix = "Rifi [getBalanceOf] | ";
 
   const rTokenAddress = address[this._network.name][rTokenName];
 
-  if (!rTokenAddress || rTokenName[0] !== 'r') {
+  if (!rTokenAddress || rTokenName[0] !== "r") {
     throw Error(`${errorPrefix}Cannot get balance on "${rTokenName}".`);
   }
 
@@ -536,5 +553,5 @@ export async function getBorrowBalanceOf(
 
   options._rifiProvider = this._provider;
 
-  return eth.trx(rTokenAddress, 'borrowBalanceStored', [accountAddr], options);
+  return eth.trx(rTokenAddress, "borrowBalanceStored", [accountAddr], options);
 }
