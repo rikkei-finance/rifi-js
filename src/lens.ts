@@ -1,6 +1,6 @@
 /**
  * @file RifiLens
- * @desc These methods facilitate interactions with the RIFI token smart contract.
+ * @desc These methods facilitate interactions with the RifiLens smart contract.
  */
 
 import * as eth from './eth';

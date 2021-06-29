@@ -1,8 +1,8 @@
 {
   "name": "@rikkei-finance/rifi-js",
   "version": "0.2.6",
-  "author": "Rifi Labs, Inc.",
-  "description": "A JavaScript SDK for Ethereum and the Rifi Protocol.",
+  "author": "Rikkei Finance",
+  "description": "A JavaScript SDK for Binance Smart Chain and the Rifi Protocol.",
   "license": "BSD-3-Clause",
   "main": "dist/nodejs/index.js",
   "scripts": {
