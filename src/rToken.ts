@@ -376,7 +376,6 @@ export async function repayBorrow(
 
   if (options.maxRepay === true) {
     if (rTokenName === constants.rBNB) {
-      amount = +amount * 1.01;
       contractAddress = address[this._network.name]["Maximillion"];
       method = "repayBehalf";
     } else {
