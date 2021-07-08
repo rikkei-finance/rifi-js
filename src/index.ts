@@ -14,6 +14,7 @@ import * as rifi from "./rifi";
 import * as lens from "./lens";
 import * as gov from "./gov";
 import * as api from "./api";
+import * as vault from "./vault";
 import { constants, decimals } from "./constants";
 import { Provider, RifiOptions, RifiInstance } from "./types";
 
@@ -68,6 +69,7 @@ const Rifi = function (
     ...priceFeed,
     ...gov,
     ...lens,
+    ...vault,
     claimRifi: rifi.claimRifi,
     delegate: rifi.delegate,
     delegateBySig: rifi.delegateBySig,
