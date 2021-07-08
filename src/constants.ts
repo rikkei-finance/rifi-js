@@ -97,6 +97,7 @@ export const abi = {
     "function withdrawAll()",
     "function harvest()",
     "function getBalance(address account) view returns (uint256)",
+    "function getUnclaimedReward(address account) view returns (uint256)",
   ],
   RewardLocker: [
     "function getVestingSchedules(address account, address token) view returns (tuple(uint64 startBlock, uint64 endBlock, uint128 quantity, uint128 vestedQuantity)[] memory schedules)",

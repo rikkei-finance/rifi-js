@@ -177,7 +177,7 @@ export async function enableDeposit(
  * (async function() {
  *
  *   console.log('Redeeming ETH...');
- *   const trx = await rifi.deposit(Rifi.USDTvault, 1);
+ *   const trx = await rifi.deposit(Rifi.UsdtVault, 1);
  *   console.log('Ethers.js transaction object', trx);
  *
  * })().catch(console.error);
@@ -268,7 +268,7 @@ export async function deposit(
  * (async function() {
  *
  *   console.log('Redeeming ETH...');
- *   const trx = await rifi.withdraw(Rifi.USDTvault, 1);
+ *   const trx = await rifi.withdraw(Rifi.UsdtVault, 1);
  *   console.log('Ethers.js transaction object', trx);
  *
  * })().catch(console.error);
@@ -342,7 +342,7 @@ export async function withdraw(
  * (async function() {
  *
  *   console.log('Harvesting RIFI...');
- *   const trx = await rifi.harvestReward(Rifi.USDTvault);
+ *   const trx = await rifi.harvestReward(Rifi.UsdtVault);
  *   console.log('Ethers.js transaction object', trx);
  *
  * })().catch(console.error);
@@ -388,7 +388,7 @@ export async function harvestReward(
  * (async function() {
  *
  *   console.log('Claiming RIFI...');
- *   const trx = await rifi.claimReward(Rifi.USDTvault);
+ *   const trx = await rifi.claimReward(Rifi.UsdtVault);
  *   console.log('Ethers.js transaction object', trx);
  *
  * })().catch(console.error);
@@ -422,18 +422,18 @@ export async function claimReward(
     _rifiProvider: this._provider,
   };
 
-  const numSchedules = await eth.read(
+  const numSchedules: BigNumber = await eth.read(
     lockerAddress,
     "numVestingSchedules",
     [userAddress, tokenAddress],
     trxOptions
   );
 
-  if (numSchedules) {
+  if (numSchedules.gt(0)) {
     return eth.trx(
       lockerAddress,
       "vestSchedulesInRange",
-      [tokenAddress, 0, numSchedules - 1],
+      [tokenAddress, 0, numSchedules.sub(1)],
       trxOptions
     );
   }
@@ -443,6 +443,7 @@ export async function claimReward(
  * Get user balance in vault
  *
  * @param {string} vault The name of the vault to (to find reward locker).
+ * @param {string} account User's account address.
  * @param {CallOptions} [options] Call options and Ethers.js overrides for the
  *     transaction.
  *
@@ -457,7 +458,7 @@ export async function claimReward(
  * (async function() {
  *
  *   console.log('Get balance...');
- *   const balance = await rifi.getDepositOf(Rifi.USDTvault);
+ *   const balance = await rifi.getDepositOf(Rifi.UsdtVault, account);
  *   console.log('Balance in vault', balance);
  *
  * })().catch(console.error);
@@ -465,7 +466,7 @@ export async function claimReward(
  */
 export async function getDepositOf(
   vault: string,
-  account: string,
+  account?: string,
   options: CallOptions = {}
 ): Promise<BigNumber> {
   await netId(this);
@@ -476,6 +477,10 @@ export async function getDepositOf(
     throw Error(errorPrefix + "Vault `vault` not found.");
   }
 
+  if (!account) {
+    account = await getUserAddress(this._provider);
+  }
+
   const trxOptions: CallOptions = {
     ...options,
     abi: constants.abi.Vault,
@@ -484,4 +489,124 @@ export async function getDepositOf(
   const parameters = [account];
 
   return await eth.read(vaultAddress, "getBalance", parameters, trxOptions);
+}
+
+interface RewardBalances {
+  pending: BigNumber;
+  vesting: BigNumber;
+  claimable: BigNumber;
+}
+
+interface VestingSchedule {
+  startBlock: BigNumber;
+  endBlock: BigNumber;
+  quantity: BigNumber;
+  vestedQuantity: BigNumber;
+}
+
+/**
+ * Query and calculate reward amounts for current user
+ *
+ * @param {string} vault The name of the vault to (to find reward locker).
+ * @param {string} account User's account address.
+ * @param {CallOptions} [options] Call options and Ethers.js overrides for the
+ *     transaction.
+ *
+ * @returns {BigNumber} Returns an Ethers.js transaction object of the withdraw
+ *     transaction.
+ *
+ * @example
+ *
+ * ```
+ * const rifi = new Rifi(window.ethereum);
+ *
+ * (async function() {
+ *
+ *   console.log('Get balance...');
+ *   const { pending, vesting, claimable } = await rifi.getRewardBalances(Rifi.UsdtVault);
+ *   console.log('Pending reward', pending);
+ *   console.log('Vesting reward', vesting);
+ *   console.log('Claimable reward', claimable);
+ *
+ * })().catch(console.error);
+ * ```
+ */
+export async function getRewardBalances(
+  vault: string,
+  options: CallOptions = {}
+): Promise<RewardBalances> {
+  await netId(this);
+  const errorPrefix = "Vault [getRewardOf] | ";
+
+  const vaultAddress = constants.address[this._network.name]?.[vault];
+  if (!vaultAddress) {
+    throw Error(errorPrefix + "Vault `vault` not found.");
+  }
+
+  const rewardLocker = constants.vaultInfo[vault]?.rewardLocker;
+  const lockerAddress = constants.address[this._network.name]?.[rewardLocker];
+  const rewardToken = constants.vaultInfo[vault]?.rewardToken;
+  const tokenAddress = constants.address[this._network.name]?.[rewardToken];
+  if (!lockerAddress || !tokenAddress) {
+    throw Error(errorPrefix + "Locker for `vault` not found.");
+  }
+
+  const userAddress = getUserAddress(this._provider);
+
+  let trxOptions: CallOptions = {
+    ...options,
+    abi: constants.abi.Vault,
+    _rifiProvider: this._provider,
+  };
+
+  const pending = await eth.read(
+    vaultAddress,
+    "getUnclaimedReward",
+    [userAddress],
+    trxOptions
+  );
+
+  trxOptions = {
+    ...trxOptions,
+    abi: constants.abi.RewardLocker,
+  };
+
+  const numSchedules: BigNumber = await eth.read(
+    lockerAddress,
+    "numVestingSchedules",
+    [userAddress, tokenAddress],
+    trxOptions
+  );
+
+  let vesting, claimable;
+  if (numSchedules.gt(0)) {
+    try {
+      claimable = await eth.read(
+        lockerAddress,
+        "vestSchedulesInRange",
+        [tokenAddress, 0, numSchedules.sub(1)],
+        trxOptions
+      );
+    } catch (err) {
+      console.error("error vestSchedulesInRange  ", err);
+      claimable = BigNumber.from(0);
+    }
+
+    const schedules: VestingSchedule[] = await eth.read(
+      lockerAddress,
+      "getVestingSchedules",
+      [userAddress, tokenAddress],
+      trxOptions
+    );
+
+    vesting = schedules.reduce<BigNumber>(
+      (total, cur) => cur.quantity.sub(cur.vestedQuantity).add(total),
+      BigNumber.from(0)
+    );
+    vesting = vesting.sub(claimable);
+  } else {
+    vesting = claimable = BigNumber.from(0);
+  }
+
+  return { pending, vesting, claimable };
 }
