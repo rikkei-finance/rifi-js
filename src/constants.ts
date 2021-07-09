@@ -114,6 +114,7 @@ export const underlyings = ['BNB', 'BUSD', 'USDC', 'USDT', 'DAI', 'ETH', 'XRP'];
 export const opfAssets = [];
 
 export const decimals = {
+  "RIFI": 18,
   "rBNB": 8,
   "BNB": 18,
   "rBUSD": 8,
