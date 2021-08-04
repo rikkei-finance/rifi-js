@@ -8,6 +8,7 @@ import * as eth from './eth';
 import { netId } from './helpers';
 import { address, abi, rTokens } from './constants';
 import { CallOptions, TrxResponse } from './types';
+import { BigNumber } from 'ethers';
 
 /**
  * Enters the user's address into Rifi Protocol markets.
@@ -207,4 +208,48 @@ export async function checkMembership(
   };
 
   return eth.trx(cointrollerAddress, 'checkMembership', parameters, trxOptions);
+}
+
+export async function getCloseFactor(options: CallOptions = {}): Promise<any> {
+  await netId(this);
+
+  const cointrollerAddress = address[this._network.name].Cointroller;
+  const parameters = [];
+
+  const trxOptions: CallOptions = {
+    ...options,
+    _rifiProvider: this._provider,
+    abi: abi.Cointroller,
+  };
+
+  const closeFactor: BigNumber = await eth.read(
+    cointrollerAddress,
+    "closeFactorMantissa",
+    parameters,
+    trxOptions
+  );
+  return closeFactor;
+}
+
+export async function getLiquidationIncentive(
+  options: CallOptions = {}
+): Promise<any> {
+  await netId(this);
+
+  const cointrollerAddress = address[this._network.name].Cointroller;
+  const parameters = [];
+
+  const trxOptions: CallOptions = {
+    ...options,
+    _rifiProvider: this._provider,
+    abi: abi.Cointroller,
+  };
+
+  const liquidationIncentive: BigNumber = await eth.read(
+    cointrollerAddress,
+    "liquidationIncentiveMantissa",
+    parameters,
+    trxOptions
+  );
+  return liquidationIncentive;
 }

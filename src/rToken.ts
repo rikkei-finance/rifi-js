@@ -553,3 +553,62 @@ export async function getBorrowBalanceOf(
 
   return eth.trx(rTokenAddress, "borrowBalanceStored", [accountAddr], options);
 }
+
+export async function liquidateBorrow(
+  borrower: string,
+  amount: string | number | BigNumber,
+  tokenRepay: string,
+  tokenCollateral: string,
+  options: CallOptions = {}
+): Promise<TrxResponse> {
+  await netId(this);
+  const errorPrefix = "Rifi [liquidateBorrow] | ";
+
+  const rTokenRepay = "r" + tokenRepay;
+  const rTokenCollateral = "r" + tokenCollateral;
+
+  const rTokenRepayAddress = address[this._network.name][rTokenRepay];
+  const rTokenCollateralAddress = address[this._network.name][rTokenCollateral];
+
+  if (
+    !rTokenRepayAddress ||
+    !underlyings.includes(tokenRepay) ||
+    !rTokenCollateralAddress ||
+    !underlyings.includes(tokenCollateral)
+  ) {
+    throw Error(errorPrefix + "Argument `asset` is not supported.");
+  }
+
+  if (
+    typeof amount !== "number" &&
+    typeof amount !== "string" &&
+    !ethers.BigNumber.isBigNumber(amount)
+  ) {
+    throw Error(
+      errorPrefix + "Argument `amount` must be a string, number, or BigNumber."
+    );
+  }
+
+  if (!options.mantissa) {
+    amount = +amount;
+    amount = parseUnits(amount, decimals[tokenRepay]);
+  }
+
+  amount = ethers.BigNumber.from(amount.toString());
+  const trxOptions: CallOptions = {
+    ...options,
+    _rifiProvider: this._provider,
+  };
+
+  let parameters = [];
+  if (rTokenRepay === constants.rBNB) {
+    parameters = [borrower, rTokenCollateralAddress];
+    trxOptions.value = amount;
+    trxOptions.abi = abi.rBinance;
+  } else {
+    parameters = [borrower, amount, rTokenCollateralAddress];
+    trxOptions.abi = abi.rBep20;
+  }
+
+  return eth.trx(rTokenRepayAddress, "liquidateBorrow", parameters, trxOptions);
+}
