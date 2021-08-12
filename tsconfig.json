@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "outDir": "dist/nodejs/",
-    "lib": ["es6", "dom"],
+    "lib": ["es2016", "dom"],
     "resolveJsonModule": true,
     "sourceMap": true,
     "declaration": true

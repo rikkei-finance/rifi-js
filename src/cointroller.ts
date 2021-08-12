@@ -54,7 +54,7 @@ export async function enterMarkets(
       markets[i] = 'r' + markets[i];
     }
 
-    if (!rTokens.includes(markets[i])) {
+    if (!rTokens[this._network.name].includes(markets[i])) {
       throw Error(errorPrefix + 'Provided market `' + markets[i] + '` is not a recognized rToken.');
     }
 
@@ -110,7 +110,7 @@ export async function exitMarket(
     market = 'r' + market;
   }
 
-  if (!rTokens.includes(market)) {
+  if (!rTokens[this._network.name].includes(market)) {
     throw Error(errorPrefix + 'Provided market `' + market + '` is not a recognized rToken.');
   }
 
@@ -166,7 +166,7 @@ export async function getCollateralFactor(
     market = 'r' + market;
   }
 
-  if (!rTokens.includes(market)) {
+  if (!rTokens[this._network.name].includes(market)) {
     throw Error(errorPrefix + 'Provided market `' + market + '` is not a recognized rToken.');
   }
 
@@ -192,7 +192,7 @@ export async function checkMembership(
   await netId(this);
   const errorPrefix = 'Rifi [checkMembership] | ';
 
-  if (!rTokens.includes(rTokenName)) {
+  if (!rTokens[this._network.name].includes(rTokenName)) {
     throw Error(`${errorPrefix}"${rTokenName}" is not a recognized rToken.`);
   }
 

@@ -215,7 +215,7 @@ export async function getSupportTokens(network: string) {
     rToken: [],
   };
 
-  rTokens.forEach((symbol, i) => {
+  rTokens[network].forEach((symbol, i) => {
     const uSymbol = underlyings[i];
 
     const token = {

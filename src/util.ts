@@ -209,12 +209,13 @@ export function getAbi(contract: string): AbiType[] {
  */
 export function getNetNameWithChainId(chainId: number): string {
   const networks = {
-    56: "mainnet",
-    97: "testnet",
-    3: "ropsten",
-    4: "rinkeby",
-    5: "goerli",
-    42: "kovan",
+    56: 'bsc_mainnet',
+    97: 'bsc_testnet',
+    1: 'mainnet',
+    3: 'ropsten',
+    4: 'rinkeby',
+    5: 'goerli',
+    42: 'kovan',
   };
   return networks[chainId];
 }

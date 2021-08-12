@@ -182,8 +182,8 @@ export async function redeem(
 
   const underlyingName = assetIsRToken ? asset.slice(1, asset.length) : asset;
 
-  if (!rTokens.includes(rTokenName) || !underlyings.includes(underlyingName)) {
-    throw Error(errorPrefix + "Argument `asset` is not supported.");
+  if (!rTokens[this._network.name].includes(rTokenName) || !underlyings.includes(underlyingName)) {
+    throw Error(errorPrefix + 'Argument `asset` is not supported.');
   }
 
   if (

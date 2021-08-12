@@ -233,9 +233,9 @@ export async function getProviderNetwork(
   let network = ethers.providers.getNetwork(networkId) || { name: 'unknown' };
 
   if (networkId === 97) {
-    network = { chainId: 97, name: 'testnet' }
+    network = { chainId: 97, name: 'bsc_testnet' }
   } else if (networkId === 56) {
-    network = { chainId: 56, name: 'mainnet' }
+    network = { chainId: 56, name: 'bsc_mainnet' }
   }
 
   return {

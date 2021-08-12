@@ -88,7 +88,7 @@ interface TokenMetadataAll {
 
 export async function rTokenMetadataAll(options: CallOptions = {}): Promise<TokenMetadataAll> {
   await netId(this);
-  const rTokenAddresses = rTokens.map(token => address[this._network.name][token]);
+  const rTokenAddresses = rTokens[this._network.name].map(token => address[this._network.name][token]);
 
   return readLens.apply(this, ['rTokenMetadataAll', [rTokenAddresses], options]);
 }

@@ -55,29 +55,31 @@ export const address = {
     "rBUSD": "0x2995d090B20c53733B4969885f1A346e148ddbe2",
     "BUSD": "0x8301f2213c0eed49a7e28ae4c3e91722919b8b47"
   },
-  "testnet": {
-    "Cointroller": "0x41FBceD84f8bfb7Eb1EE1c689F37580Af258c0B9",
-    "PriceFeed": "0x01b2Deb0c063190845056d3da4278b523A69F318",
-    "rBep20Delegate": "0x5Ff1E67BcFBa69118A0d266B7c7381B39A1EffFA",
-    "Maximillion": "0xC455E952C6ddc89541F010F901801c21D34cFF6a",
-    "RifiLens": "0x00d92b4c6d308eE69d3511cE309F87d5202d2379",
-    "RIFI": "0xb3DddbaCBeBEEC7641e5F76cacf16FC8eb8430bC",
-    "rBNB": "0xB1635236E1212E3397528fD646153D6364aC8071",
-    "BUSD": "0x19405ec08bb9C25282d4c8eABf2EF833CB022f52",
-    "rBUSD": "0x0E16E16081EE343Ab5b1deF0a159062ce60af85A",
-    "USDC": "0xafe8F7FDC72A3821a8f0269752BE49684BA08EE8",
-    "rUSDC": "0xc93140aD443ac767738574cf8827A1d8E9307023",
-    "USDT": "0xBC92158D6bBB6d42E1c7bE24a271213EB56dD93D",
-    "rUSDT": "0x46F7425A1B87b837151f098c22fcE59EECf42E48",
-    "DAI": "0xd584Cb880dFd736F30bE65BBA7c755b1d6495def",
-    "rDAI": "0xe7F39c3EE98371f8f4aF7Db97AaE232eF6566Bb1",
-    "ETH": "0xB5A4eBCcD93A19273160D8Af025A45fB0b9e64Ff",
-    "rETH": "0x71e36113aBDD87d78104aCA966AE8B9ceA8C5E72",
-    "XRP": "0x5BCF07962B16C18247B1dAf320478674F2408285",
-    "rXRP": "0x77c3361f6cfA0374F05b779fdcE4DC79DeB475e2",
-    "UsdtVault": "0xE31653C3B70fAA0aC7d6dE14D13e93969bC1ab9B",
-    "RifiVault": "0x4d071ae6bf73D0776Adc498Ac1bcb1abFc07dDBF",
-    "RewardLocker": "0xd0825DAFfB71C6C3a0E7d310C498b0a31f542CbB",
+  "bsc_testnet": {
+    "Maximillion": "0x4d272fAdc0BbfF47D23B24684A7EF950930bC170",
+    "RIFI": "0x3816b86AbED8B7F69d8AB4b7a9B5eB866c0b0F18",
+    "Cointroller": "0x97684D0DbF7B9B27B03324822ff7A5CFE7AEB732",
+    "PriceFeed": "0xa569e40d93D7C6EE1F87a4Ca31f56f38bbE40a17",
+    "rBep20Delegate": "0x545E68B4178DE31C4421F5A9b0762f39Fb642A9B",
+    "RIFIChainBridge": "0x25069109104f2B4D4C47D71a7852aED7B15E8326",
+    "BUSD": "0x88DFbF8ca8F6937818DA9C3A09bE152E3b221E9a",
+    "rBUSD": "0x036a1E7a2ea830b7721f8f91a63b2c67D14C0128",
+    "USDC": "0xFE16F4D3A17EafA7C7842aE8b0b3C51Ec6dc64d6",
+    "rUSDC": "0xCcbE879f931D8d36370E0A684d53E38a4A01dbAb",
+    "RifiLens": "0xe84cEAf5F98e2a34D43a8319D2A56d7baA484B0e",
+  },
+  "rinkeby": {
+    "Cointroller": "0x5AE47f87E8C94ed4b4a8f13e67E4fa520daB96c3",
+    "PriceFeed": "0x8506223a1655dd4f4A5B3D63a5dE9fd384d10a4B",
+    "rBep20Delegate": "0x12041c0A8Fc56aeC0AB4a8727d803d813a940d78",
+    "Maximillion": "0x4d272fAdc0BbfF47D23B24684A7EF950930bC170",
+    "RifiLens": "0xB32f90A8dE3382c86F4C8CE6bbad07A7c4d2668e",
+    "RIFI": "0xa96786DC3Fd5261FcaDB6ac6FfD21252CAA9053F",
+    "RIFIChainBridge": "0x7ee42014D106552Ce1e2b6Ea9b24795De937929B",
+    "rUSDT": "0xc00dC0FA7870Ae9345ddb35E6523Ec28e8F4F746",
+    "rDAI": "0xF01667df35deC71bD5e86edB2c2D7ea8f673654d",
+    "USDT": "0x28BE85F67978af7cD01aF0D9829e727c4D7a07ca",
+    "DAI": "0x3c134dDc2473f3a30f55978b992900Cbf38D4deB",
   }
 };
 
@@ -105,18 +107,20 @@ export const abi = {
     "function vestSchedulesInRange (address token, uint256 startIndex, uint256 endIndex) returns (uint256)",
     "function vestCompletedSchedules(address token) returns (uint256)",
   ],
+  RIFIChainBridge: [{"inputs":[{"internalType":"contract IBEP20","name":"_rifi","type":"address"},{"internalType":"uint256","name":"_maxDailyAmount","type":"uint256"},{"internalType":"uint256","name":"_maxAmountInTx","type":"uint256"}],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"sender","type":"address"},{"indexed":false,"internalType":"address","name":"receiver","type":"address"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"},{"indexed":true,"internalType":"uint256","name":"epoch","type":"uint256"}],"name":"Lock","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"previousOwner","type":"address"},{"indexed":true,"internalType":"address","name":"newOwner","type":"address"}],"name":"OwnershipTransferred","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"uint256","name":"receiveEpoch","type":"uint256"},{"indexed":false,"internalType":"address","name":"sender","type":"address"},{"indexed":false,"internalType":"address","name":"receiver","type":"address"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"},{"indexed":true,"internalType":"uint256","name":"index","type":"uint256"}],"name":"Unlock","type":"event"},{"inputs":[],"name":"DOMAIN_SEPARATOR","outputs":[{"internalType":"bytes32","name":"","type":"bytes32"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"LOCK_TYPE_HASH","outputs":[{"internalType":"bytes32","name":"","type":"bytes32"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"MAX_AMOUNT_BRIDGE","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"MAX_DAILY_BRIDGE","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"NAME","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"UNLOCK_TYPE_HASH","outputs":[{"internalType":"bytes32","name":"","type":"bytes32"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"UPDATE_EPOCH_TYPE_HASH","outputs":[{"internalType":"bytes32","name":"","type":"bytes32"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"},{"internalType":"uint256","name":"","type":"uint256"}],"name":"bridgeData","outputs":[{"internalType":"address","name":"sender","type":"address"},{"internalType":"address","name":"ethAddress","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"bridgeUserData","outputs":[{"internalType":"uint256","name":"timestamp","type":"uint256"},{"internalType":"uint256","name":"bridgeAmount","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"epochs","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"epoch","type":"uint256"}],"name":"getBridgeDataLength","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"contract IBEP20","name":"token","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"inCaseStuckToken","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"isOwner","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"isUnlocked","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"ethAddress","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"lockRifi","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"sender","type":"address"},{"internalType":"address","name":"ethAddress","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"},{"internalType":"uint256","name":"deadline","type":"uint256"},{"internalType":"uint8","name":"v","type":"uint8"},{"internalType":"bytes32","name":"r","type":"bytes32"},{"internalType":"bytes32","name":"s","type":"bytes32"}],"name":"lockRifiPermit","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"nonces","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"owner","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"renounceOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"rifi","outputs":[{"internalType":"contract IBEP20","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_amount","type":"uint256"}],"name":"setDailyAmount","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_amount","type":"uint256"}],"name":"setMaxAmountInTx","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"contract IBEP20","name":"_rifi","type":"address"}],"name":"setRifi","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"_user","type":"address"},{"internalType":"bool","name":"_result","type":"bool"}],"name":"setUnlockRoles","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"newOwner","type":"address"}],"name":"transferOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address[]","name":"senders","type":"address[]"},{"internalType":"address[]","name":"receivers","type":"address[]"},{"internalType":"uint256[]","name":"amounts","type":"uint256[]"},{"internalType":"uint256","name":"receiveEpoch","type":"uint256"}],"name":"unlockRifi","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address[]","name":"senders","type":"address[]"},{"internalType":"address[]","name":"receivers","type":"address[]"},{"internalType":"uint256[]","name":"amounts","type":"uint256[]"},{"internalType":"uint256","name":"receiveEpoch","type":"uint256"},{"internalType":"uint256","name":"deadline","type":"uint256"},{"internalType":"address","name":"sender","type":"address"},{"internalType":"uint8","name":"v","type":"uint8"},{"internalType":"bytes32","name":"r","type":"bytes32"},{"internalType":"bytes32","name":"s","type":"bytes32"}],"name":"unlockRifiPermit","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"unlockedRoles","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"updateEpoch","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"sender","type":"address"},{"internalType":"uint8","name":"v","type":"uint8"},{"internalType":"bytes32","name":"r","type":"bytes32"},{"internalType":"bytes32","name":"s","type":"bytes32"}],"name":"updateEpochPermit","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"bytes32","name":"data","type":"bytes32"},{"internalType":"address","name":"sender","type":"address"},{"internalType":"uint8","name":"v","type":"uint8"},{"internalType":"bytes32","name":"r","type":"bytes32"},{"internalType":"bytes32","name":"s","type":"bytes32"}],"name":"verify","outputs":[],"stateMutability":"view","type":"function"}],
 };
 
-export const rTokens = ['rBNB', 'rBUSD', 'rUSDC', 'rUSDT', 'rDAI', 'rETH', 'rXRP'];
-export const underlyings = ['BNB', 'BUSD', 'USDC', 'USDT', 'DAI', 'ETH', 'XRP'];
+export const rTokens = {
+  "bsc_testnet": ['rBUSD', 'rUSDC'],
+  "rinkeby": ['rUSDT', 'rDAI'],
+};
+export const underlyings = ['BUSD', 'USDC', 'USDT', 'DAI'];
 
 // additional assets supported by the open price feed
 export const opfAssets = [];
 
 export const decimals = {
   "RIFI": 18,
-  "rBNB": 8,
-  "BNB": 18,
   "rBUSD": 8,
   "BUSD": 18,
   "rUSDC": 8,
@@ -125,10 +129,6 @@ export const decimals = {
   "USDT": 18,
   "rDAI": 8,
   "DAI": 18,
-  "rETH": 8,
-  "ETH": 18,
-  "rXRP": 8,
-  "XRP": 18,
 };
 
 export const vaults = ['UsdtVault', 'RifiVault'];

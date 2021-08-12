@@ -29,7 +29,7 @@ function validateAsset(
   const underlyingAddress = address[this._network.name][underlyingName];
 
   if (
-    (!rTokens.includes(rTokenName) || !underlyings.includes(underlyingName)) &&
+    (!rTokens[this._network.name].includes(rTokenName) || !underlyings.includes(underlyingName)) &&
     !opfAssets.includes(underlyingName)
   ) {
     throw Error(errorPrefix + 'Argument `' + argument + '` is not supported.');
