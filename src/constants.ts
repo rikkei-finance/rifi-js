@@ -16,11 +16,8 @@ export const constants = {
   'rUSDT': 'rUSDT',
   'DAI': 'DAI',
   'rDAI': 'rDAI',
-  'ETH': 'ETH',
-  'rETH': 'rETH',
-  'XRP': 'XRP',
-  'rXRP': 'rXRP',
   'RewardLocker': 'RewardLocker',
+  'RIFIChainBridge': 'RIFIChainBridge',
   'UsdtVault': 'UsdtVault',
   'RifiVault': 'RifiVault',
 };
@@ -54,6 +51,19 @@ export const address = {
     "rBNB": "0x7F8DD78Cad8fc3d94A762dc2b39b6BB4e1f08e43",
     "rBUSD": "0x2995d090B20c53733B4969885f1A346e148ddbe2",
     "BUSD": "0x8301f2213c0eed49a7e28ae4c3e91722919b8b47"
+  },
+  "bsc_mainnet": {
+    "Maximillion": "0x4d272fAdc0BbfF47D23B24684A7EF950930bC170",
+    "RIFI": "0x3816b86AbED8B7F69d8AB4b7a9B5eB866c0b0F18",
+    "Cointroller": "0x97684D0DbF7B9B27B03324822ff7A5CFE7AEB732",
+    "PriceFeed": "0xa569e40d93D7C6EE1F87a4Ca31f56f38bbE40a17",
+    "rBep20Delegate": "0x545E68B4178DE31C4421F5A9b0762f39Fb642A9B",
+    "RIFIChainBridge": "0x25069109104f2B4D4C47D71a7852aED7B15E8326",
+    "BUSD": "0x88DFbF8ca8F6937818DA9C3A09bE152E3b221E9a",
+    "rBUSD": "0x036a1E7a2ea830b7721f8f91a63b2c67D14C0128",
+    "USDC": "0xFE16F4D3A17EafA7C7842aE8b0b3C51Ec6dc64d6",
+    "rUSDC": "0xCcbE879f931D8d36370E0A684d53E38a4A01dbAb",
+    "RifiLens": "0xe84cEAf5F98e2a34D43a8319D2A56d7baA484B0e",
   },
   "bsc_testnet": {
     "Maximillion": "0x4d272fAdc0BbfF47D23B24684A7EF950930bC170",
@@ -111,7 +121,9 @@ export const abi = {
 };
 
 export const rTokens = {
+  "bsc_mainnet": ['rBUSD', 'rUSDC'],
   "bsc_testnet": ['rBUSD', 'rUSDC'],
+  "mainnet": ['rUSDT', 'rDAI'],
   "rinkeby": ['rUSDT', 'rDAI'],
 };
 export const underlyings = ['BUSD', 'USDC', 'USDT', 'DAI'];
