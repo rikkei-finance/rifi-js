@@ -76,7 +76,7 @@ export const address = {
     "rBUSD": "0x036a1E7a2ea830b7721f8f91a63b2c67D14C0128",
     "USDC": "0xFE16F4D3A17EafA7C7842aE8b0b3C51Ec6dc64d6",
     "rUSDC": "0xCcbE879f931D8d36370E0A684d53E38a4A01dbAb",
-    "RifiLens": "0xe84cEAf5F98e2a34D43a8319D2A56d7baA484B0e",
+    "RifiLens": "0xf38776eC4525bcD19Ba10EF99Ad226aE0033b4c5",
   },
   "rinkeby": {
     "Cointroller": "0x5AE47f87E8C94ed4b4a8f13e67E4fa520daB96c3",
