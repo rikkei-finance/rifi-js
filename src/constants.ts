@@ -77,6 +77,9 @@ export const address = {
     "USDC": "0xFE16F4D3A17EafA7C7842aE8b0b3C51Ec6dc64d6",
     "rUSDC": "0xCcbE879f931D8d36370E0A684d53E38a4A01dbAb",
     "RifiLens": "0xf38776eC4525bcD19Ba10EF99Ad226aE0033b4c5",
+    "UsdtVault": "0xE31653C3B70fAA0aC7d6dE14D13e93969bC1ab9B",
+    "RifiVault": "0x4d071ae6bf73D0776Adc498Ac1bcb1abFc07dDBF",
+    "RewardLocker": "0xd0825DAFfB71C6C3a0E7d310C498b0a31f542CbB",
   },
   "rinkeby": {
     "Cointroller": "0x5AE47f87E8C94ed4b4a8f13e67E4fa520daB96c3",

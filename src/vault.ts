@@ -10,11 +10,13 @@ import { netId } from "./helpers";
 import * as constants from "./constants";
 import { CallOptions, TrxResponse } from "./types";
 
+
 const MAX_ALLOWANCE = BigNumber.from(
   "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
 ); // 2**256 - 1
 // Because RIFI only set allowance to (2**96 - 1)
 const SAFE_ALLOWANCE = BigNumber.from("0xffffffffffffffffffffff"); // 2**88 - 1
+
 
 async function getUserAddress(provider: any): Promise<string> {
   let userAddress: string = provider.address;
@@ -578,7 +580,7 @@ export async function getRewardBalances(
     trxOptions
   );
 
-  let vesting, claimable;
+  let vesting: BigNumber, claimable: BigNumber;
   if (numSchedules.gt(0)) {
     try {
       claimable = await eth.read(
