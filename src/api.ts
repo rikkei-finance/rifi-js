@@ -210,13 +210,17 @@ function queryApi(options: APIRequest, name: string, path: string): Promise<APIR
   });
 }
 
-export async function getSupportTokens(network: string) {
+interface SupportedTokens {
+  rToken: any[];
+}
+
+export async function getSupportTokens(network: string): Promise<SupportedTokens> {
   const tokens = {
     rToken: [],
   };
 
-  rTokens[network].forEach((symbol, i) => {
-    const uSymbol = underlyings[i];
+  rTokens[network].forEach(symbol => {
+    const uSymbol = symbol.substring(1);
 
     const token = {
       borrow_cap: { value: '0' },
