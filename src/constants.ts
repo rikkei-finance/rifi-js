@@ -60,6 +60,8 @@ export const address = {
     "rBUSD": "0x4Fdd6Bf5243F611dE2D8FE692C5E765C6Ebe1584",
     "USDC": "0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d",
     "rUSDC": "0x43e817969ceaB419bD398A7752854417e26384e7",
+    "USDT": "0x55d398326f99059ff775485246999027b3197955",
+    "rUSDT": "0x0325b422Ab67889CA8E1Ff1165041607b010d9FD",
     "RifiLens": "0x8B163772DEFea4b2161C2Cc35B46d911Ea17F449",
   },
   "bsc_testnet": {
@@ -121,9 +123,9 @@ export const abi = {
 };
 
 export const rTokens = {
-  "bsc_mainnet": ['rBUSD', 'rUSDC'],
+  "bsc_mainnet": ['rBUSD', 'rUSDC', 'rUSDT'],
   "bsc_testnet": ['rBUSD', 'rUSDC'],
-  "mainnet": ['rUSDT', 'rDAI'],
+  "mainnet": [],
   "rinkeby": ['rUSDT', 'rDAI'],
 };
 export const underlyings = ['BUSD', 'USDC', 'USDT', 'DAI'];
@@ -138,7 +140,7 @@ export const decimals = {
   "rUSDC": 8,
   "USDC": 18,
   "rUSDT": 8,
-  "USDT": 6,
+  "USDT": 18,
   "rDAI": 8,
   "DAI": 18,
 };

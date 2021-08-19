@@ -16,8 +16,8 @@ import {
 import {
   address,
   rTokens,
-  underlyings,
   decimals,
+  constants,
   names,
 } from './constants';
 
@@ -218,6 +218,8 @@ export async function getSupportTokens(network: string): Promise<SupportedTokens
   const tokens = {
     rToken: [],
   };
+
+  if (!rTokens[network]) return tokens;
 
   rTokens[network].forEach(symbol => {
     const uSymbol = symbol.substring(1);
