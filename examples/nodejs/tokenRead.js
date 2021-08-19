@@ -4,8 +4,10 @@ const Rifi = require("../../dist/nodejs/index.js");
 const privateKey =
   "0xacbafc9fbca0575b001c3c57d8967fd2d95ae360c3214091e33dbee9a5e3aa2e";
 
-const providerUrl = "https://data-seed-prebsc-2-s1.binance.org:8545/";
+// const providerUrl = "https://data-seed-prebsc-2-s1.binance.org:8545/";
 // const providerUrl = "https://rinkeby.infura.io/v3/598f149bca12438caeb720bdd9aadb09";
+// const providerUrl = "https://mainnet.infura.io/v3/598f149bca12438caeb720bdd9aadb09";
+const providerUrl = "https://bsc-dataseed.binance.org";
 const addr = "0x9AAD6f9eA2D7910CCAF17c9D1A6f7863251f194a";
 const rifi = new Rifi(providerUrl, { privateKey });
 

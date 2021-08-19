@@ -1,4 +1,9 @@
 import { RifiInstance } from './types';
+import { getNetNameWithChainId } from './util';
+
+const mapChainIdWithName = _rifi => {
+  _rifi._network.name = getNetNameWithChainId(_rifi._network.chainId || _rifi._network.id);
+};
 
 /**
  * This function acts like a decorator for all methods that interact with the
@@ -15,5 +20,6 @@ import { RifiInstance } from './types';
 export async function netId(_rifi: RifiInstance): Promise<void> {
   if (_rifi._networkPromise) {
     await _rifi._networkPromise;
+    mapChainIdWithName(_rifi);
   }
 }

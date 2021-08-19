@@ -14,6 +14,7 @@ import { BigNumber } from '@ethersproject/bignumber/lib/bignumber';
 
 export interface RifiInstance {
   _networkPromise: Promise<ProviderNetwork>;
+  _network: Network;
 }
 
 export interface RifiOptions {
