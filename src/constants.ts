@@ -47,7 +47,7 @@ export const address = {
     "rUSDT": "0x1C9b657641b4c53e78dcEB0410b7957E738Cdfb3",
     "DAI": "0x6b175474e89094c44da98b954eedeac495271d0f",
     "rDAI": "0x3837304b3a00160994B3E61faE3d4DE865BE2f10",
-    "RifiLens": "0x8B163772DEFea4b2161C2Cc35B46d911Ea17F449",
+    "RifiLens": "0x5914f6dEeF07960c7d2b6F69ddbE2BF61468C33A",
   },
   "bsc_mainnet": {
     "Maximillion": "0x4d272fAdc0BbfF47D23B24684A7EF950930bC170",

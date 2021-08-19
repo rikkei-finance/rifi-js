@@ -6,8 +6,8 @@ const privateKey =
 
 // const providerUrl = "https://data-seed-prebsc-2-s1.binance.org:8545/";
 // const providerUrl = "https://rinkeby.infura.io/v3/598f149bca12438caeb720bdd9aadb09";
-// const providerUrl = "https://mainnet.infura.io/v3/598f149bca12438caeb720bdd9aadb09";
-const providerUrl = "https://bsc-dataseed.binance.org";
+const providerUrl = "https://mainnet.infura.io/v3/598f149bca12438caeb720bdd9aadb09";
+// const providerUrl = "https://bsc-dataseed.binance.org";
 const addr = "0x9AAD6f9eA2D7910CCAF17c9D1A6f7863251f194a";
 const rifi = new Rifi(providerUrl, { privateKey });
 
