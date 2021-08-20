@@ -18,7 +18,7 @@ const MAX_ALLOWANCE = BigNumber.from(
 const SAFE_ALLOWANCE = BigNumber.from("0xffffffffffffffffffffff"); // 2**88 - 1
 
 
-async function getUserAddress(provider: any): Promise<string> {
+async function getUserAddress(provider: ethers.Wallet): Promise<string> {
   let userAddress: string = provider.address;
 
   if (!userAddress && provider.getAddress) {
@@ -89,7 +89,7 @@ export async function depositEnabled(
   const errorPrefix = "Vault [depositEnabled] | ";
 
   const vaultAddress = constants.address[this._network?.name]?.[vault];
-  const tokenName = constants.vaultInfo[vault]?.depositToken;
+  const tokenName = constants.vaultInfo[this._network?.name]?.[vault]?.depositToken;
   const tokenAddress = constants.address[this._network?.name]?.[tokenName];
 
   if (!vaultAddress || !tokenAddress) {
@@ -128,9 +128,9 @@ export async function enableDeposit(
   await netId(this);
   const errorPrefix = "Vault [enableDeposit] | ";
 
-  const vaultAddress = constants.address[this._network.name]?.[vault];
-  const tokenName = constants.vaultInfo[vault]?.depositToken;
-  const tokenAddress = constants.address[this._network.name]?.[tokenName];
+  const vaultAddress = constants.address[this._network?.name]?.[vault];
+  const tokenName = constants.vaultInfo[this._network?.name]?.[vault]?.depositToken;
+  const tokenAddress = constants.address[this._network?.name]?.[tokenName];
 
   if (!vaultAddress || !tokenAddress) {
     throw Error(errorPrefix + "Vault `vault` not found.");
@@ -194,9 +194,9 @@ export async function deposit(
   await netId(this);
   const errorPrefix = "Vault [deposit] | ";
 
-  const vaultAddress = constants.address[this._network.name]?.[vault];
-  const tokenName = constants.vaultInfo[vault]?.depositToken;
-  const tokenAddress = constants.address[this._network.name]?.[tokenName];
+  const vaultAddress = constants.address[this._network?.name]?.[vault];
+  const tokenName = constants.vaultInfo[this._network?.name]?.[vault]?.depositToken;
+  const tokenAddress = constants.address[this._network?.name]?.[tokenName];
 
   if (!vaultAddress || !tokenAddress) {
     throw Error(errorPrefix + "Vault `vault` not found.");
@@ -305,7 +305,7 @@ export async function withdraw(
     }
 
     if (!options.mantissa) {
-      const tokenName = constants.vaultInfo[vault]?.depositToken;
+      const tokenName = constants.vaultInfo[this._network?.name]?.[vault]?.depositToken;
       amount = parseUnits(amount.toString(), constants.decimals[tokenName]);
     } else {
       amount = BigNumber.from(amount.toString());
@@ -408,10 +408,10 @@ export async function claimReward(
     throw Error(errorPrefix + "Vault `vault` not found.");
   }
 
-  const rewardLocker = constants.vaultInfo[vault]?.rewardLocker;
-  const lockerAddress = constants.address[this._network.name]?.[rewardLocker];
-  const rewardToken = constants.vaultInfo[vault]?.rewardToken;
-  const tokenAddress = constants.address[this._network.name]?.[rewardToken];
+  const rewardLocker = constants.vaultInfo[this._network?.name]?.[vault]?.rewardLocker;
+  const lockerAddress = constants.address[this._network?.name]?.[rewardLocker];
+  const rewardToken = constants.vaultInfo[this._network?.name]?.[vault]?.rewardToken;
+  const tokenAddress = constants.address[this._network?.name]?.[rewardToken];
   if (!lockerAddress || !tokenAddress) {
     throw Error(errorPrefix + "Locker for `vault` not found.");
   }
@@ -545,10 +545,10 @@ export async function getRewardBalances(
     throw Error(errorPrefix + "Vault `vault` not found.");
   }
 
-  const rewardLocker = constants.vaultInfo[vault]?.rewardLocker;
-  const lockerAddress = constants.address[this._network.name]?.[rewardLocker];
-  const rewardToken = constants.vaultInfo[vault]?.rewardToken;
-  const tokenAddress = constants.address[this._network.name]?.[rewardToken];
+  const rewardLocker = constants.vaultInfo[this._network?.name]?.[vault]?.rewardLocker;
+  const lockerAddress = constants.address[this._network?.name]?.[rewardLocker];
+  const rewardToken = constants.vaultInfo[this._network?.name]?.[vault]?.rewardToken;
+  const tokenAddress = constants.address[this._network?.name]?.[rewardToken];
   if (!lockerAddress || !tokenAddress) {
     throw Error(errorPrefix + "Locker for `vault` not found.");
   }

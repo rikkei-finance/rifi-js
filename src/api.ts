@@ -17,7 +17,6 @@ import {
   address,
   rTokens,
   decimals,
-  constants,
   names,
 } from './constants';
 
@@ -211,6 +210,7 @@ function queryApi(options: APIRequest, name: string, path: string): Promise<APIR
 }
 
 interface SupportedTokens {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   rToken: any[];
 }
 

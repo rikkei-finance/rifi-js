@@ -63,6 +63,8 @@ export const address = {
     "USDT": "0x55d398326f99059ff775485246999027b3197955",
     "rUSDT": "0x0325b422Ab67889CA8E1Ff1165041607b010d9FD",
     "RifiLens": "0x8B163772DEFea4b2161C2Cc35B46d911Ea17F449",
+    "AirdropVaultT1": "0x657CD473E80912A1f9D1EcDC676f9F2812b629EB",
+    "RewardLocker": "0x9ceB25af72f9D63f8b92932f9507cF07585683b9",
   },
   "bsc_testnet": {
     "Maximillion": "0x4d272fAdc0BbfF47D23B24684A7EF950930bC170",
@@ -76,9 +78,9 @@ export const address = {
     "USDC": "0xFE16F4D3A17EafA7C7842aE8b0b3C51Ec6dc64d6",
     "rUSDC": "0xCcbE879f931D8d36370E0A684d53E38a4A01dbAb",
     "RifiLens": "0xf38776eC4525bcD19Ba10EF99Ad226aE0033b4c5",
-    "UsdtVault": "0xE31653C3B70fAA0aC7d6dE14D13e93969bC1ab9B",
-    "RifiVault": "0x4d071ae6bf73D0776Adc498Ac1bcb1abFc07dDBF",
     "RewardLocker": "0xd0825DAFfB71C6C3a0E7d310C498b0a31f542CbB",
+    "BusdVault": "0x2812bC83b24b71ba07C4395956B9543FE3CEaC62",
+    "RifiVault": "0x6CdF38d24e064dC74957F7Ee9e274bF897B3f37E",
   },
   "rinkeby": {
     "Maximillion": "0x4d272fAdc0BbfF47D23B24684A7EF950930bC170",
@@ -145,19 +147,28 @@ export const decimals = {
   "DAI": 18,
 };
 
-export const vaults = ['UsdtVault', 'RifiVault'];
+export const vaults = ['RifiVault', 'AirdropVaultT1', 'BusdVault'];
 
 export const vaultInfo = {
-  UsdtVault: {
-    depositToken: "USDT",
-    rewardToken: "RIFI",
-    rewardLocker: "RewardLocker",
+  "bsc_mainnet": {
+    AirdropVaultT1: {
+      depositToken: "RIFI",
+      rewardToken: "RIFI",
+      rewardLocker: "RewardLocker",
+    },
   },
-  RifiVault: {
-    depositToken: "RIFI",
-    rewardToken: "RIFI",
-    rewardLocker: "RewardLocker",
-  },
+  "bsc_testnet": {
+    RifiVault: {
+      depositToken: "RIFI",
+      rewardToken: "RIFI",
+      rewardLocker: "RewardLocker",
+    },
+    BusdVault: {
+      depositToken: "BUSD",
+      rewardToken: "BUSD",
+      rewardLocker: "RewardLocker",
+    },
+  }
 };
 
 export const errorCodes = {
