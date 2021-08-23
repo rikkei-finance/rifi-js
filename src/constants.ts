@@ -147,30 +147,6 @@ export const decimals = {
   "DAI": 18,
 };
 
-export const vaults = ['RifiVault', 'AirdropVaultT1', 'BusdVault'];
-
-export const vaultInfo = {
-  "bsc_mainnet": {
-    AirdropVaultT1: {
-      depositToken: "RIFI",
-      rewardToken: "RIFI",
-      rewardLocker: "RewardLocker",
-    },
-  },
-  "bsc_testnet": {
-    RifiVault: {
-      depositToken: "RIFI",
-      rewardToken: "RIFI",
-      rewardLocker: "RewardLocker",
-    },
-    BusdVault: {
-      depositToken: "BUSD",
-      rewardToken: "BUSD",
-      rewardLocker: "RewardLocker",
-    },
-  }
-};
-
 export const errorCodes = {
   'cointroller': {
     'codes': {
@@ -214,5 +190,30 @@ export const errorCodes = {
       '17': { 'error': 'SUPPORT_MARKET_EXISTS', 'description': '', 'hint': '', },
       '18': { 'error': 'SUPPORT_MARKET_OWNER_CHECK', 'description': '', 'hint': '', },
     }
+  }
+};
+
+
+export const vaults = ['RifiVault', 'AirdropVaultT1', 'BusdVault'];
+
+export const vaultInfo = {
+  "bsc_mainnet": {
+    AirdropVaultT1: {
+      depositToken: "RIFI",
+      rewardToken: "RIFI",
+      rewardLocker: "RewardLocker",
+    },
+  },
+  "bsc_testnet": {
+    RifiVault: {
+      depositToken: "RIFI",
+      rewardToken: "RIFI",
+      rewardLocker: "RewardLocker",
+    },
+    BusdVault: {
+      depositToken: "BUSD",
+      rewardToken: "BUSD",
+      rewardLocker: "RewardLocker",
+    },
   }
 };

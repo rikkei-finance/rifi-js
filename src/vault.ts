@@ -449,8 +449,7 @@ export async function claimReward(
  * @param {CallOptions} [options] Call options and Ethers.js overrides for the
  *     transaction.
  *
- * @returns {BigNumber} Returns an Ethers.js transaction object of the withdraw
- *     transaction.
+ * @returns {BigNumber} Account's balance in vault
  *
  * @example
  *
@@ -494,6 +493,7 @@ export async function getDepositOf(
 }
 
 interface RewardBalances {
+  symbol: string;
   pending: BigNumber;
   vesting: BigNumber;
   claimable: BigNumber;
@@ -514,8 +514,7 @@ interface VestingSchedule {
  * @param {CallOptions} [options] Call options and Ethers.js overrides for the
  *     transaction.
  *
- * @returns {BigNumber} Returns an Ethers.js transaction object of the withdraw
- *     transaction.
+ * @returns {RewardBalances[]} Balances for each type of reward / earning tokens
  *
  * @example
  *
@@ -536,9 +535,9 @@ interface VestingSchedule {
 export async function getRewardBalances(
   vault: string,
   options: CallOptions = {}
-): Promise<RewardBalances> {
+): Promise<RewardBalances[]> {
   await netId(this);
-  const errorPrefix = "Vault [getRewardOf] | ";
+  const errorPrefix = "Vault [getRewardBalances] | ";
 
   const vaultAddress = constants.address[this._network.name]?.[vault];
   if (!vaultAddress) {
@@ -610,5 +609,5 @@ export async function getRewardBalances(
     vesting = claimable = BigNumber.from(0);
   }
 
-  return { pending, vesting, claimable };
+  return [{ symbol: rewardToken, pending, vesting, claimable }];
 }
