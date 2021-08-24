@@ -78,10 +78,12 @@ export const address = {
     "USDC": "0xFE16F4D3A17EafA7C7842aE8b0b3C51Ec6dc64d6",
     "rUSDC": "0xCcbE879f931D8d36370E0A684d53E38a4A01dbAb",
     "RifiLens": "0xf38776eC4525bcD19Ba10EF99Ad226aE0033b4c5",
-    "RewardLocker": "0xd0825DAFfB71C6C3a0E7d310C498b0a31f542CbB",
-    "BusdVault": "0x2812bC83b24b71ba07C4395956B9543FE3CEaC62",
-    "RifiVault": "0x6CdF38d24e064dC74957F7Ee9e274bF897B3f37E",
-  },
+    "RewardLocker": "0x9653811B43D30b894310bD9656D24363473a7825",
+    "VaultBusdVenus": "0xcc98b38F2f5d80d561Da8AA060f70Eb003FcAB87",
+    "BUSDv": "0x8301F2213c0eeD49a7E28Ae4c3e91722919B8B47",
+    "vBUSD": "0x08e0A5575De71037aE36AbfAfb516595fE68e5e4",
+    "XVS": "0xB9e0E753630434d7863528cc73CB7AC638a7c8ff",
+},
   "rinkeby": {
     "Maximillion": "0x4d272fAdc0BbfF47D23B24684A7EF950930bC170",
     "RIFI": "0xa96786DC3Fd5261FcaDB6ac6FfD21252CAA9053F",
@@ -94,7 +96,18 @@ export const address = {
     "rDAI": "0xF01667df35deC71bD5e86edB2c2D7ea8f673654d",
     "USDT": "0x28BE85F67978af7cD01aF0D9829e727c4D7a07ca",
     "DAI": "0x3c134dDc2473f3a30f55978b992900Cbf38D4deB",
-  }
+  },
+  "ropsten": {
+    "RewardLocker": "0xd97cfCe893B475632AA95e48DED4Bd943c943950",
+    "VaultUsdtComp": "0xcc98b38F2f5d80d561Da8AA060f70Eb003FcAB87",
+    "COMP": "0xf76D4a441E4ba86A923ce32B89AFF89dBccAA075",
+    "Comptroller": "0xcfa7b0e37f5AC60f3ae25226F5e39ec59AD26152",
+    "USDTc": "0x110a13FC3efE6A245B50102D2d79B3E76125Ae83",
+    "cUSDT": "0xF6958Cf3127e62d3EB26c79F4f45d3F3b2CcdeD4",
+  },
+  "kovan": {
+
+  },
 };
 
 export const abi = {
@@ -194,7 +207,7 @@ export const errorCodes = {
 };
 
 
-export const vaults = ['RifiVault', 'AirdropVaultT1', 'BusdVault'];
+export const vaults = ['AirdropVaultT1', 'RifiVault', 'VaultBusdVenus', 'VaultUsdtComp'];
 
 export const vaultInfo = {
   "bsc_mainnet": {
@@ -205,15 +218,19 @@ export const vaultInfo = {
     },
   },
   "bsc_testnet": {
-    RifiVault: {
-      depositToken: "RIFI",
+    VaultBusdVenus: {
+      depositToken: "BUSDv",
       rewardToken: "RIFI",
+      earnToken: "XVS",
       rewardLocker: "RewardLocker",
     },
-    BusdVault: {
-      depositToken: "BUSD",
-      rewardToken: "BUSD",
+  },
+  "ropsten": {
+    VaultUsdtComp: {
+      depositToken: "USDTc",
+      rewardToken: "COMP",
+      earnToken: "COMP",
       rewardLocker: "RewardLocker",
     },
-  }
+  },
 };
