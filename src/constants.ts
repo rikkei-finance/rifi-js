@@ -99,7 +99,7 @@ export const address = {
   },
   "ropsten": {
     "RewardLocker": "0xd97cfCe893B475632AA95e48DED4Bd943c943950",
-    "VaultUsdtComp": "0xcc98b38F2f5d80d561Da8AA060f70Eb003FcAB87",
+    "VaultUsdtComp": "0x2700ba7cECa3E45846CcAFD713184856566fd739",
     "COMP": "0xf76D4a441E4ba86A923ce32B89AFF89dBccAA075",
     "Comptroller": "0xcfa7b0e37f5AC60f3ae25226F5e39ec59AD26152",
     "USDTc": "0x110a13FC3efE6A245B50102D2d79B3E76125Ae83",
