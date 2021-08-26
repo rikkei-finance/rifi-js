@@ -49,6 +49,7 @@ export const address = {
     "rDAI": "0x3837304b3a00160994B3E61faE3d4DE865BE2f10",
     "RifiLens": "0x5914f6dEeF07960c7d2b6F69ddbE2BF61468C33A",
   },
+
   "bsc_mainnet": {
     "Maximillion": "0x4d272fAdc0BbfF47D23B24684A7EF950930bC170",
     "RIFI": "0xD7c271AC4eB765705B32EdbA75CB6d3243c731F6",
@@ -66,6 +67,7 @@ export const address = {
     "AirdropVaultT1": "0x657CD473E80912A1f9D1EcDC676f9F2812b629EB",
     "RewardLocker": "0x9ceB25af72f9D63f8b92932f9507cF07585683b9",
   },
+
   "bsc_testnet": {
     "Maximillion": "0x4d272fAdc0BbfF47D23B24684A7EF950930bC170",
     "RIFI": "0x3816b86AbED8B7F69d8AB4b7a9B5eB866c0b0F18",
@@ -78,12 +80,15 @@ export const address = {
     "USDC": "0xFE16F4D3A17EafA7C7842aE8b0b3C51Ec6dc64d6",
     "rUSDC": "0xCcbE879f931D8d36370E0A684d53E38a4A01dbAb",
     "RifiLens": "0xf38776eC4525bcD19Ba10EF99Ad226aE0033b4c5",
+
+    "XVS": "0xB9e0E753630434d7863528cc73CB7AC638a7c8ff",
+    "BUSDv": "0x8301F2213c0eeD49a7E28Ae4c3e91722919B8B47",
+    "USDTv": "0xA11c8D9DC9b66E209Ef60F0C8D969D3CD988782c",
     "RewardLocker": "0x9653811B43D30b894310bD9656D24363473a7825",
     "VaultBusdVenus": "0xcc98b38F2f5d80d561Da8AA060f70Eb003FcAB87",
-    "BUSDv": "0x8301F2213c0eeD49a7E28Ae4c3e91722919B8B47",
-    "vBUSD": "0x08e0A5575De71037aE36AbfAfb516595fE68e5e4",
-    "XVS": "0xB9e0E753630434d7863528cc73CB7AC638a7c8ff",
-},
+    "VaultUsdtVenus": "0x4617E38A8A1c5dfBF8a3916e4227732BFe143b0f",
+  },
+
   "rinkeby": {
     "Maximillion": "0x4d272fAdc0BbfF47D23B24684A7EF950930bC170",
     "RIFI": "0xa96786DC3Fd5261FcaDB6ac6FfD21252CAA9053F",
@@ -97,16 +102,25 @@ export const address = {
     "USDT": "0x28BE85F67978af7cD01aF0D9829e727c4D7a07ca",
     "DAI": "0x3c134dDc2473f3a30f55978b992900Cbf38D4deB",
   },
+
   "ropsten": {
+    "RIFI": "0x274C7fE18FEdbcA811B4d2dd2A237f46115EEA8a",
+
+    "COMP": "0xf76D4a441E4ba86A923ce32B89AFF89dBccAA075",
+    "USDTc": "0x110a13FC3efE6A245B50102D2d79B3E76125Ae83",
+    "DAIc": "0x31F42841c2db5173425b5223809CF3A38FEde360",
     "RewardLocker": "0xd97cfCe893B475632AA95e48DED4Bd943c943950",
     "VaultUsdtComp": "0x2700ba7cECa3E45846CcAFD713184856566fd739",
-    "COMP": "0xf76D4a441E4ba86A923ce32B89AFF89dBccAA075",
-    "Comptroller": "0xcfa7b0e37f5AC60f3ae25226F5e39ec59AD26152",
-    "USDTc": "0x110a13FC3efE6A245B50102D2d79B3E76125Ae83",
-    "cUSDT": "0xF6958Cf3127e62d3EB26c79F4f45d3F3b2CcdeD4",
+    "VaultDaiComp": "0x55E503639c144788b7D0A1BA6c2fe55Dd0404687",
   },
-  "kovan": {
 
+  "kovan": {
+    "RIFI": "0x0CE49958c7202e1274a89db25AD7011d107b94bf",
+
+    "AAVE": "0xB597cd8D3217ea6477232F9217fa70837ff667Af",
+    "DAIa": "0xFf795577d9AC8bD7D90Ee22b6C1703490b6512FD",
+    "RewardLocker": "0xd97cfCe893B475632AA95e48DED4Bd943c943950",
+    "VaultDaiAave": "0x9653811B43D30b894310bD9656D24363473a7825",
   },
 };
 
@@ -207,7 +221,14 @@ export const errorCodes = {
 };
 
 
-export const vaults = ['AirdropVaultT1', 'RifiVault', 'VaultBusdVenus', 'VaultUsdtComp'];
+export const vaults = [
+  'AirdropVaultT1',
+  'VaultBusdVenus',
+  'VaultUsdtVenus',
+  'VaultUsdtComp',
+  'VaultDaiComp',
+  'VaultDaiAave',
+];
 
 export const vaultInfo = {
   "bsc_mainnet": {
@@ -224,12 +245,32 @@ export const vaultInfo = {
       earnToken: "XVS",
       rewardLocker: "RewardLocker",
     },
+    VaultUsdtVenus: {
+      depositToken: "USDTv",
+      rewardToken: "RIFI",
+      earnToken: "XVS",
+      rewardLocker: "RewardLocker",
+    }
   },
   "ropsten": {
     VaultUsdtComp: {
       depositToken: "USDTc",
       rewardToken: "COMP",
       earnToken: "COMP",
+      rewardLocker: "RewardLocker",
+    },
+    VaultDaiComp: {
+      depositToken: "DAIc",
+      rewardToken: "RIFI",
+      earnToken: "COMP",
+      rewardLocker: "RewardLocker",
+    },
+  },
+  "kovan": {
+    VaultDaiAave: {
+      depositToken: "DAIa",
+      rewardToken: "RIFI",
+      earnToken: "AAVE",
       rewardLocker: "RewardLocker",
     },
   },
