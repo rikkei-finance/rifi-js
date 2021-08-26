@@ -18,8 +18,6 @@ export const constants = {
   'rDAI': 'rDAI',
   'RewardLocker': 'RewardLocker',
   'RIFIChainBridge': 'RIFIChainBridge',
-  'UsdtVault': 'UsdtVault',
-  'RifiVault': 'RifiVault',
 };
 
 export const names = {
@@ -172,6 +170,15 @@ export const decimals = {
   "USDT": 18,
   "rDAI": 8,
   "DAI": 18,
+
+  "BUSDv": 18,
+  "USDTv": 6,
+  "USDTc": 6,
+  "DAIc": 18,
+  "DAIa": 18,
+  "COMP": 18,
+  "XVS": 18,
+  "AAVE": 18,
 };
 
 export const errorCodes = {
@@ -230,7 +237,7 @@ export const vaults = [
   'VaultDaiAave',
 ];
 
-export const vaultInfo = {
+export const vaultConfig = {
   "bsc_mainnet": {
     AirdropVaultT1: {
       depositToken: "RIFI",

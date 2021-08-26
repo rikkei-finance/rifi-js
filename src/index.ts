@@ -15,7 +15,7 @@ import * as lens from "./lens";
 import * as gov from "./gov";
 import * as api from "./api";
 import * as vault from "./vault";
-import { constants, decimals } from "./constants";
+import { constants, decimals, vaultConfig } from "./constants";
 import { Provider, RifiOptions, RifiInstance } from "./types";
 
 // Turn off Ethers.js warnings
@@ -70,6 +70,9 @@ const Rifi = function (
     ...gov,
     ...lens,
     ...vault,
+    vault: {
+      ...vault,
+    },
     claimRifi: rifi.claimRifi,
     delegate: rifi.delegate,
     delegateBySig: rifi.delegateBySig,
@@ -97,6 +100,7 @@ Rifi.rifi = {
   getRifiBalance: rifi.getRifiBalance,
   getRifiAccrued: rifi.getRifiAccrued,
 };
+Rifi.vaultConfig = vaultConfig;
 Object.assign(Rifi, constants);
 
 export = Rifi;

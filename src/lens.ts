@@ -9,7 +9,7 @@ import { address, abi, rTokens } from './constants';
 import {
   CallOptions,
 } from './types';
-import { BigNumber } from '@ethersproject/bignumber';
+import { BigNumber } from 'ethers';
 
 const LENS_FUNCTIONS = [
   'rTokenMetadata',

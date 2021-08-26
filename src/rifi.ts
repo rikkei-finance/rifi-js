@@ -4,7 +4,7 @@
  *     contract.
  */
 
-import { ethers } from 'ethers';
+import { ethers, BigNumber } from 'ethers';
 import * as eth from './eth';
 import { netId } from './helpers';
 import { address, abi } from './constants';
@@ -99,6 +99,13 @@ export async function getRifiBalance(
   return result.toString();
 }
 
+interface RifiBalanceMetadataExt {
+  balance: BigNumber;
+  votes: BigNumber;
+  delegate: string;
+  allocated: BigNumber;
+}
+
 /**
  * Get the amount of RIFI tokens accrued but not yet claimed by an address.
  *
@@ -121,7 +128,7 @@ export async function getRifiBalance(
 export async function getRifiAccrued(
   _address: string,
   _provider: Provider | string = 'mainnet'
-) {
+): Promise<RifiBalanceMetadataExt> {
   const provider = await eth._createProvider({ provider: _provider });
   const net = await eth.getProviderNetwork(provider);
 
