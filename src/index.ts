@@ -70,9 +70,6 @@ const Rifi = function (
     ...gov,
     ...lens,
     ...vault,
-    vault: {
-      ...vault,
-    },
     claimRifi: rifi.claimRifi,
     delegate: rifi.delegate,
     delegateBySig: rifi.delegateBySig,

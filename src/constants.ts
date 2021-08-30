@@ -140,6 +140,16 @@ export const abi = {
     "function getBalance(address account) view returns (uint256)",
     "function getUnclaimedReward(address account) view returns (uint256)",
   ],
+  VaultV3: [
+    "function deposit(uint256 amount)",
+    "function withdraw(uint256 amount)",
+    "function withdrawAll()",
+    "function harvest()",
+    "function getBalance(address account) view returns (uint256)",
+    "function getUnclaimedReward(address account) view returns (uint256)",
+    "function getCurrentBalance(address account) returns (uint256)",
+    "function getEarning(address account) returns (tuple(address token, uint amount)[] earning)",
+  ],
   RewardLocker: [
     "function getVestingSchedules(address account, address token) view returns (tuple(uint64 startBlock, uint64 endBlock, uint128 quantity, uint128 vestedQuantity)[] memory schedules)",
     "function numVestingSchedules(address account, address token) view returns (uint256)",
@@ -249,13 +259,13 @@ export const vaultConfig = {
     VaultBusdVenus: {
       depositToken: "BUSDv",
       rewardToken: "RIFI",
-      earnToken: "XVS",
+      earnToken: ["XVS"],
       rewardLocker: "RewardLocker",
     },
     VaultUsdtVenus: {
       depositToken: "USDTv",
       rewardToken: "RIFI",
-      earnToken: "XVS",
+      earnToken: ["XVS"],
       rewardLocker: "RewardLocker",
     }
   },
@@ -263,13 +273,7 @@ export const vaultConfig = {
     VaultUsdtComp: {
       depositToken: "USDTc",
       rewardToken: "COMP",
-      earnToken: "COMP",
-      rewardLocker: "RewardLocker",
-    },
-    VaultDaiComp: {
-      depositToken: "DAIc",
-      rewardToken: "RIFI",
-      earnToken: "COMP",
+      earnToken: ["COMP"],
       rewardLocker: "RewardLocker",
     },
   },
@@ -277,7 +281,7 @@ export const vaultConfig = {
     VaultDaiAave: {
       depositToken: "DAIa",
       rewardToken: "RIFI",
-      earnToken: "AAVE",
+      earnToken: ["AAVE"],
       rewardLocker: "RewardLocker",
     },
   },

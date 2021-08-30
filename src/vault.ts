@@ -93,7 +93,7 @@ export async function depositEnabled(
   const tokenAddress = constants.address[this._network?.name]?.[tokenName];
 
   if (!vaultAddress || !tokenAddress) {
-    throw Error(errorPrefix + "Vault `vault` not found.");
+    throw Error(errorPrefix + `Vault ${vault} not found.`);
   }
 
   const userAddress = await getUserAddress(this._provider);
@@ -133,7 +133,7 @@ export async function enableDeposit(
   const tokenAddress = constants.address[this._network?.name]?.[tokenName];
 
   if (!vaultAddress || !tokenAddress) {
-    throw Error(errorPrefix + "Vault `vault` not found.");
+    throw Error(errorPrefix + `Vault ${vault} not found.`);
   }
 
   const userAddress = await getUserAddress(this._provider);
@@ -199,7 +199,7 @@ export async function deposit(
   const tokenAddress = constants.address[this._network?.name]?.[tokenName];
 
   if (!vaultAddress || !tokenAddress) {
-    throw Error(errorPrefix + "Vault `vault` not found.");
+    throw Error(errorPrefix + `Vault ${vault} not found.`);
   }
 
   if (
@@ -284,9 +284,9 @@ export async function withdraw(
   await netId(this);
   const errorPrefix = "Vault [withdraw] | ";
 
-  const vaultAddress = constants.address[this._network.name]?.[vault];
+  const vaultAddress = constants.address[this._network?.name]?.[vault];
   if (!vaultAddress) {
-    throw Error(errorPrefix + "Vault `vault` not found.");
+    throw Error(errorPrefix + `Vault ${vault} not found.`);
   }
 
   const parameters = [];
@@ -357,9 +357,9 @@ export async function harvestReward(
   await netId(this);
   const errorPrefix = "Vault [harvestReward] | ";
 
-  const vaultAddress = constants.address[this._network.name]?.[vault];
+  const vaultAddress = constants.address[this._network?.name]?.[vault];
   if (!vaultAddress) {
-    throw Error(errorPrefix + "Vault `vault` not found.");
+    throw Error(errorPrefix + `Vault ${vault} not found.`);
   }
 
   const trxOptions: CallOptions = {
@@ -403,9 +403,9 @@ export async function claimReward(
   await netId(this);
   const errorPrefix = "Vault [claimReward] | ";
 
-  const vaultAddress = constants.address[this._network.name]?.[vault];
+  const vaultAddress = constants.address[this._network?.name]?.[vault];
   if (!vaultAddress) {
-    throw Error(errorPrefix + "Vault `vault` not found.");
+    throw Error(errorPrefix + `Vault ${vault} not found.`);
   }
 
   const rewardLocker = constants.vaultConfig[this._network?.name]?.[vault]?.rewardLocker;
@@ -413,7 +413,7 @@ export async function claimReward(
   const rewardToken = constants.vaultConfig[this._network?.name]?.[vault]?.rewardToken;
   const tokenAddress = constants.address[this._network?.name]?.[rewardToken];
   if (!lockerAddress || !tokenAddress) {
-    throw Error(errorPrefix + "Locker for `vault` not found.");
+    throw Error(errorPrefix + `Locker for ${vault} not found.`);
   }
 
   const userAddress = getUserAddress(this._provider);
@@ -473,9 +473,9 @@ export async function getDepositOf(
   await netId(this);
   const errorPrefix = "Vault [getDepositOf] | ";
 
-  const vaultAddress = constants.address[this._network.name]?.[vault];
+  const vaultAddress = constants.address[this._network?.name]?.[vault];
   if (!vaultAddress) {
-    throw Error(errorPrefix + "Vault `vault` not found.");
+    throw Error(errorPrefix + `Vault ${vault} not found.`);
   }
 
   if (!account) {
@@ -539,9 +539,9 @@ export async function getRewardBalances(
   await netId(this);
   const errorPrefix = "Vault [getRewardBalances] | ";
 
-  const vaultAddress = constants.address[this._network.name]?.[vault];
+  const vaultAddress = constants.address[this._network?.name]?.[vault];
   if (!vaultAddress) {
-    throw Error(errorPrefix + "Vault `vault` not found.");
+    throw Error(errorPrefix + `Vault ${vault} not found.`);
   }
 
   const rewardLocker = constants.vaultConfig[this._network?.name]?.[vault]?.rewardLocker;
@@ -549,18 +549,46 @@ export async function getRewardBalances(
   const rewardToken = constants.vaultConfig[this._network?.name]?.[vault]?.rewardToken;
   const tokenAddress = constants.address[this._network?.name]?.[rewardToken];
   if (!lockerAddress || !tokenAddress) {
-    throw Error(errorPrefix + "Locker for `vault` not found.");
+    throw Error(errorPrefix + `Locker for ${vault} not found.`);
   }
 
   const userAddress = getUserAddress(this._provider);
 
   let trxOptions: CallOptions = {
     ...options,
-    abi: constants.abi.Vault,
+    abi: constants.abi.VaultV3,
     _rifiProvider: this._provider,
   };
 
-  const pending = await eth.read(
+  interface EarningData {
+    token: string;
+    amount: BigNumber;
+  }
+
+  const earning: EarningData[] = await eth.read(
+    vaultAddress,
+    "getEarning",
+    [userAddress],
+    trxOptions
+  );
+  const earnToken = constants.vaultConfig[this._network?.name]?.[vault]?.earnToken;
+
+  const returnResult = [];
+  if (earnToken) {
+    for (const val of earning) {
+      for (const sym of earnToken) {
+        if (val.token.toLowerCase() == constants.address[this._network?.name]?.[sym]?.toLowerCase()) {
+          returnResult.push({
+            symbol: sym,
+            claimable: val.amount,
+          });
+          break;
+        }
+      }
+    }
+  }
+
+  const pending: BigNumber = await eth.read(
     vaultAddress,
     "getUnclaimedReward",
     [userAddress],
@@ -609,5 +637,7 @@ export async function getRewardBalances(
     vesting = claimable = BigNumber.from(0);
   }
 
-  return [{ symbol: rewardToken, pending, vesting, claimable }];
+  returnResult.push({ symbol: rewardToken, pending, vesting, claimable });
+
+  return returnResult;
 }
