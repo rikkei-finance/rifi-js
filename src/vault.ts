@@ -548,11 +548,12 @@ export async function getRewardBalances(
   const lockerAddress = constants.address[this._network?.name]?.[rewardLocker];
   const rewardToken = constants.vaultConfig[this._network?.name]?.[vault]?.rewardToken;
   const tokenAddress = constants.address[this._network?.name]?.[rewardToken];
-  if (!lockerAddress || !tokenAddress) {
+  if (rewardToken && (!lockerAddress || !tokenAddress)) {
     throw Error(errorPrefix + `Locker for ${vault} not found.`);
   }
 
   const userAddress = getUserAddress(this._provider);
+  const tokenBalances = [];
 
   let trxOptions: CallOptions = {
     ...options,
@@ -573,12 +574,11 @@ export async function getRewardBalances(
   );
   const earnToken = constants.vaultConfig[this._network?.name]?.[vault]?.earnToken;
 
-  const returnResult = [];
   if (earnToken) {
     for (const val of earning) {
       for (const sym of earnToken) {
         if (val.token.toLowerCase() == constants.address[this._network?.name]?.[sym]?.toLowerCase()) {
-          returnResult.push({
+          tokenBalances.push({
             symbol: sym,
             claimable: val.amount,
           });
@@ -586,6 +586,10 @@ export async function getRewardBalances(
         }
       }
     }
+  }
+
+  if (!rewardToken) {
+    return tokenBalances;
   }
 
   const pending: BigNumber = await eth.read(
@@ -637,7 +641,7 @@ export async function getRewardBalances(
     vesting = claimable = BigNumber.from(0);
   }
 
-  returnResult.push({ symbol: rewardToken, pending, vesting, claimable });
+  tokenBalances.push({ symbol: rewardToken, pending, vesting, claimable });
 
-  return returnResult;
+  return tokenBalances;
 }

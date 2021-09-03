@@ -272,9 +272,7 @@ export const vaultConfig = {
   "ropsten": {
     VaultUsdtComp: {
       depositToken: "USDTc",
-      rewardToken: "COMP",
       earnToken: ["COMP"],
-      rewardLocker: "RewardLocker",
     },
   },
   "kovan": {
