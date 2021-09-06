@@ -46,7 +46,13 @@ export const address = {
     "DAI": "0x6b175474e89094c44da98b954eedeac495271d0f",
     "rDAI": "0x3837304b3a00160994B3E61faE3d4DE865BE2f10",
     "RifiLens": "0x5914f6dEeF07960c7d2b6F69ddbE2BF61468C33A",
-  },
+    "USDC": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+    "COMP": "0xc00e94Cb662C3520282E6f5717214004A7f26888",
+    "AAVE": "0x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9",
+    "RewardLocker": "0x7b0878d9e8629ddA9B8C44f3F370E60485325DFb",
+    "VaultUsdcComp": "0x85EFcb2BEb3F8d7a403C353e1ae3eFEF31c0dcd9",
+    "VaultUsdtAave": "0x21ea8947e8c8A878f634d0926970d3Ec0E654bA9",
+},
 
   "bsc_mainnet": {
     "Maximillion": "0x4d272fAdc0BbfF47D23B24684A7EF950930bC170",
@@ -63,8 +69,14 @@ export const address = {
     "rUSDT": "0x0325b422Ab67889CA8E1Ff1165041607b010d9FD",
     "RifiLens": "0x8B163772DEFea4b2161C2Cc35B46d911Ea17F449",
     "AirdropVaultT1": "0x657CD473E80912A1f9D1EcDC676f9F2812b629EB",
-    "RewardLocker": "0x9ceB25af72f9D63f8b92932f9507cF07585683b9",
-  },
+    "RewardLockerT1": "0x9ceB25af72f9D63f8b92932f9507cF07585683b9",
+    "XVS": "0xcF6BB5389c92Bdda8a3747Ddb454cB7a64626C63",
+    "RewardLockerT2": "0xf03B0f68DA53a0ed8EeBeb202E41f43E497E981A",
+    "VaultBusdVenus": "0x05E9926fe11956fbb280612332e8093233ad4802",
+    "VaultUsdtVenus": "0x5865e2c746e1BaD733417Fd8372E8CC63c35cAB5",
+    "VaultUsdcVenus": "0xff1734001Ee9374be33C475cC4CdD0F414de7Bac",
+    "VaultDaiVenus": "0xEbbDeb97Caca5268dEAD4a1F3fDd87539D8e713d",
+},
 
   "bsc_testnet": {
     "Maximillion": "0x4d272fAdc0BbfF47D23B24684A7EF950930bC170",
@@ -247,11 +259,59 @@ export const vaults = [
   'VaultDaiAave',
 ];
 
+/*
+ * @types
+ * interface SingleVault {
+ *   depositToken: string;
+ *   rewardToken?: string;
+ *   earnToken?: string[];
+ *   rewardLocker?: string;
+ * }
+ */
+
 export const vaultConfig = {
   "bsc_mainnet": {
     AirdropVaultT1: {
       depositToken: "RIFI",
       rewardToken: "RIFI",
+      rewardLocker: "RewardLockerT1",
+    },
+    VaultBusdVenus: {
+      depositToken: "BUSD",
+      rewardToken: "RIFI",
+      earnToken: ["XVS"],
+      rewardLocker: "RewardLockerT2",
+    },
+    VaultUsdtVenus: {
+      depositToken: "USDT",
+      rewardToken: "RIFI",
+      earnToken: ["XVS"],
+      rewardLocker: "RewardLockerT2",
+    },
+    VaultUsdcVenus: {
+      depositToken: "USDC",
+      rewardToken: "RIFI",
+      earnToken: ["XVS"],
+      rewardLocker: "RewardLockerT2",
+    },
+    VaultDaiVenus: {
+      depositToken: "DAI",
+      rewardToken: "RIFI",
+      earnToken: ["XVS"],
+      rewardLocker: "RewardLockerT2",
+    },
+  },
+  "mainnet": {
+    VaultUsdcComp: {
+      depositToken: "USDC",
+      rewardToken: "RIFI",
+      earnToken: ["COMP"],
+      rewardLocker: "RewardLocker",
+    },
+    VaultUsdtAave: {
+      depositToken: "USDT",
+      rewardToken: "RIFI",
+      earnToken: ["AAVE"],
       rewardLocker: "RewardLocker",
     },
   },
