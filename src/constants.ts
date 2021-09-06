@@ -52,7 +52,7 @@ export const address = {
     "RewardLocker": "0x7b0878d9e8629ddA9B8C44f3F370E60485325DFb",
     "VaultUsdcComp": "0x85EFcb2BEb3F8d7a403C353e1ae3eFEF31c0dcd9",
     "VaultUsdtAave": "0x21ea8947e8c8A878f634d0926970d3Ec0E654bA9",
-},
+  },
 
   "bsc_mainnet": {
     "Maximillion": "0x4d272fAdc0BbfF47D23B24684A7EF950930bC170",
@@ -70,13 +70,14 @@ export const address = {
     "RifiLens": "0x8B163772DEFea4b2161C2Cc35B46d911Ea17F449",
     "AirdropVaultT1": "0x657CD473E80912A1f9D1EcDC676f9F2812b629EB",
     "RewardLockerT1": "0x9ceB25af72f9D63f8b92932f9507cF07585683b9",
+    "DAI": "0x1AF3F329e8BE154074D8769D1FFa4eE058B1DBc3",
     "XVS": "0xcF6BB5389c92Bdda8a3747Ddb454cB7a64626C63",
     "RewardLockerT2": "0xf03B0f68DA53a0ed8EeBeb202E41f43E497E981A",
     "VaultBusdVenus": "0x05E9926fe11956fbb280612332e8093233ad4802",
     "VaultUsdtVenus": "0x5865e2c746e1BaD733417Fd8372E8CC63c35cAB5",
     "VaultUsdcVenus": "0xff1734001Ee9374be33C475cC4CdD0F414de7Bac",
     "VaultDaiVenus": "0xEbbDeb97Caca5268dEAD4a1F3fDd87539D8e713d",
-},
+  },
 
   "bsc_testnet": {
     "Maximillion": "0x4d272fAdc0BbfF47D23B24684A7EF950930bC170",
