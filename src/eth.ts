@@ -5,6 +5,7 @@
 
 import { ethers } from 'ethers';
 import { AbiItem, CallOptions, Provider, ProviderNetwork } from './types';
+import { getNetNameWithChainId } from './util';
 
 enum JsonRpc {
   EthSendTransaction,
@@ -230,17 +231,11 @@ export async function getProviderNetwork(
 
   networkId = isNaN(networkId) ? 0 : +networkId;
 
-  let network = ethers.providers.getNetwork(networkId) || { name: 'unknown' };
-
-  if (networkId === 97) {
-    network = { chainId: 97, name: 'bsc_testnet' }
-  } else if (networkId === 56) {
-    network = { chainId: 56, name: 'bsc_mainnet' }
-  }
+  const network = ethers.providers.getNetwork(networkId) || { name: 'unknown' };
 
   return {
     id: networkId,
-    name: network.name,
+    name: getNetNameWithChainId(networkId) || network.name || 'unknown',
   };
 }
 
