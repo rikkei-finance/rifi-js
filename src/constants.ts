@@ -329,6 +329,10 @@ export const vaultConfig = {
       rewardToken: "RIFI",
       earnToken: ["XVS"],
       rewardLocker: "RewardLocker",
+    },
+    KabyNFTVault: {
+      depositToken: "RIFI",
+      rewardToken: "RIFI",
     }
   },
   "ropsten": {
