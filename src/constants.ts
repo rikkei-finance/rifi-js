@@ -98,7 +98,7 @@ export const address = {
     "RewardLocker": "0x9653811B43D30b894310bD9656D24363473a7825",
     "VaultBusdVenus": "0xcc98b38F2f5d80d561Da8AA060f70Eb003FcAB87",
     "VaultUsdtVenus": "0x4617E38A8A1c5dfBF8a3916e4227732BFe143b0f",
-    "KabyNFTVault": "0x00f01a4b7Ee2dAdfA906492cfc2f6d837bB3A27c",
+    "KabyNFTVault": "0xad7D0f902aF22A55594FAf3186BC4442cA7E52a0",
   },
 
   "rinkeby": {
