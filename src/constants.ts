@@ -163,6 +163,7 @@ export const abi = {
     "function getUnclaimedReward(address account) view returns (uint256)",
     "function getCurrentBalance(address account) returns (uint256)",
     "function getEarning(address account) returns (tuple(address token, uint amount)[] earning)",
+    "function claimReward()",
   ],
   RewardLocker: [
     "function getVestingSchedules(address account, address token) view returns (tuple(uint64 startBlock, uint64 endBlock, uint128 quantity, uint128 vestedQuantity)[] memory schedules)",
@@ -333,6 +334,7 @@ export const vaultConfig = {
     KabyNFTVault: {
       depositToken: "RIFI",
       rewardToken: "RIFI",
+      isNFTVault: true,
     }
   },
   "ropsten": {

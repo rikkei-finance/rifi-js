@@ -372,6 +372,22 @@ export async function harvestReward(
   return eth.trx(vaultAddress, "harvest", parameters, trxOptions);
 }
 
+async function claimRewardNFTVault(vaultAddress, options): Promise<TrxResponse> {
+  await netId(this);
+  const trxOptions = {
+    ...options,
+    abi: constants.abi.VaultV3,
+    _rifiProvider: this._provider,
+  };
+
+  return eth.trx(
+    vaultAddress,
+    "claimReward",
+    [],
+    trxOptions
+  );
+}
+
 /**
  * Claim vested reward from vault.
  *
@@ -406,6 +422,11 @@ export async function claimReward(
   const vaultAddress = constants.address[this._network?.name]?.[vault];
   if (!vaultAddress) {
     throw Error(errorPrefix + `Vault ${vault} not found.`);
+  }
+
+  const isNFTVault = constants.vaultConfig[this._network?.name]?.[vault]?.isNFTVault;
+  if (isNFTVault) {
+    return claimRewardNFTVault.call(this, vaultAddress, options);
   }
 
   const rewardLocker = constants.vaultConfig[this._network?.name]?.[vault]?.rewardLocker;
@@ -538,7 +559,6 @@ export async function getRewardBalances(
 ): Promise<RewardBalances[]> {
   await netId(this);
   const errorPrefix = "Vault [getRewardBalances] | ";
-
   const vaultAddress = constants.address[this._network?.name]?.[vault];
   if (!vaultAddress) {
     throw Error(errorPrefix + `Vault ${vault} not found.`);
@@ -548,11 +568,12 @@ export async function getRewardBalances(
   const lockerAddress = constants.address[this._network?.name]?.[rewardLocker];
   const rewardToken = constants.vaultConfig[this._network?.name]?.[vault]?.rewardToken;
   const tokenAddress = constants.address[this._network?.name]?.[rewardToken];
-  if (rewardToken && (!lockerAddress || !tokenAddress)) {
+  const isNFTVault = constants.vaultConfig[this._network?.name]?.[vault]?.isNFTVault;
+  if (rewardToken && !isNFTVault && (!lockerAddress || !tokenAddress)) {
     throw Error(errorPrefix + `Locker for ${vault} not found.`);
   }
 
-  const userAddress = getUserAddress(this._provider);
+  const userAddress = await getUserAddress(this._provider);
   const tokenBalances = [];
 
   let trxOptions: CallOptions = {
@@ -565,16 +586,17 @@ export async function getRewardBalances(
     token: string;
     amount: BigNumber;
   }
-
-  const earning: EarningData[] = await eth.read(
-    vaultAddress,
-    "getEarning",
-    [userAddress],
-    trxOptions
-  );
+  
   const earnToken = constants.vaultConfig[this._network?.name]?.[vault]?.earnToken;
 
   if (earnToken) {
+    const earning: EarningData[] = await eth.read(
+      vaultAddress,
+      "getEarning",
+      [userAddress],
+      trxOptions
+    );
+
     for (const val of earning) {
       for (const sym of earnToken) {
         if (val.token.toLowerCase() == constants.address[this._network?.name]?.[sym]?.toLowerCase()) {
@@ -603,6 +625,12 @@ export async function getRewardBalances(
     ...trxOptions,
     abi: constants.abi.RewardLocker,
   };
+
+  if (isNFTVault) {
+    tokenBalances.push({ symbol: rewardToken, pending, vesting: BigNumber.from(0), claimable: pending });
+
+    return tokenBalances;
+  }
 
   const numSchedules: BigNumber = await eth.read(
     lockerAddress,
