@@ -36,7 +36,7 @@ export const names = {
 export const address = {
   "mainnet": {
     "Maximillion": "0xf859A1AD94BcF445A406B892eF0d3082f4174088",
-    "RIFI": "0xd2B9d016fcE1179A4d85Da1a48dD85e796611d34",
+    "RIFI": "0xC8EF1460277EA47d179dEc66D1c5f8b7f7aE5a28",
     "RIFIChainBridge": "0xf289f9AE0130eb8640c3525dfa88B7C8d2A3d709",
     "Cointroller": "0xf0BABFb01F37A50fBEBb24D2ade824cCE6b713c3",
     "PriceFeed": "0x5d238Ee9bAe37705861c18e6b99D8Ea8e428600e",
@@ -56,7 +56,7 @@ export const address = {
 
   "bsc_mainnet": {
     "Maximillion": "0x4d272fAdc0BbfF47D23B24684A7EF950930bC170",
-    "RIFI": "0xD7c271AC4eB765705B32EdbA75CB6d3243c731F6",
+    "RIFI": "0xe17fbdf671f3cce0f354cacbd27e03f4245a3ffe",
     "RIFIChainBridge": "0xd2B9d016fcE1179A4d85Da1a48dD85e796611d34",
     "Cointroller": "0x2aEAa61D6CC1F5f097BcaA7Fc34347afa6853a70",
     "PriceFeed": "0x8F26813b839054626698F0f06A6a2A2aF9508d3A",
