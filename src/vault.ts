@@ -555,6 +555,7 @@ interface VestingSchedule {
  */
 export async function getRewardBalances(
   vault: string,
+  account?: string,
   options: CallOptions = {}
 ): Promise<RewardBalances[]> {
   await netId(this);
@@ -573,7 +574,7 @@ export async function getRewardBalances(
     throw Error(errorPrefix + `Locker for ${vault} not found.`);
   }
 
-  const userAddress = await getUserAddress(this._provider);
+  const userAddress = account ? account : await getUserAddress(this._provider);
   const tokenBalances = [];
 
   let trxOptions: CallOptions = {
@@ -586,7 +587,7 @@ export async function getRewardBalances(
     token: string;
     amount: BigNumber;
   }
-  
+
   const earnToken = constants.vaultConfig[this._network?.name]?.[vault]?.earnToken;
 
   if (earnToken) {
