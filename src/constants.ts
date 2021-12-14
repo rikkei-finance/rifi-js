@@ -341,7 +341,7 @@ export const vaultConfig = {
       isNFTVault: true,
     },
     VaultRifiRifi: {
-      depositToken: "BUSDv",
+      depositToken: "RIFI",
       rewardToken: "RIFI",
       rewardLocker: "RewardLocker",
     },
