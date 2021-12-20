@@ -77,6 +77,9 @@ export const address = {
     "VaultUsdtVenus": "0x5865e2c746e1BaD733417Fd8372E8CC63c35cAB5",
     "VaultUsdcVenus": "0xff1734001Ee9374be33C475cC4CdD0F414de7Bac",
     "VaultDaiVenus": "0xEbbDeb97Caca5268dEAD4a1F3fDd87539D8e713d",
+    "TITA": "0x0c1253a30da9580472064a91946c5ce0C58aCf7f",
+    "RewardLockerV1": "0x51A6e45b27EfE28B3611Ebc68a3dC422Fd5Dcf7a",
+    "VaultRifiTita": "0x7818C675F9d64A4B93C69a17952d64941EE05063",
   },
 
   "bsc_testnet": {
@@ -102,6 +105,7 @@ export const address = {
     "VaultUsdtVenus": "0x4617E38A8A1c5dfBF8a3916e4227732BFe143b0f",
     "KabyNFTVault": "0xB79a16e06f95A4B92A130243f0000f9ddb2E7135",
     "VaultRifiRifi": "0x3509F9bb7aB49aF398eF44699079F29E0Eac6fad",
+    "RewardLockerV1": "0x9653811B43D30b894310bD9656D24363473a7825",
     "VaultRifiTita": "0x12cA4653E26ba1785F0B72fF43A3985e9320D5A3",
   },
 
@@ -350,7 +354,7 @@ export const vaultConfig = {
     VaultRifiTita: {
       depositToken: "RIFI",
       rewardToken: "TITA",
-      rewardLocker: "RewardLocker",
+      rewardLocker: "RewardLockerV1",
     },
   },
   "ropsten": {
