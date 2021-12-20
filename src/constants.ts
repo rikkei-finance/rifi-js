@@ -313,6 +313,11 @@ export const vaultConfig = {
       earnToken: ["XVS"],
       rewardLocker: "RewardLockerT2",
     },
+    VaultRifiTita: {
+      depositToken: "RIFI",
+      rewardToken: "TITA",
+      rewardLocker: "RewardLockerV1",
+    },
   },
   "mainnet": {
     VaultUsdcComp: {
@@ -354,7 +359,7 @@ export const vaultConfig = {
     VaultRifiTita: {
       depositToken: "RIFI",
       rewardToken: "TITA",
-      rewardLocker: "RewardLockerV1",
+      rewardLocker: "RewardLocker",
     },
   },
   "ropsten": {
