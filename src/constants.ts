@@ -107,6 +107,7 @@ export const address = {
     "VaultRifiRifi": "0x3509F9bb7aB49aF398eF44699079F29E0Eac6fad",
     "RewardLockerV1": "0x9653811B43D30b894310bD9656D24363473a7825",
     "VaultRifiTita": "0x12cA4653E26ba1785F0B72fF43A3985e9320D5A3",
+    "VaultRifiAirdropT2": "0xC7420Aee1f03Bb10AFFB3bafBc98C83ACC93346f",
   },
 
   "rinkeby": {
@@ -360,6 +361,9 @@ export const vaultConfig = {
       depositToken: "RIFI",
       rewardToken: "TITA",
       rewardLocker: "RewardLocker",
+    },
+    VaultRifiAirdropT2: {
+      depositToken: "RIFI",
     },
   },
   "ropsten": {
