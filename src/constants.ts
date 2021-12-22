@@ -80,6 +80,7 @@ export const address = {
     "TITA": "0x0c1253a30da9580472064a91946c5ce0C58aCf7f",
     "RewardLockerV1": "0x51A6e45b27EfE28B3611Ebc68a3dC422Fd5Dcf7a",
     "VaultRifiTita": "0x7818C675F9d64A4B93C69a17952d64941EE05063",
+    "AirdropVault": "0x887aB709d83Ba2FDc8CB7f14D839D75B57e74edD",
   },
 
   "bsc_testnet": {
@@ -318,6 +319,9 @@ export const vaultConfig = {
       depositToken: "RIFI",
       rewardToken: "TITA",
       rewardLocker: "RewardLockerV1",
+    },
+    AirdropVault: {
+      depositToken: "RIFI",
     },
   },
   "mainnet": {
