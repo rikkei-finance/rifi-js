@@ -72,6 +72,7 @@ export const address = {
     "RewardLockerT1": "0x9ceB25af72f9D63f8b92932f9507cF07585683b9",
     "DAI": "0x1AF3F329e8BE154074D8769D1FFa4eE058B1DBc3",
     "XVS": "0xcF6BB5389c92Bdda8a3747Ddb454cB7a64626C63",
+    "RIFItest": "0xD7c271AC4eB765705B32EdbA75CB6d3243c731F6",
     "RewardLockerT2": "0xf03B0f68DA53a0ed8EeBeb202E41f43E497E981A",
     "VaultBusdVenus": "0x05E9926fe11956fbb280612332e8093233ad4802",
     "VaultUsdtVenus": "0x5865e2c746e1BaD733417Fd8372E8CC63c35cAB5",
@@ -206,6 +207,7 @@ export const decimals = {
   "USDT": 18,
   "rDAI": 8,
   "DAI": 18,
+  "RIFItest": 18,
 
   "BUSDv": 18,
   "USDTv": 6,
@@ -287,31 +289,31 @@ export const vaults = [
 export const vaultConfig = {
   "bsc_mainnet": {
     AirdropVaultT1: {
-      depositToken: "RIFI",
-      rewardToken: "RIFI",
+      depositToken: "RIFItest",
+      rewardToken: "RIFItest",
       rewardLocker: "RewardLockerT1",
     },
     VaultBusdVenus: {
       depositToken: "BUSD",
-      rewardToken: "RIFI",
+      rewardToken: "RIFItest",
       earnToken: ["XVS"],
       rewardLocker: "RewardLockerT2",
     },
     VaultUsdtVenus: {
       depositToken: "USDT",
-      rewardToken: "RIFI",
+      rewardToken: "RIFItest",
       earnToken: ["XVS"],
       rewardLocker: "RewardLockerT2",
     },
     VaultUsdcVenus: {
       depositToken: "USDC",
-      rewardToken: "RIFI",
+      rewardToken: "RIFItest",
       earnToken: ["XVS"],
       rewardLocker: "RewardLockerT2",
     },
     VaultDaiVenus: {
       depositToken: "DAI",
-      rewardToken: "RIFI",
+      rewardToken: "RIFItest",
       earnToken: ["XVS"],
       rewardLocker: "RewardLockerT2",
     },
