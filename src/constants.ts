@@ -74,14 +74,15 @@ export const address = {
     "XVS": "0xcF6BB5389c92Bdda8a3747Ddb454cB7a64626C63",
     "RIFItest": "0xD7c271AC4eB765705B32EdbA75CB6d3243c731F6",
     "RewardLockerT2": "0xf03B0f68DA53a0ed8EeBeb202E41f43E497E981A",
-    "VaultBusdVenus": "0x05E9926fe11956fbb280612332e8093233ad4802",
-    "VaultUsdtVenus": "0x5865e2c746e1BaD733417Fd8372E8CC63c35cAB5",
-    "VaultUsdcVenus": "0xff1734001Ee9374be33C475cC4CdD0F414de7Bac",
-    "VaultDaiVenus": "0xEbbDeb97Caca5268dEAD4a1F3fDd87539D8e713d",
+    "VaultBusdVenusT1": "0x05E9926fe11956fbb280612332e8093233ad4802",
+    "VaultUsdtVenusT1": "0x5865e2c746e1BaD733417Fd8372E8CC63c35cAB5",
+    "VaultUsdcVenusT1": "0xff1734001Ee9374be33C475cC4CdD0F414de7Bac",
+    "VaultDaiVenusT1": "0xEbbDeb97Caca5268dEAD4a1F3fDd87539D8e713d",
     "TITA": "0x0c1253a30da9580472064a91946c5ce0C58aCf7f",
     "RewardLockerV1": "0x51A6e45b27EfE28B3611Ebc68a3dC422Fd5Dcf7a",
     "VaultRifiTita": "0x7818C675F9d64A4B93C69a17952d64941EE05063",
     "AirdropVault": "0x887aB709d83Ba2FDc8CB7f14D839D75B57e74edD",
+    "VaultBusdVenus": "0xB7eDD8067E548B9b8E0DD75b0f5D678635F75A93",
   },
 
   "bsc_testnet": {
@@ -293,25 +294,25 @@ export const vaultConfig = {
       rewardToken: "RIFItest",
       rewardLocker: "RewardLockerT1",
     },
-    VaultBusdVenus: {
+    VaultBusdVenusT1: {
       depositToken: "BUSD",
       rewardToken: "RIFItest",
       earnToken: ["XVS"],
       rewardLocker: "RewardLockerT2",
     },
-    VaultUsdtVenus: {
+    VaultUsdtVenusT1: {
       depositToken: "USDT",
       rewardToken: "RIFItest",
       earnToken: ["XVS"],
       rewardLocker: "RewardLockerT2",
     },
-    VaultUsdcVenus: {
+    VaultUsdcVenusT1: {
       depositToken: "USDC",
       rewardToken: "RIFItest",
       earnToken: ["XVS"],
       rewardLocker: "RewardLockerT2",
     },
-    VaultDaiVenus: {
+    VaultDaiVenusT1: {
       depositToken: "DAI",
       rewardToken: "RIFItest",
       earnToken: ["XVS"],
@@ -320,6 +321,12 @@ export const vaultConfig = {
     VaultRifiTita: {
       depositToken: "RIFI",
       rewardToken: "TITA",
+      rewardLocker: "RewardLockerV1",
+    },
+    VaultBusdVenus: {
+      depositToken: "BUSD",
+      rewardToken: "RIFI",
+      earnToken: ["XVS"],
       rewardLocker: "RewardLockerV1",
     },
     AirdropVault: {
