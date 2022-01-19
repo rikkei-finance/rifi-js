@@ -16,6 +16,8 @@ export const constants = {
   'rUSDT': 'rUSDT',
   'DAI': 'DAI',
   'rDAI': 'rDAI',
+  'BTC': 'BTC',
+  'rBTC': 'rBTC',
   'RewardLocker': 'RewardLocker',
   'RIFIChainBridge': 'RIFIChainBridge',
 };
@@ -31,6 +33,8 @@ export const names = {
   'rUSDT': 'Rifi USDT',
   'DAI': 'DAI',
   'rDAI': 'Rifi DAI',
+  'BTC': 'Bitcoin',
+  'rBTC': 'Rifi Bitcoin',
 }
 
 export const address = {
@@ -86,7 +90,6 @@ export const address = {
   },
 
   "bsc_testnet": {
-    "Maximillion": "0x4d272fAdc0BbfF47D23B24684A7EF950930bC170",
     "RIFI": "0x3816b86AbED8B7F69d8AB4b7a9B5eB866c0b0F18",
     "RIFIChainBridge": "0x25069109104f2B4D4C47D71a7852aED7B15E8326",
     "Cointroller": "0x97684D0DbF7B9B27B03324822ff7A5CFE7AEB732",
@@ -96,6 +99,10 @@ export const address = {
     "rBUSD": "0x036a1E7a2ea830b7721f8f91a63b2c67D14C0128",
     "USDC": "0xFE16F4D3A17EafA7C7842aE8b0b3C51Ec6dc64d6",
     "rUSDC": "0xCcbE879f931D8d36370E0A684d53E38a4A01dbAb",
+    "rBNB": "0xC8820d421C857c5a0b6ADa6262AFaF516894e720",
+    "BTC": "0xC21025e87367d9018f4c5A53c6d15116d0785a3f",
+    "rBTC": "0xAE54272121536977bFEB929d4325c550139EF91b",
+    "Maximillion": "0x402164140F424bAE93e11bB71E7D35334BAd4f5F",
     "RifiLens": "0xf38776eC4525bcD19Ba10EF99Ad226aE0033b4c5",
 
     "XVS": "0xB9e0E753630434d7863528cc73CB7AC638a7c8ff",
@@ -188,17 +195,19 @@ export const abi = {
 
 export const rTokens = {
   "bsc_mainnet": ['rBUSD', 'rUSDC', 'rUSDT'],
-  "bsc_testnet": ['rBUSD', 'rUSDC'],
+  "bsc_testnet": [ 'rBNB', 'rBUSD', 'rUSDC', 'rBTC' ],
   "mainnet": [],
   "rinkeby": ['rUSDT', 'rDAI'],
 };
-export const underlyings = ['BUSD', 'USDC', 'USDT', 'DAI'];
+export const underlyings = ['BUSD', 'USDC', 'USDT', 'DAI', 'BNB', 'BTC'];
 
 // additional assets supported by the open price feed
 export const opfAssets = [];
 
 export const decimals = {
   "RIFI": 18,
+  "rBNB": 8,
+  "BNB": 8,
   "rBUSD": 8,
   "BUSD": 18,
   "rUSDC": 8,
@@ -208,6 +217,8 @@ export const decimals = {
   "USDT": 18,
   "rDAI": 8,
   "DAI": 18,
+  "rBTC": 8,
+  "BTC": 18,
   "RIFItest": 18,
 
   "BUSDv": 18,
