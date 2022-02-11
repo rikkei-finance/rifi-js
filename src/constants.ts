@@ -59,19 +59,23 @@ export const address = {
   },
 
   "bsc_mainnet": {
-    "Maximillion": "0x4d272fAdc0BbfF47D23B24684A7EF950930bC170",
-    "RIFI": "0xe17fbdf671f3cce0f354cacbd27e03f4245a3ffe",
+    "Maximillion": "0x9f37e8A2622E57659C405b4ce5E1B6C67EDc567c",
+    "RIFI": "0xD7c271AC4eB765705B32EdbA75CB6d3243c731F6",
     "RIFIChainBridge": "0xd2B9d016fcE1179A4d85Da1a48dD85e796611d34",
     "Cointroller": "0x2aEAa61D6CC1F5f097BcaA7Fc34347afa6853a70",
+    "CointrollerImpl": "0x6e40AfcFbE950c7618bC53Bf9fe477b362cf3905",
     "PriceFeed": "0x8F26813b839054626698F0f06A6a2A2aF9508d3A",
     "rBep20Delegate": "0x1C9b657641b4c53e78dcEB0410b7957E738Cdfb3",
     "BUSD": "0xe9e7cea3dedca5984780bafc599bd69add087d56",
     "rBUSD": "0x4Fdd6Bf5243F611dE2D8FE692C5E765C6Ebe1584",
     "USDC": "0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d",
     "rUSDC": "0x43e817969ceaB419bD398A7752854417e26384e7",
+    "RifiLens": "0x8B163772DEFea4b2161C2Cc35B46d911Ea17F449",
     "USDT": "0x55d398326f99059ff775485246999027b3197955",
     "rUSDT": "0x0325b422Ab67889CA8E1Ff1165041607b010d9FD",
-    "RifiLens": "0x8B163772DEFea4b2161C2Cc35B46d911Ea17F449",
+    "rBNB": "0x126f2B3850d43003e4630F2965ccFFf700bACBB4",
+    "BTC": "0x7130d2a12b9bcbfae4f2634d864a1ee1ce3ead9c",
+    "rBTC": "0xaB6f50f23357853b2B65A9c325aaf597a009b2Fd",
     "AirdropVaultT1": "0x657CD473E80912A1f9D1EcDC676f9F2812b629EB",
     "RewardLockerT1": "0x9ceB25af72f9D63f8b92932f9507cF07585683b9",
     "DAI": "0x1AF3F329e8BE154074D8769D1FFa4eE058B1DBc3",
@@ -194,8 +198,8 @@ export const abi = {
 };
 
 export const rTokens = {
-  "bsc_mainnet": ['rBUSD', 'rUSDC', 'rUSDT'],
-  "bsc_testnet": [ 'rBNB', 'rBUSD', 'rUSDC', 'rBTC' ],
+  "bsc_mainnet": ['rBUSD', 'rUSDC', 'rUSDT','rBTC', 'rBNB'],
+  "bsc_testnet": [ 'rBNB', 'rBUSD', 'rUSDC', 'rBTC' ], 
   "mainnet": [],
   "rinkeby": ['rUSDT', 'rDAI'],
 };
