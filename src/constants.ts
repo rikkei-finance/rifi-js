@@ -349,6 +349,10 @@ export const vaultConfig = {
     AirdropVault: {
       depositToken: "RIFI",
     },
+    RifiFixedApyNoLock: {
+      depositToken: "RIFI",
+      rewardToken: "RIFI",
+    },
   },
   "mainnet": {
     VaultUsdcComp: {
