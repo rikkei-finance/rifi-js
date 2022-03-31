@@ -59,7 +59,7 @@ export const address = {
   },
 
   "bsc_mainnet": {
-    "Maximillion": "0x9f37e8A2622E57659C405b4ce5E1B6C67EDc567c",
+    "Maximillion": "0x7Bf7f45F2a5BcC352cefD78715A3a9Bf617a3c35",
     "RIFI": "0xe17fbdf671f3cce0f354cacbd27e03f4245a3ffe",
     "RIFIChainBridge": "0xd2B9d016fcE1179A4d85Da1a48dD85e796611d34",
     "Cointroller": "0x4f3e801Bd57dC3D641E72f2774280b21d31F64e4",
@@ -73,7 +73,7 @@ export const address = {
     "RifiLens": "0x8c56a781573ef1a1d073FC571c9248A88f0384be",
     "USDT": "0x55d398326f99059ff775485246999027b3197955",
     "rUSDT": "0x383598668C025Be0798E90E7c5485Ff18D311063",
-    "rBNB": "0x126f2B3850d43003e4630F2965ccFFf700bACBB4",
+    "rBNB": "0x157822aC5fa0Efe98daa4b0A55450f4a182C10cA",
     "BTC": "0x7130d2a12b9bcbfae4f2634d864a1ee1ce3ead9c",
     "rBTC": "0x53aBF990bF7A37FaA783A75FDD75bbcF8bdF11eB",
     "AirdropVaultT1": "0x657CD473E80912A1f9D1EcDC676f9F2812b629EB",
@@ -200,7 +200,7 @@ export const abi = {
 };
 
 export const rTokens = {
-  "bsc_mainnet": ['rBUSD', 'rUSDC', 'rUSDT','rBTC', 'rDAI'],
+  "bsc_mainnet": ['rBUSD', 'rUSDC', 'rUSDT','rBTC', 'rDAI', 'rBNB'],
   "bsc_testnet": [ 'rBNB', 'rBUSD', 'rUSDC', 'rBTC' ], 
   "mainnet": [],
   "rinkeby": ['rUSDT', 'rDAI'],
