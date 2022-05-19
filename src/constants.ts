@@ -220,7 +220,7 @@ export const rTokens = {
   "bsc_testnet": [ 'rBNB', 'rBUSD', 'rUSDC', 'rBTC' ], 
   "mainnet": [],
   "rinkeby": ['rUSDT', 'rDAI'],
-  "shibuya": ['rBTC', 'rUSDC', 'rASTR']
+  "shibuya": ['rBTC', 'rUSDC']
 };
 export const underlyings = ['BUSD', 'USDC', 'USDT', 'DAI', 'BNB', 'BTC'];
 
@@ -252,6 +252,61 @@ export const decimals = {
   "COMP": 18,
   "XVS": 18,
   "AAVE": 18,
+};
+
+export const decimalNetwork = {
+  "bsc_mainnet" : {
+    "RIFI": 18,
+    "rBNB": 8,
+    "BNB": 18,
+    "rBUSD": 8,
+    "BUSD": 18,
+    "rUSDC": 8,
+    "USDC": 18, // bsc
+    // "USDC": 6, // eth
+    "rUSDT": 8,
+    "USDT": 18,
+    "rDAI": 8,
+    "DAI": 18,
+    "rBTC": 8,
+    "BTC": 18,
+    "RIFItest": 18,
+
+    "BUSDv": 18,
+    "USDTv": 6,
+    "USDTc": 6,
+    "DAIc": 18,
+    "DAIa": 18,
+    "COMP": 18,
+    "XVS": 18,
+    "AAVE": 18,
+  },
+  "shibuya": {
+    "RIFI": 18,
+    "rBNB": 8,
+    "BNB": 18,
+    "rBUSD": 8,
+    "BUSD": 18,
+    "rUSDC": 8,
+    "USDC": 18, // bsc
+    // "USDC": 6, // eth
+    "rUSDT": 8,
+    "USDT": 18,
+    "rDAI": 8,
+    "DAI": 18,
+    "rBTC": 8,
+    "BTC": 8,
+    "RIFItest": 18,
+
+    "BUSDv": 18,
+    "USDTv": 6,
+    "USDTc": 6,
+    "DAIc": 18,
+    "DAIa": 18,
+    "COMP": 18,
+    "XVS": 18,
+    "AAVE": 18,
+  }
 };
 
 export const errorCodes = {
