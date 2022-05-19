@@ -288,8 +288,7 @@ export const decimalNetwork = {
     "rBUSD": 8,
     "BUSD": 18,
     "rUSDC": 8,
-    "USDC": 18, // bsc
-    // "USDC": 6, // eth
+    "USDC": 6,
     "rUSDT": 8,
     "USDT": 18,
     "rDAI": 8,
@@ -297,7 +296,6 @@ export const decimalNetwork = {
     "rBTC": 8,
     "BTC": 8,
     "RIFItest": 18,
-
     "BUSDv": 18,
     "USDTv": 6,
     "USDTc": 6,
@@ -306,6 +304,8 @@ export const decimalNetwork = {
     "COMP": 18,
     "XVS": 18,
     "AAVE": 18,
+    "rASTR": 8,
+    "ASTR": 18
   }
 };
 
