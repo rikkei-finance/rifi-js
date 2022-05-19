@@ -220,7 +220,7 @@ export const rTokens = {
   "bsc_testnet": [ 'rBNB', 'rBUSD', 'rUSDC', 'rBTC' ], 
   "mainnet": [],
   "rinkeby": ['rUSDT', 'rDAI'],
-  "shibuya": ['rBTC']
+  "shibuya": ['rBTC', 'rUSDC', 'rASTR']
 };
 export const underlyings = ['BUSD', 'USDC', 'USDT', 'DAI', 'BNB', 'BTC'];
 
