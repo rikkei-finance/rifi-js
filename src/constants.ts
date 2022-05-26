@@ -160,20 +160,20 @@ export const address = {
     "VaultDaiAave": "0x9653811B43D30b894310bD9656D24363473a7825",
   },
   "shibuya": {
-    "RIFI": "0xBaf185d33E5c724e3C0b880AbC0Ff2fD7bAe875A",
+    "RIFI": "0xd7613D6E55abDf67B4eE670A56c76bF9bE9750bE",
     "DIA": "0x1232AcD632Dd75f874E357c77295Da3f5Cd7733E",
-    "Cointroller": "0x822Ecf68C0A0CB2b7dc3DFD2CB4BEb1b9d9d8ae3",
-    "CointrollerImpl": "0x96F4f2740BB4eB33A7159369B879437dc482FB70",
-    "PriceFeed": "0x6004Af0ceF84605230431F24E6f1D9626c00108A",
+    "Cointroller": "0x2F14CBd6193D182A15050F39cAC55c0EC77847bE",
+    "CointrollerImpl": "0x7719A780d02e49498a6e7203c6fA759F4D97bAED",
+    "PriceFeed": "0x80437c669aA64D62820A27571e5002490152CcB8",
     "rBep20Delegate": "0x028792bFe0EE4C1E8bdA7A82c3f0944dF2F3425b",
     "BTC": "0x880057d85311Ac8dC395851103457780B0d53408",
-    "rBTC": "0x46E5Cd954F7493D1E353e7cAa5dC5f25b55FFD67",
+    "rBTC": "0x88456973e4391aC1C2aA64B232A339268E32E19e",
     "USDC": "0xE8CCeE0161512dCf6f2fFd2435062ff214B41f01",
-    "rUSDC": "0xC80eDf0916853604277B1E5DAAb571d2656e9E05",
-    "RifiLens": "0x6181Bf4D33479d1FfC46b79418F3219a9CB4387D",
-    "Maximillion": "0x8B0BF90CB10F7c5d9d7985e76d3bcDE3de536ED3",
-    "rASTR": "0x9Ef88bDf85bf63599112f8F7b815f97DBf8fB672",
-    "timelock": "0x8Fad410807387a015C915E06a20d9d682878E9B8"
+    "rUSDC": "0x581E4018D76495c033F281f45C0dfcf7cE9b4fD6",
+    "RifiLens": "0x3Ab8433835540E9eafdA61010AC17Ed680B43bA1",
+    "Maximillion": "0xe0556997C035128E6dA097bC70EfE3889D2109dF",
+    "rASTR": "0xF7DA24fDa59dca87a8929e97285402FB4303170E",
+    "timelock": "0xa2B829e2616EB6C376c6B5399398f568d36DAC3A"
   }
 };
 
@@ -220,9 +220,9 @@ export const rTokens = {
   "bsc_testnet": [ 'rBNB', 'rBUSD', 'rUSDC', 'rBTC' ], 
   "mainnet": [],
   "rinkeby": ['rUSDT', 'rDAI'],
-  "shibuya": ['rBTC', 'rUSDC']
+  "shibuya": ['rBTC', 'rUSDC', 'rASTR']
 };
-export const underlyings = ['BUSD', 'USDC', 'USDT', 'DAI', 'BNB', 'BTC'];
+export const underlyings = ['BUSD', 'USDC', 'USDT', 'DAI', 'BNB', 'BTC', 'ASTR'];
 
 // additional assets supported by the open price feed
 export const opfAssets = [];
@@ -252,6 +252,7 @@ export const decimals = {
   "COMP": 18,
   "XVS": 18,
   "AAVE": 18,
+  "ASTR": 18
 };
 
 export const decimalNetwork = {

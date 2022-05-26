@@ -7,17 +7,19 @@ const privateKey =
 // const providerUrl = "https://data-seed-prebsc-2-s1.binance.org:8545/";
 // const providerUrl = "https://rinkeby.infura.io/v3/598f149bca12438caeb720bdd9aadb09";
 // const providerUrl = "https://mainnet.infura.io/v3/598f149bca12438caeb720bdd9aadb09";
-const providerUrl = "https://bsc-dataseed.binance.org";
+const providerUrl = "https://evm.shibuya.astar.network";
 const addr = "0x9AAD6f9eA2D7910CCAF17c9D1A6f7863251f194a";
-const rifi = new Rifi(providerUrl, { privateKey });
+const rifi = new Rifi(providerUrl);
 
 const trxOptions = { gasLimit: 250000, mantissa: false };
 
 (async function () {
   const callOptions = {
-    // gasLimit: 1234567,
+    network: 'shibuya'
   };
-  const metadata = await rifi.rTokenMetadataAll(callOptions);
+  // const metadata = await rifi.rTokenMetadataAll(callOptions);
+  const metadata = await rifi.getUnderlyingPrice('rASTR');
+
   // const metadata = await rifi.rTokenMetadata("rUSDC", callOptions);
   // const metadata = await rifi.rTokenMetadata("rUSDT", callOptions);
   console.log("Ethers.js transaction object", metadata);
