@@ -35,6 +35,8 @@ export const names = {
   'rDAI': 'Rifi DAI',
   'BTC': 'Bitcoin',
   'rBTC': 'Rifi Bitcoin',
+  'rASTR': 'Rifi Astar',
+  'ASTR': 'Astar'
 }
 
 export const address = {
