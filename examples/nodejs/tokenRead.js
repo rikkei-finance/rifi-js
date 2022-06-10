@@ -18,11 +18,12 @@ const trxOptions = { gasLimit: 250000, mantissa: false };
     network: 'shibuya'
   };
   // const metadata = await rifi.rTokenMetadataAll(callOptions);
-  const metadata = await rifi.getUnderlyingPrice('rASTR');
+  const token = 'rUSDC';
+  const metadata = await rifi.getUnderlyingPrice(token);
 
   // const metadata = await rifi.rTokenMetadata("rUSDC", callOptions);
   // const metadata = await rifi.rTokenMetadata("rUSDT", callOptions);
-  console.log("Ethers.js transaction object", metadata);
+  console.log("price ", token , " = ", metadata);
 
   // console.log(metadata.allocated.toString());
 })().catch(console.error);
