@@ -18,6 +18,8 @@ export const constants = {
   'rDAI': 'rDAI',
   'BTC': 'BTC',
   'rBTC': 'rBTC',
+  'ASTR':'ASTR',
+  'rASTR':'rASTR',
   'RewardLocker': 'RewardLocker',
   'RIFIChainBridge': 'RIFIChainBridge',
 };
