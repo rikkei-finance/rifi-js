@@ -143,6 +143,10 @@ export async function getPrice(
   return result;
 }
 
+const NETID_PRICE_FORMULA2 = [
+  81
+];
+
 export async function getUnderlyingPrice(
   asset: string
 ): Promise<number> {
@@ -160,6 +164,10 @@ export async function getUnderlyingPrice(
   };
 
   const assetUnderlyingPrice = await eth.read(priceFeedAddress, 'getUnderlyingPrice', [rTokenAddress], trxOptions);
+  
+  if (NETID_PRICE_FORMULA2.indexOf(this._network.id) > -1) {
+    return assetUnderlyingPrice / (10 ** (26 - underlyingDecimals));
+  }
 
   return assetUnderlyingPrice * 10 ** -parseInt(underlyingDecimals);
 }
