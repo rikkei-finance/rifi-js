@@ -1,10 +1,11 @@
 {
-  "name": "@rikkei-finance/rifi-js",
-  "version": "0.2.6",
+  "name": "rifi-js",
+  "version": "0.2.7",
   "author": "Rikkei Finance",
   "description": "A JavaScript SDK for Binance Smart Chain and the Rifi Protocol.",
   "license": "BSD-3-Clause",
   "main": "dist/nodejs/index.js",
+  "types": "dist/nodejs/index.d.ts",
   "scripts": {
     "lint": "./node_modules/.bin/eslint ./src/*.ts",
     "build": "npm run lint && ./node_modules/.bin/tsc && npm run rollup",

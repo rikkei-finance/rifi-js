@@ -104,3 +104,10 @@ export async function rTokenMetadata(rTokenName: string, options: CallOptions = 
 
   return readLens.apply(this, ['rTokenMetadata', [rTokenAddress], options]);
 }
+
+export async function rTokenBalancesAll(account: string, options: CallOptions = {}): Promise<TokenMetadataAll> {
+  await netId(this);
+  const rTokenAddresses = rTokens[this._network.name].map(token => address[this._network.name][token]);
+
+  return readLens.apply(this, ['rTokenBalancesAll', [rTokenAddresses, account], options]);
+}

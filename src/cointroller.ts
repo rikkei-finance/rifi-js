@@ -210,6 +210,23 @@ export async function checkMembership(
   return eth.trx(cointrollerAddress, 'checkMembership', parameters, trxOptions);
 }
 
+export async function getAssetsInAccount(
+  accountAddr: string,
+  options: CallOptions = {}
+): Promise<TrxResponse> {
+  await netId(this);
+  const cointrollerAddress = address[this._network.name].Cointroller;
+  const parameters = [accountAddr];
+
+  const trxOptions: CallOptions = {
+    _rifiProvider: this._provider,
+    abi: abi.Cointroller,
+    ...options
+  };
+
+  return eth.trx(cointrollerAddress, 'getAssetsIn', parameters, trxOptions);
+}
+
 export async function getCloseFactor(options: CallOptions = {}): Promise<BigNumber> {
   await netId(this);
 

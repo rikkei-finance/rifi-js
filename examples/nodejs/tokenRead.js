@@ -8,7 +8,7 @@ const privateKey =
 // const providerUrl = "https://rinkeby.infura.io/v3/598f149bca12438caeb720bdd9aadb09";
 // const providerUrl = "https://mainnet.infura.io/v3/598f149bca12438caeb720bdd9aadb09";
 const providerUrl = "https://bsc-dataseed.binance.org";
-const addr = "0x9AAD6f9eA2D7910CCAF17c9D1A6f7863251f194a";
+const addr = "0x2727DC45DC776a70BE546347f296CBFfEBfcA5Af";
 const rifi = new Rifi(providerUrl, { privateKey });
 
 const trxOptions = { gasLimit: 250000, mantissa: false };
@@ -17,10 +17,14 @@ const trxOptions = { gasLimit: 250000, mantissa: false };
   const callOptions = {
     // gasLimit: 1234567,
   };
-  const metadata = await rifi.rTokenMetadataAll(callOptions);
+  // const metadata = await rifi.rTokenMetadataAll(callOptions);
+  const allTokens = await rifi.rTokenBalancesAll(addr, callOptions);
   // const metadata = await rifi.rTokenMetadata("rUSDC", callOptions);
   // const metadata = await rifi.rTokenMetadata("rUSDT", callOptions);
-  console.log("Ethers.js transaction object", metadata);
+ // console.log("allTokens === ", allTokens);
+
+  const getAssetsIn = await rifi.getAssetsInAccount(addr, callOptions);
+  console.log("getAssetsIn === ", getAssetsIn);
 
   // console.log(metadata.allocated.toString());
 })().catch(console.error);
