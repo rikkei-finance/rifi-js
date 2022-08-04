@@ -20,7 +20,8 @@ export const constants = {
   'rBTC': 'rBTC',
   'RewardLocker': 'RewardLocker',
   'RIFIChainBridge': 'RIFIChainBridge',
-  'rASTAR': 'rASTAR'
+  'rASTR': 'rASTR',
+  'ASTR': 'ASTR'
 };
 
 export const names = {
@@ -36,7 +37,8 @@ export const names = {
   'rDAI': 'Rifi DAI',
   'BTC': 'Bitcoin',
   'rBTC': 'Rifi Bitcoin',
-  'rASTR': 'ASTAR'
+  'rASTR': 'ASTAR',
+  'ASTR': 'ASTAR',
 }
 
 export const address = {
