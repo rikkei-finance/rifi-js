@@ -16,7 +16,7 @@ import {
 import {
   address,
   rTokens,
-  decimals,
+  decimalNetwork,
   names,
 } from './constants';
 
@@ -243,10 +243,10 @@ export async function getSupportTokens(network: string): Promise<SupportedTokens
       token_address: address[network][symbol],
       total_borrows: { value: '0' },
       total_supply: { value: '0' },
-      decimals: decimals[symbol] || 8,
+      decimals: decimalNetwork[network] ? (decimalNetwork[network][symbol]) || 8 : 8,
       underlying_address: address[network][uSymbol] ? address[network][uSymbol] : null,
       underlying_name: names[uSymbol],
-      underlying_decimals: decimals[uSymbol] || 18,
+      underlying_decimals: decimalNetwork[network] ? (decimalNetwork[network][uSymbol] || 18) : 18,
       underlying_price: { value: '1' },
       underlying_symbol: uSymbol,
     };

@@ -216,7 +216,8 @@ export function getNetNameWithChainId(chainId: number): string {
     4: 'rinkeby',
     5: 'goerli',
     42: 'kovan',
-    592: 'astar_mainnet'
+    592: 'astar_mainnet',
+    81: 'shibuya'
   };
   return networks[chainId];
 }

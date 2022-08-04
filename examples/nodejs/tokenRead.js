@@ -15,17 +15,15 @@ const trxOptions = { gasLimit: 250000, mantissa: false };
 
 (async function () {
   const callOptions = {
-    // gasLimit: 1234567,
+    network: 'shibuya'
   };
-  const metadata = await rifi.rTokenMetadataAll(callOptions);
-  console.log('metadata  ==== ', JSON.stringify(metadata))
-//   const allTokens = await rifi.rTokenBalancesAll(addr, callOptions);
-//   // const metadata = await rifi.rTokenMetadata("rUSDC", callOptions);
-//   // const metadata = await rifi.rTokenMetadata("rUSDT", callOptions);
-//  // console.log("allTokens === ", allTokens);
+  // const metadata = await rifi.rTokenMetadataAll(callOptions);
+  const token = 'rUSDC';
+  const metadata = await rifi.getUnderlyingPrice(token);
 
-//   const getAssetsIn = await rifi.getAssetsInAccount(addr, callOptions);
-//   console.log("getAssetsIn === ", getAssetsIn);
+  // const metadata = await rifi.rTokenMetadata("rUSDC", callOptions);
+  // const metadata = await rifi.rTokenMetadata("rUSDT", callOptions);
+  console.log("price ", token , " = ", metadata);
 
   // console.log(metadata.allocated.toString());
 })().catch(console.error);

@@ -37,8 +37,8 @@ export const names = {
   'rDAI': 'Rifi DAI',
   'BTC': 'Bitcoin',
   'rBTC': 'Rifi Bitcoin',
-  'rASTR': 'ASTAR',
-  'ASTR': 'ASTAR',
+  'rASTR': 'Rifi Astar',
+  'ASTR': 'Astar'
 }
 
 export const address = {
@@ -176,6 +176,22 @@ export const address = {
     "RewardLocker": "0xd97cfCe893B475632AA95e48DED4Bd943c943950",
     "VaultDaiAave": "0x9653811B43D30b894310bD9656D24363473a7825",
   },
+  "shibuya": {
+    "RIFI": "0xd7613D6E55abDf67B4eE670A56c76bF9bE9750bE",
+    "DIA": "0x1232AcD632Dd75f874E357c77295Da3f5Cd7733E",
+    "Cointroller": "0xFA1d02B50A52a8317198C957F7A047707a19992c",
+    "CointrollerImpl": "0x0d38D399a936B8D60a10F9485DFA02Cc646c9a0a",
+    "PriceFeed": "0xa8Ae84D025164997ff1544680991e9b94933F656",
+    "rBep20Delegate": "0x028792bFe0EE4C1E8bdA7A82c3f0944dF2F3425b",
+    "BTC": "0x880057d85311Ac8dC395851103457780B0d53408",
+    "rBTC": "0x7902A057206031b524a2a6A6F12ebDEEde215304",
+    "USDC": "0xE8CCeE0161512dCf6f2fFd2435062ff214B41f01",
+    "rUSDC": "0x84383250Ab01Fb84A599BE73d403A70Fa005a595",
+    "RifiLens": "0xd60e55c3517d864978Aad282ed46e089235e5279",
+    "Maximillion": "0xF4749F80fD61e4C36E0586Ff8D93f4345F3B15B6",
+    "rASTR": "0x8543135cbbCa173f80C73AAaE8A7AD351F0F1666",
+    "timelock": "0xa2B829e2616EB6C376c6B5399398f568d36DAC3A"
+  }
 };
 
 export const abi = {
@@ -222,8 +238,10 @@ export const rTokens = {
   "mainnet": [],
   "rinkeby": ['rUSDT', 'rDAI'],
   "astar_mainnet": ['rUSDC', 'rASTR'],
+  "shibuya": ['rBTC', 'rUSDC', 'rASTR']
 };
-export const underlyings = ['BUSD', 'USDC', 'USDT', 'DAI', 'BNB', 'BTC', "ASTR"];
+
+export const underlyings = ['BUSD', 'USDC', 'USDT', 'DAI', 'BNB', 'BTC', 'ASTR'];
 
 // additional assets supported by the open price feed
 export const opfAssets = [];
@@ -254,6 +272,61 @@ export const decimals = {
   "XVS": 18,
   "AAVE": 18,
   "ASTR": 18
+};
+
+export const decimalNetwork = {
+  "bsc_mainnet" : {
+    "RIFI": 18,
+    "rBNB": 8,
+    "BNB": 18,
+    "rBUSD": 8,
+    "BUSD": 18,
+    "rUSDC": 8,
+    "USDC": 18, // bsc
+    // "USDC": 6, // eth
+    "rUSDT": 8,
+    "USDT": 18,
+    "rDAI": 8,
+    "DAI": 18,
+    "rBTC": 8,
+    "BTC": 18,
+    "RIFItest": 18,
+
+    "BUSDv": 18,
+    "USDTv": 6,
+    "USDTc": 6,
+    "DAIc": 18,
+    "DAIa": 18,
+    "COMP": 18,
+    "XVS": 18,
+    "AAVE": 18,
+  },
+  "shibuya": {
+    "RIFI": 18,
+    "rBNB": 8,
+    "BNB": 18,
+    "rBUSD": 8,
+    "BUSD": 18,
+    "rUSDC": 8,
+    "USDC": 6,
+    "rUSDT": 8,
+    "USDT": 18,
+    "rDAI": 8,
+    "DAI": 18,
+    "rBTC": 8,
+    "BTC": 8,
+    "RIFItest": 18,
+    "BUSDv": 18,
+    "USDTv": 6,
+    "USDTc": 6,
+    "DAIc": 18,
+    "DAIa": 18,
+    "COMP": 18,
+    "XVS": 18,
+    "AAVE": 18,
+    "rASTR": 8,
+    "ASTR": 18
+  }
 };
 
 export const errorCodes = {

@@ -7,7 +7,7 @@
 import * as eth from './eth';
 import { netId } from './helpers';
 import {
-  constants, address, abi, rTokens, underlyings, decimals, opfAssets
+  constants, address, abi, rTokens, underlyings, decimals, opfAssets, decimalNetwork
 } from './constants';
 import { CallOptions } from './types';
 
@@ -35,7 +35,7 @@ function validateAsset(
     throw Error(errorPrefix + 'Argument `' + argument + '` is not supported.');
   }
 
-  const underlyingDecimals = decimals[underlyingName];
+  const underlyingDecimals = decimalNetwork[this._network.name] ? decimalNetwork[this._network.name][underlyingName] : decimals[underlyingName];
 
   // The open price feed reveals BTC, not WBTC.
   underlyingName = underlyingName === 'WBTC' ? 'BTC' : underlyingName;
@@ -143,6 +143,11 @@ export async function getPrice(
   return result;
 }
 
+const NETID_PRICE_FORMULA2 = [
+  81,
+  592
+];
+
 export async function getUnderlyingPrice(
   asset: string
 ): Promise<number> {
@@ -160,6 +165,10 @@ export async function getUnderlyingPrice(
   };
 
   const assetUnderlyingPrice = await eth.read(priceFeedAddress, 'getUnderlyingPrice', [rTokenAddress], trxOptions);
+
+  if (NETID_PRICE_FORMULA2.indexOf(this._network.id) > -1) {
+    return assetUnderlyingPrice / (10 ** (26 - underlyingDecimals));
+  }
 
   return assetUnderlyingPrice * 10 ** -parseInt(underlyingDecimals);
 }
