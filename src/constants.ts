@@ -20,6 +20,7 @@ export const constants = {
   'rBTC': 'rBTC',
   'RewardLocker': 'RewardLocker',
   'RIFIChainBridge': 'RIFIChainBridge',
+  'rASTAR': 'rASTAR'
 };
 
 export const names = {
@@ -35,6 +36,7 @@ export const names = {
   'rDAI': 'Rifi DAI',
   'BTC': 'Bitcoin',
   'rBTC': 'Rifi Bitcoin',
+  'rASTR': 'ASTAR'
 }
 
 export const address = {
@@ -94,14 +96,14 @@ export const address = {
     "VaultBusdVenus": "0xB7eDD8067E548B9b8E0DD75b0f5D678635F75A93",
   },
   "astar_mainnet": {
-    "RIFI": "0x0000000000000000000000000000000000000000",
+    "RIFI": "0xF578801D64A236785707C948d50e4d095aadc695",
     "DIA": "0xd79357ebb0cd724e391f2b49a8De0E31688fEc75",
     "Cointroller": "0xd6BeDd3C2BF260AE8dF9629B9Ef6A718856267d0",
     "CointrollerImpl": "0xD8b2c984B055B2171a4D84a95bA7BAfC585517b3",
     "PriceFeed": "0x4Ccc20719985024b6B46E693beb15A793BE257f1",
     "USDC": "0x6a2d262D56735DbA19Dd70682B39F6bE9a931D98",
     "rUSDC": "0xF43bFc51Df739899C2F903eF5b836aDDdE2CFA19",
-    "RifiLens": "0x00dc749cc6dC3F3b449B11c15f6F020ED1e19907",
+    "RifiLens": "0x6e11A8D8573ddf568F861449FD8c06d380595D9c",
     "Maximillion": "0xe5325BB4776710246f4fA09EED89E4b3883b5bec",
     "rASTR": "0xA3190dCed6Bf50cfD55799877d3f223Ce09062ed",
     "rErc20Delegate": "0x88e2E7cfAE91E430140F42BD11240278a0B6F897",
@@ -217,8 +219,9 @@ export const rTokens = {
   "bsc_testnet": [ 'rBNB', 'rBUSD', 'rUSDC', 'rBTC' ], 
   "mainnet": [],
   "rinkeby": ['rUSDT', 'rDAI'],
+  "astar_mainnet": ['rUSDC', 'rASTR'],
 };
-export const underlyings = ['BUSD', 'USDC', 'USDT', 'DAI', 'BNB', 'BTC'];
+export const underlyings = ['BUSD', 'USDC', 'USDT', 'DAI', 'BNB', 'BTC', "ASTR"];
 
 // additional assets supported by the open price feed
 export const opfAssets = [];
@@ -248,6 +251,7 @@ export const decimals = {
   "COMP": 18,
   "XVS": 18,
   "AAVE": 18,
+  "ASTR": 18
 };
 
 export const errorCodes = {
