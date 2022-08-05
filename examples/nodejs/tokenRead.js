@@ -7,7 +7,7 @@ const privateKey =
 // const providerUrl = "https://data-seed-prebsc-2-s1.binance.org:8545/";
 // const providerUrl = "https://rinkeby.infura.io/v3/598f149bca12438caeb720bdd9aadb09";
 // const providerUrl = "https://mainnet.infura.io/v3/598f149bca12438caeb720bdd9aadb09";
-const providerUrl = "https://bsc-dataseed.binance.org";
+const providerUrl = "https://rpc.astar.network:8545";
 const addr = "0x2727DC45DC776a70BE546347f296CBFfEBfcA5Af";
 const rifi = new Rifi(providerUrl, { privateKey });
 
@@ -18,7 +18,7 @@ const trxOptions = { gasLimit: 250000, mantissa: false };
     network: 'shibuya'
   };
   // const metadata = await rifi.rTokenMetadataAll(callOptions);
-  const token = 'rUSDC';
+  const token = 'rASTR';
   const metadata = await rifi.getUnderlyingPrice(token);
 
   // const metadata = await rifi.rTokenMetadata("rUSDC", callOptions);

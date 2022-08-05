@@ -271,7 +271,8 @@ export const decimals = {
   "COMP": 18,
   "XVS": 18,
   "AAVE": 18,
-  "ASTR": 18
+  "ASTR": 18,
+  "rASTR": 8
 };
 
 export const decimalNetwork = {
@@ -302,6 +303,32 @@ export const decimalNetwork = {
     "AAVE": 18,
   },
   "shibuya": {
+    "RIFI": 18,
+    "rBNB": 8,
+    "BNB": 18,
+    "rBUSD": 8,
+    "BUSD": 18,
+    "rUSDC": 8,
+    "USDC": 6,
+    "rUSDT": 8,
+    "USDT": 18,
+    "rDAI": 8,
+    "DAI": 18,
+    "rBTC": 8,
+    "BTC": 8,
+    "RIFItest": 18,
+    "BUSDv": 18,
+    "USDTv": 6,
+    "USDTc": 6,
+    "DAIc": 18,
+    "DAIa": 18,
+    "COMP": 18,
+    "XVS": 18,
+    "AAVE": 18,
+    "rASTR": 8,
+    "ASTR": 18
+  },
+  "astar_mainnet": {
     "RIFI": 18,
     "rBNB": 8,
     "BNB": 18,

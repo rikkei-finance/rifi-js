@@ -52,7 +52,7 @@ async function rTokenExchangeRate(
   const method = 'exchangeRateCurrent';
   const options = {
     _rifiProvider: this._provider,
-    abi: rTokenName === constants.rBNB ? abi.rBinance : abi.rBep20,
+    abi: rTokenName === constants.rBNB || rTokenName === constants.rASTR ? abi.rBinance : abi.rBep20,
   };
   const exchangeRateCurrent = await eth.read(address, method, [], options);
   const mantissa = 18 + underlyingDecimals - 8; // rToken always 8 decimals
