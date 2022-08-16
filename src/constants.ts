@@ -21,7 +21,11 @@ export const constants = {
   'RewardLocker': 'RewardLocker',
   'RIFIChainBridge': 'RIFIChainBridge',
   'rASTR': 'rASTR',
-  'ASTR': 'ASTR'
+  'ASTR': 'ASTR',
+  'rETH': 'rETH',
+  'ETH': 'ETH',
+  'WBTC': 'WBTC',
+  'WETH': 'WETH'
 };
 
 export const names = {
@@ -38,7 +42,8 @@ export const names = {
   'BTC': 'Bitcoin',
   'rBTC': 'Rifi Bitcoin',
   'rASTR': 'Rifi Astar',
-  'ASTR': 'Astar'
+  'ASTR': 'Astar',
+  'rETH': 'Rifi Ethereum'
 }
 
 export const address = {
@@ -109,6 +114,10 @@ export const address = {
     "Maximillion": "0xe5325BB4776710246f4fA09EED89E4b3883b5bec",
     "rASTR": "0xA3190dCed6Bf50cfD55799877d3f223Ce09062ed",
     "rErc20Delegate": "0x88e2E7cfAE91E430140F42BD11240278a0B6F897",
+    "WBTC": "0xad543f18cFf85c77E140E3E5E3c3392f6Ba9d5CA",
+    "rBTC": "0xDBAbfF2bB832192E04bd0eb5cCb78D92B9B427D1",
+    "WETH": "0x81ECac0D6Be0550A00FF064a4f9dd2400585FE9c",
+    "rETH": "0x11768d93781949B0A18E072e832F5CBC9500782E"
   },
 
   "bsc_testnet": {
@@ -237,11 +246,11 @@ export const rTokens = {
   "bsc_testnet": [ 'rBNB', 'rBUSD', 'rUSDC', 'rBTC' ], 
   "mainnet": [],
   "rinkeby": ['rUSDT', 'rDAI'],
-  "astar_mainnet": ['rUSDC', 'rASTR'],
+  "astar_mainnet": ['rUSDC', 'rASTR', 'rBTC', 'rETH'],
   "shibuya": ['rBTC', 'rUSDC', 'rASTR']
 };
 
-export const underlyings = ['BUSD', 'USDC', 'USDT', 'DAI', 'BNB', 'BTC', 'ASTR'];
+export const underlyings = ['BUSD', 'USDC', 'USDT', 'DAI', 'BNB', 'BTC', 'ASTR', 'ETH'];
 
 // additional assets supported by the open price feed
 export const opfAssets = [];
@@ -352,7 +361,9 @@ export const decimalNetwork = {
     "XVS": 18,
     "AAVE": 18,
     "rASTR": 8,
-    "ASTR": 18
+    "ASTR": 18,
+    'ETH': 18,
+    'rETH': 8
   }
 };
 
