@@ -43,7 +43,8 @@ export const names = {
   'rBTC': 'Rifi Bitcoin',
   'rASTR': 'Rifi Astar',
   'ASTR': 'Astar',
-  'rETH': 'Rifi Ethereum'
+  'rETH': 'Rifi Ethereum',
+  'ETH': 'Etherum'
 }
 
 export const address = {
@@ -114,9 +115,9 @@ export const address = {
     "Maximillion": "0xe5325BB4776710246f4fA09EED89E4b3883b5bec",
     "rASTR": "0xA3190dCed6Bf50cfD55799877d3f223Ce09062ed",
     "rErc20Delegate": "0x88e2E7cfAE91E430140F42BD11240278a0B6F897",
-    "WBTC": "0xad543f18cFf85c77E140E3E5E3c3392f6Ba9d5CA",
+    "BTC": "0xad543f18cFf85c77E140E3E5E3c3392f6Ba9d5CA",
     "rBTC": "0xDBAbfF2bB832192E04bd0eb5cCb78D92B9B427D1",
-    "WETH": "0x81ECac0D6Be0550A00FF064a4f9dd2400585FE9c",
+    "ETH": "0x81ECac0D6Be0550A00FF064a4f9dd2400585FE9c",
     "rETH": "0x11768d93781949B0A18E072e832F5CBC9500782E"
   },
 
