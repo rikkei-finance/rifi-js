@@ -7,18 +7,19 @@ const privateKey =
 // const providerUrl = "https://data-seed-prebsc-2-s1.binance.org:8545/";
 // const providerUrl = "https://rinkeby.infura.io/v3/598f149bca12438caeb720bdd9aadb09";
 // const providerUrl = "https://mainnet.infura.io/v3/598f149bca12438caeb720bdd9aadb09";
-const providerUrl = "https://rpc.astar.network:8545";
-const addr = "0x2727DC45DC776a70BE546347f296CBFfEBfcA5Af";
+const providerUrl = "https://matic-mumbai.chainstacklabs.com";
+// const providerUrl = "https://goerli.infura.io/v3/277345d9b43d4041975344c90edb09b9";
+// const addr = "0x2727DC45DC776a70BE546347f296CBFfEBfcA5Af";
 const rifi = new Rifi(providerUrl, { privateKey });
 
 const trxOptions = { gasLimit: 250000, mantissa: false };
 
 (async function () {
   const callOptions = {
-    network: 'shibuya'
+    // network: 'shibuya'
   };
   // const metadata = await rifi.rTokenMetadataAll(callOptions);
-  const token = 'rASTR';
+  const token = 'rMATIC';
   const metadata = await rifi.getUnderlyingPrice(token);
 
   // const metadata = await rifi.rTokenMetadata("rUSDC", callOptions);

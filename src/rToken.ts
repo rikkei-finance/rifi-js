@@ -87,7 +87,7 @@ export async function supply(
 
   amount = ethers.BigNumber.from(amount.toString());
 
-  if (rTokenName === constants.rBNB || rTokenName === constants.rASTR) {
+  if (rTokenName === constants.rBNB || rTokenName === constants.rASTR || rTokenName === constants.rMATIC || rTokenName === constants.rETH) {
     options.abi = abi.rBinance;
   } else {
     options.abi = abi.rBep20;
@@ -95,7 +95,7 @@ export async function supply(
 
   options._rifiProvider = this._provider;
 
-  if ((rTokenName !== constants.rBNB && rTokenName !== constants.rASTR) && noApprove !== true) {
+  if ((rTokenName !== constants.rBNB && rTokenName !== constants.rASTR && rTokenName !== constants.rMATIC && rTokenName !== constants.rETH) && noApprove !== true) {
     const underlyingAddress = address[this._network.name][asset];
     let userAddress = this._provider.address;
 
@@ -125,7 +125,7 @@ export async function supply(
   }
 
   const parameters = [];
-  if (rTokenName === constants.rBNB || rTokenName === constants.rASTR) {
+  if (rTokenName === constants.rBNB || rTokenName === constants.rASTR || rTokenName === constants.rMATIC || rTokenName === constants.rETH) {
     options.value = amount;
   } else {
     parameters.push(amount);
@@ -207,7 +207,7 @@ export async function redeem(
   const trxOptions: CallOptions = {
     ...options,
     _rifiProvider: this._provider,
-    abi: rTokenName === constants.rBNB || rTokenName === constants.rASTR ? abi.rBinance : abi.rBep20,
+    abi: rTokenName === constants.rBNB || rTokenName === constants.rASTR || rTokenName === constants.rMATIC || rTokenName === constants.rETH ? abi.rBinance : abi.rBep20,
   };
   const parameters = [amount];
   const method = assetIsRToken ? "redeem" : "redeemUnderlying";
@@ -288,7 +288,7 @@ export async function borrow(
     _rifiProvider: this._provider,
   };
   const parameters = [amount];
-  trxOptions.abi = rTokenName === constants.rBNB || rTokenName === constants.rASTR ? abi.rBinance : abi.rBep20;
+  trxOptions.abi = rTokenName === constants.rBNB || rTokenName === constants.rASTR || rTokenName === constants.rMATIC || rTokenName === constants.rETH ? abi.rBinance : abi.rBep20;
 
   return eth.trx(rTokenAddress, "borrow", parameters, trxOptions);
 }
@@ -375,7 +375,7 @@ export async function repayBorrow(
   }
 
   if (options.maxRepay === true) {
-    if (rTokenName === constants.rBNB || rTokenName === constants.rASTR) {
+    if (rTokenName === constants.rBNB || rTokenName === constants.rASTR || rTokenName === constants.rMATIC || rTokenName === constants.rETH) {
       contractAddress = address[this._network.name]["Maximillion"];
       method = "repayBehalf";
     } else {
@@ -392,7 +392,7 @@ export async function repayBorrow(
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const parameters: any[] = method.indexOf("Behalf") !== -1 ? [borrower] : [];
-  if (rTokenName === constants.rBNB || rTokenName === constants.rASTR) {
+  if (rTokenName === constants.rBNB || rTokenName === constants.rASTR || rTokenName === constants.rMATIC || rTokenName === constants.rETH) {
     trxOptions.value = amount;
     trxOptions.abi = options.maxRepay ? abi.Maximillion : abi.rBinance;
   } else {
@@ -400,7 +400,7 @@ export async function repayBorrow(
     trxOptions.abi = abi.rBep20;
   }
 
-  if ((rTokenName !== constants.rBNB && rTokenName !== constants.rASTR) && noApprove !== true) {
+  if ((rTokenName !== constants.rBNB && rTokenName !== constants.rASTR && rTokenName !== constants.rMATIC && rTokenName !== constants.rETH) && noApprove !== true) {
     const underlyingAddress = address[this._network.name][asset];
     const userAddress = this._provider.address;
 
@@ -493,7 +493,7 @@ export async function tokenRead(
     throw Error(`${errorPrefix}Cannot call ${func} on "${rTokenName}".`);
   }
 
-  if (rTokenName === constants.rBNB || rTokenName === constants.rASTR) {
+  if (rTokenName === constants.rBNB || rTokenName === constants.rASTR || rTokenName === constants.rMATIC || rTokenName === constants.rETH) {
     options.abi = abi.rBinance;
   } else {
     options.abi = abi.rBep20;
@@ -518,7 +518,7 @@ export async function getBalanceOf(
     throw Error(`${errorPrefix}Cannot get balance on "${rTokenName}".`);
   }
 
-  if (rTokenName === constants.rBNB || rTokenName === constants.rASTR) {
+  if (rTokenName === constants.rBNB || rTokenName === constants.rASTR || rTokenName === constants.rMATIC || rTokenName === constants.rETH) {
     options.abi = abi.rBinance;
   } else {
     options.abi = abi.rBep20;
@@ -543,7 +543,7 @@ export async function getBorrowBalanceOf(
     throw Error(`${errorPrefix}Cannot get balance on "${rTokenName}".`);
   }
 
-  if (rTokenName === constants.rBNB || rTokenName === constants.rASTR) {
+  if (rTokenName === constants.rBNB || rTokenName === constants.rASTR || rTokenName === constants.rMATIC || rTokenName === constants.rETH) {
     options.abi = abi.rBinance;
   } else {
     options.abi = abi.rBep20;

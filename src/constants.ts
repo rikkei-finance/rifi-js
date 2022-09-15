@@ -25,7 +25,9 @@ export const constants = {
   'rETH': 'rETH',
   'ETH': 'ETH',
   'WBTC': 'WBTC',
-  'WETH': 'WETH'
+  'WETH': 'WETH',
+  'rMATIC': 'rMATIC',
+  'MATIC': 'MATIC'
 };
 
 export const names = {
@@ -44,7 +46,9 @@ export const names = {
   'rASTR': 'Rifi Astar',
   'ASTR': 'Astar',
   'rETH': 'Rifi Ethereum',
-  'ETH': 'Etherum'
+  'ETH': 'Etherum',
+  'rMATIC': 'Rifi Matic',
+  'MATIC': 'MATIC'
 }
 
 export const address = {
@@ -201,6 +205,40 @@ export const address = {
     "Maximillion": "0xF4749F80fD61e4C36E0586Ff8D93f4345F3B15B6",
     "rASTR": "0x8543135cbbCa173f80C73AAaE8A7AD351F0F1666",
     "timelock": "0xa2B829e2616EB6C376c6B5399398f568d36DAC3A"
+  },
+  "goerli" : {
+    "RIFI": "0x7B6b30EF81CD55418C39D061986ffdEE723Bf976",
+    "Cointroller": "0x2349F1941cEFCebEbb2f42a5E1Dc47B9395CB1Da",
+    "CointrollerImpl": "0xa2c60E6D45c9C8184FF73cbB99B767CD93a9B1f6",
+    "PriceFeed": "0x9490A735616595B04eac1048268Fdc77e2018596",
+    "DAI": "0xA54DAf61f4A713df60795d080CC85ed293f97de5",
+    "rDAI": "0x37Be89FDA3FbbA464a88284eB92EDaC691922A92",
+    "USDC": "0x88b2370dB1fC8FB2880048b066696857393383Ee",
+    "rUSDC": "0x6FDa24A41dCA89a91674aAC3b998583bF2C9214A",
+    "RifiLens": "0xf1f8A1b9422dBE216B3005E5D0Fe1982972331dA",
+    "Maximillion": "0x1d01Af43752af175E5b88f17998490921f8cEd0f",
+    "rETH": "0x2B22B0fe19A39136820fFB9BAb87786814302363",
+    "rErc20Delegate": "0xA7036ec7c634D506bfA91dda3D125B80aBb7a1cE",
+    "BTC": "0xdc7956ea91cadc4a017D23b950F4bec2b8239B09",
+    "rBTC": "0x57B2de4a347B97689ADf78A6aD4Fe237e832d3FD"
+  },
+  "mumbai": {
+    "RIFI": "0x57652320b35BE7a8eBce05bb6EDE94d8d1863AeF",
+    "Cointroller": "0xBd5816Db1c7E191f1d990a7ab39412017C2e20d2",
+    "CointrollerImpl": "0x9540B8Fa611B41418e3D87315Bae0f111c66B9fb",
+    "PriceFeed": "0x4b1688C9c1dCeC3148C8Fc78dC32E36DC0Bd6A56",
+    "USDC": "0xC9Bd1F272871e21Ad8C860992A5da3026DCcA26a",
+    "rUSDC": "0xf1DE35BfD5828542CDa5b5BA7f9F114C6f4A12eB",
+    "DAI": "0x99dC6ffA2664f7a2F086acC5A012FECd982C4c83",
+    "rDAI": "0x91D968b1B5D674D59EB9ddFB58eB334Abf7413a0",
+    "RifiLens": "0x3e9847015746e7d116197c061d14b617b902D0d9",
+    "Maximillion": "0xAa29578E7C7C47D51c410C69BeCC46e056649C4D",
+    "rErc20Delegate": "0xF257d51646216ca329d69d47A915f95Adb854978",
+    "rMATIC": "0xc6D55AC8a05487ad98CAe33B220460Fd6EDd1B9D",
+    "BTC": "0x4CA940aab724da955347F53CEB3D8Fb398aEcc46",
+    "rBTC": "0x918060C3e71B375bdD2d5F56338BAB5637768a90",
+    "ETH": "0x4b46526118462cf70699B44201DBeaD5F60e8074",
+    "rETH": "0xFe1Db89D26E08Bd185d1Ed8036baFFC9a2473dBa"
   }
 };
 
@@ -248,10 +286,12 @@ export const rTokens = {
   "mainnet": [],
   "rinkeby": ['rUSDT', 'rDAI'],
   "astar_mainnet": ['rUSDC', 'rASTR', 'rBTC', 'rETH'],
-  "shibuya": ['rBTC', 'rUSDC', 'rASTR']
+  "shibuya": ['rBTC', 'rUSDC', 'rASTR'],
+  "goerli": ['rBTC', 'rUSDC', 'rETH', 'rDAI'],
+  "mumbai": ['rBTC', 'rUSDC', 'rETH', 'rDAI', 'rMATIC'],
 };
 
-export const underlyings = ['BUSD', 'USDC', 'USDT', 'DAI', 'BNB', 'BTC', 'ASTR', 'ETH'];
+export const underlyings = ['BUSD', 'USDC', 'USDT', 'DAI', 'BNB', 'BTC', 'ASTR', 'ETH', 'MATIC'];
 
 // additional assets supported by the open price feed
 export const opfAssets = [];
@@ -301,16 +341,6 @@ export const decimalNetwork = {
     "DAI": 18,
     "rBTC": 8,
     "BTC": 18,
-    "RIFItest": 18,
-
-    "BUSDv": 18,
-    "USDTv": 6,
-    "USDTc": 6,
-    "DAIc": 18,
-    "DAIa": 18,
-    "COMP": 18,
-    "XVS": 18,
-    "AAVE": 18,
   },
   "shibuya": {
     "RIFI": 18,
@@ -326,15 +356,6 @@ export const decimalNetwork = {
     "DAI": 18,
     "rBTC": 8,
     "BTC": 8,
-    "RIFItest": 18,
-    "BUSDv": 18,
-    "USDTv": 6,
-    "USDTc": 6,
-    "DAIc": 18,
-    "DAIa": 18,
-    "COMP": 18,
-    "XVS": 18,
-    "AAVE": 18,
     "rASTR": 8,
     "ASTR": 18
   },
@@ -352,20 +373,47 @@ export const decimalNetwork = {
     "DAI": 18,
     "rBTC": 8,
     "BTC": 8,
-    "RIFItest": 18,
-    "BUSDv": 18,
-    "USDTv": 6,
-    "USDTc": 6,
-    "DAIc": 18,
-    "DAIa": 18,
-    "COMP": 18,
-    "XVS": 18,
-    "AAVE": 18,
     "rASTR": 8,
     "ASTR": 18,
     'ETH': 18,
     'rETH': 8
-  }
+  },
+  "goerli": {
+    "RIFI": 18,
+    "rBNB": 8,
+    "BNB": 18,
+    "rBUSD": 8,
+    "BUSD": 18,
+    "rUSDC": 8,
+    "USDC": 6,
+    "rUSDT": 8,
+    "USDT": 18,
+    "rDAI": 8,
+    "DAI": 18,
+    "rBTC": 8,
+    "BTC": 8,
+    'ETH': 18,
+    'rETH': 8
+  },
+  "mumbai": {
+    "RIFI": 18,
+    "rBNB": 8,
+    "BNB": 18,
+    "rBUSD": 8,
+    "BUSD": 18,
+    "rUSDC": 8,
+    "USDC": 6,
+    "rUSDT": 8,
+    "USDT": 18,
+    "rDAI": 8,
+    "DAI": 18,
+    "rBTC": 8,
+    "BTC": 8,
+    'ETH': 18,
+    'rETH': 8,
+    'MATIC' : 18,
+    'rMATIC': 8,
+  },
 };
 
 export const errorCodes = {

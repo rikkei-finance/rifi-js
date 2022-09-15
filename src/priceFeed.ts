@@ -52,7 +52,7 @@ async function rTokenExchangeRate(
   const method = 'exchangeRateCurrent';
   const options = {
     _rifiProvider: this._provider,
-    abi: rTokenName === constants.rBNB || rTokenName === constants.rASTR ? abi.rBinance : abi.rBep20,
+    abi: rTokenName === constants.rBNB || rTokenName === constants.rASTR || rTokenName === constants.rMATIC || rTokenName === constants.rETH ? abi.rBinance : abi.rBep20,
   };
   const exchangeRateCurrent = await eth.read(address, method, [], options);
   const mantissa = 18 + underlyingDecimals - 8; // rToken always 8 decimals
@@ -145,7 +145,9 @@ export async function getPrice(
 
 const NETID_PRICE_FORMULA2 = [
   81,
-  592
+  592,
+  5,
+  80001
 ];
 
 export async function getUnderlyingPrice(
