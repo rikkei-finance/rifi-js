@@ -48,28 +48,25 @@ export const names = {
   'rETH': 'Rifi Ethereum',
   'ETH': 'Etherum',
   'rMATIC': 'Rifi Matic',
-  'MATIC': 'MATIC'
+  'MATIC': 'MATIC',
 }
 
 export const address = {
   "mainnet": {
-    "Maximillion": "0xf859A1AD94BcF445A406B892eF0d3082f4174088",
-    "RIFI": "0xC8EF1460277EA47d179dEc66D1c5f8b7f7aE5a28",
-    "RIFIChainBridge": "0xf289f9AE0130eb8640c3525dfa88B7C8d2A3d709",
-    "Cointroller": "0xf0BABFb01F37A50fBEBb24D2ade824cCE6b713c3",
-    "PriceFeed": "0x5d238Ee9bAe37705861c18e6b99D8Ea8e428600e",
-    "rBep20Delegate": "0x248F1e3bD69C3a9e69b7DA04BCb7a7666D373A2f",
+    "Cointroller": "0x98635bDB3A85a1BaDb6776A048c799C4B3110024",
+    "CointrollerImpl": "0x2b3504C22Ad9BD5BacE93f3e104d7C314A8Ea48D",
+    "PriceFeed": "0x447fbD579335F3b8F983ef7fE137c376EdB144FA",
+    "rBep20Delegate": "",
     "USDT": "0xdac17f958d2ee523a2206206994597c13d831ec7",
-    "rUSDT": "0x1C9b657641b4c53e78dcEB0410b7957E738Cdfb3",
-    "DAI": "0x6b175474e89094c44da98b954eedeac495271d0f",
-    "rDAI": "0x3837304b3a00160994B3E61faE3d4DE865BE2f10",
-    "RifiLens": "0x5914f6dEeF07960c7d2b6F69ddbE2BF61468C33A",
+    "rUSDT": "0x248f6E6b01411bA1C1cc38dF2cda8e6162293F60",
+    "DAI": "",
+    "rDAI": "",
+    "RifiLens": "0x2861bafEE7b138E9931F7091afdDf28aDB671911",
+    "rETH": "0x29b271C53B460394648bd52c6C1bD53913599Ac6",
+    "rErc20Delegate": "0x096C1ce6f351BA6a11AF78C74a0cd446660f49AE",
     "USDC": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-    "COMP": "0xc00e94Cb662C3520282E6f5717214004A7f26888",
-    "AAVE": "0x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9",
-    "RewardLocker": "0x7b0878d9e8629ddA9B8C44f3F370E60485325DFb",
-    "VaultUsdcComp": "0x85EFcb2BEb3F8d7a403C353e1ae3eFEF31c0dcd9",
-    "VaultUsdtAave": "0x21ea8947e8c8A878f634d0926970d3Ec0E654bA9",
+    "rUSDC": "0xc001ED634DfB6eDaEF35A9d72d18aC9149C5e791",
+    "Maximillion": "0x04199D09cAF25E3569E85708B2762a0A00d73806",
   },
 
   "bsc_mainnet": {
@@ -239,6 +236,25 @@ export const address = {
     "rBTC": "0x918060C3e71B375bdD2d5F56338BAB5637768a90",
     "ETH": "0x4b46526118462cf70699B44201DBeaD5F60e8074",
     "rETH": "0xFe1Db89D26E08Bd185d1Ed8036baFFC9a2473dBa"
+  },
+  "polygon": {
+    "RIFI": "", // Chưa có nên để 0x000...
+    "Cointroller": "0x98635bDB3A85a1BaDb6776A048c799C4B3110024",
+    "CointrollerImpl": "0x2b3504C22Ad9BD5BacE93f3e104d7C314A8Ea48D",
+    "PriceFeed": "0xEECaA8aA6B2B8aC8BDCd82D2100932d9Dc3052b9",
+    "USDC": "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
+    "rUSDC": "0x248f6E6b01411bA1C1cc38dF2cda8e6162293F60",
+    "DAI": "",
+    "rDAI": "",
+    "RifiLens": "0x2861bafEE7b138E9931F7091afdDf28aDB671911",
+    "Maximillion": "0x04199D09cAF25E3569E85708B2762a0A00d73806",
+    "rErc20Delegate": "0x096C1ce6f351BA6a11AF78C74a0cd446660f49AE",
+    "rMATIC": "0x29b271C53B460394648bd52c6C1bD53913599Ac6",
+    "BTC": "",
+    "rBTC": "",
+    "ETH": "0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
+    "rETH": "0xc001ED634DfB6eDaEF35A9d72d18aC9149C5e791",
+    "WETH": "0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619"
   }
 };
 
@@ -283,12 +299,13 @@ export const abi = {
 export const rTokens = {
   "bsc_mainnet": ['rBUSD', 'rUSDC', 'rUSDT','rBTC', 'rDAI', 'rBNB'],
   "bsc_testnet": [ 'rBNB', 'rBUSD', 'rUSDC', 'rBTC' ], 
-  "mainnet": [],
+  "mainnet": ['rUSDT', 'rETH', 'rUSDC'],
   "rinkeby": ['rUSDT', 'rDAI'],
   "astar_mainnet": ['rUSDC', 'rASTR', 'rBTC', 'rETH'],
   "shibuya": ['rBTC', 'rUSDC', 'rASTR'],
   "goerli": ['rBTC', 'rUSDC', 'rETH', 'rDAI'],
   "mumbai": ['rBTC', 'rUSDC', 'rETH', 'rDAI', 'rMATIC'],
+  "polygon": ['rUSDC', 'rETH', 'rMATIC'],
 };
 
 export const underlyings = ['BUSD', 'USDC', 'USDT', 'DAI', 'BNB', 'BTC', 'ASTR', 'ETH', 'MATIC'];
@@ -413,6 +430,42 @@ export const decimalNetwork = {
     'rETH': 8,
     'MATIC' : 18,
     'rMATIC': 8,
+  },
+  "polygon": {
+    "RIFI": 18,
+    "rBNB": 8,
+    "BNB": 18,
+    "rBUSD": 8,
+    "BUSD": 18,
+    "rUSDC": 8,
+    "USDC": 6,
+    "rUSDT": 8,
+    "USDT": 18,
+    "rDAI": 8,
+    "DAI": 18,
+    "rBTC": 8,
+    "BTC": 8,
+    'ETH': 18,
+    'rETH': 8,
+    'MATIC' : 18,
+    'rMATIC': 8,
+  },
+  "mainnet": {
+    "RIFI": 18,
+    "rBNB": 8,
+    "BNB": 18,
+    "rBUSD": 8,
+    "BUSD": 18,
+    "rUSDC": 8,
+    "USDC": 6,
+    "rUSDT": 8,
+    "USDT": 18,
+    "rDAI": 8,
+    "DAI": 18,
+    "rBTC": 8,
+    "BTC": 8,
+    'ETH': 18,
+    'rETH': 8
   },
 };
 

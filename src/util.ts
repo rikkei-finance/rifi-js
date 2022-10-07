@@ -218,7 +218,8 @@ export function getNetNameWithChainId(chainId: number): string {
     42: 'kovan',
     592: 'astar_mainnet',
     81: 'shibuya',
-    80001: 'mumbai'
+    80001: 'mumbai',
+    137: 'polygon'
   };
   return networks[chainId];
 }

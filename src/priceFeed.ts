@@ -147,7 +147,9 @@ const NETID_PRICE_FORMULA2 = [
   81,
   592,
   5,
-  80001
+  80001,
+  1,
+  137
 ];
 
 export async function getUnderlyingPrice(
