@@ -459,7 +459,7 @@ export const decimalNetwork = {
     "rUSDC": 8,
     "USDC": 6,
     "rUSDT": 8,
-    "USDT": 18,
+    "USDT": 6,
     "rDAI": 8,
     "DAI": 18,
     "rBTC": 8,
