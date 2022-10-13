@@ -13,6 +13,7 @@ import {
   decimals,
   underlyings,
   rTokens,
+  decimalNetwork
 } from "./constants";
 import { BigNumber } from "@ethersproject/bignumber/lib/bignumber";
 import { CallOptions, TrxResponse } from "./types";
@@ -281,10 +282,14 @@ export async function borrow(
   if (!options.mantissa) {
     amount = +amount;
     // amount = amount * Math.pow(10, decimals[asset]);
-    amount = parseUnits(amount, decimals[asset]);
+    const decimal = decimalNetwork[this._network.name] ? decimalNetwork[this._network.name][asset] : 
+    (decimals[asset] || 18);
+    amount = parseUnits(amount, decimal);
   }
 
   amount = ethers.BigNumber.from(amount.toString());
+
+  console.log('amount ==== ', amount)
 
   const trxOptions: CallOptions = {
     ...options,
