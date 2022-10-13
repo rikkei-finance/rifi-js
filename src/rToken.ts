@@ -8,7 +8,6 @@ import { ethers } from "ethers";
 import * as eth from "./eth";
 import { netId } from "./helpers";
 import {
-  constants,
   address,
   abi,
   decimals,
@@ -17,7 +16,7 @@ import {
 } from "./constants";
 import { BigNumber } from "@ethersproject/bignumber/lib/bignumber";
 import { CallOptions, TrxResponse } from "./types";
-import { parseUnits } from "./util";
+import { parseUnits, isNativeCoin } from "./util";
 
 /**
  * Supplies the user's Ethereum asset to the Rifi Protocol.
@@ -87,7 +86,9 @@ export async function supply(
 
   amount = ethers.BigNumber.from(amount.toString());
 
-  if (rTokenName === constants.rBNB || rTokenName === constants.rASTR || rTokenName === constants.rMATIC || rTokenName === constants.rETH) {
+  const isNative: boolean = isNativeCoin(rTokenName, this);
+
+  if (isNative) {
     options.abi = abi.rBinance;
   } else {
     options.abi = abi.rBep20;
@@ -95,7 +96,7 @@ export async function supply(
 
   options._rifiProvider = this._provider;
 
-  if ((rTokenName !== constants.rBNB && rTokenName !== constants.rASTR && rTokenName !== constants.rMATIC && rTokenName !== constants.rETH) && noApprove !== true) {
+  if (!isNative && noApprove !== true) {
     const underlyingAddress = address[this._network.name][asset];
     let userAddress = this._provider.address;
 
@@ -125,7 +126,7 @@ export async function supply(
   }
 
   const parameters = [];
-  if (rTokenName === constants.rBNB || rTokenName === constants.rASTR || rTokenName === constants.rMATIC || rTokenName === constants.rETH) {
+  if (isNative) {
     options.value = amount;
   } else {
     parameters.push(amount);
@@ -204,10 +205,12 @@ export async function redeem(
 
   amount = ethers.BigNumber.from(amount.toString());
 
+  const isNative: boolean = isNativeCoin(rTokenName, this);
+
   const trxOptions: CallOptions = {
     ...options,
     _rifiProvider: this._provider,
-    abi: rTokenName === constants.rBNB || rTokenName === constants.rASTR || rTokenName === constants.rMATIC || rTokenName === constants.rETH ? abi.rBinance : abi.rBep20,
+    abi: isNative ? abi.rBinance : abi.rBep20,
   };
   const parameters = [amount];
   const method = assetIsRToken ? "redeem" : "redeemUnderlying";
@@ -288,7 +291,9 @@ export async function borrow(
     _rifiProvider: this._provider,
   };
   const parameters = [amount];
-  trxOptions.abi = rTokenName === constants.rBNB || rTokenName === constants.rASTR || rTokenName === constants.rMATIC || rTokenName === constants.rETH ? abi.rBinance : abi.rBep20;
+
+  const isNative: boolean = isNativeCoin(rTokenName, this);
+  trxOptions.abi = isNative ? abi.rBinance : abi.rBep20;
 
   return eth.trx(rTokenAddress, "borrow", parameters, trxOptions);
 }
@@ -374,8 +379,10 @@ export async function repayBorrow(
     amount = parseUnits(amount, decimals[asset]);
   }
 
+  const isNative: boolean = isNativeCoin(rTokenName, this);
+
   if (options.maxRepay === true) {
-    if (rTokenName === constants.rBNB || rTokenName === constants.rASTR || rTokenName === constants.rMATIC || rTokenName === constants.rETH) {
+    if (isNative) {
       contractAddress = address[this._network.name]["Maximillion"];
       method = "repayBehalf";
     } else {
@@ -392,7 +399,7 @@ export async function repayBorrow(
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const parameters: any[] = method.indexOf("Behalf") !== -1 ? [borrower] : [];
-  if (rTokenName === constants.rBNB || rTokenName === constants.rASTR || rTokenName === constants.rMATIC || rTokenName === constants.rETH) {
+  if (isNative) {
     trxOptions.value = amount;
     trxOptions.abi = options.maxRepay ? abi.Maximillion : abi.rBinance;
   } else {
@@ -400,7 +407,7 @@ export async function repayBorrow(
     trxOptions.abi = abi.rBep20;
   }
 
-  if ((rTokenName !== constants.rBNB && rTokenName !== constants.rASTR && rTokenName !== constants.rMATIC && rTokenName !== constants.rETH) && noApprove !== true) {
+  if (!isNative && noApprove !== true) {
     const underlyingAddress = address[this._network.name][asset];
     const userAddress = this._provider.address;
 
@@ -493,7 +500,9 @@ export async function tokenRead(
     throw Error(`${errorPrefix}Cannot call ${func} on "${rTokenName}".`);
   }
 
-  if (rTokenName === constants.rBNB || rTokenName === constants.rASTR || rTokenName === constants.rMATIC || rTokenName === constants.rETH) {
+  const isNative: boolean = isNativeCoin(rTokenName, this);
+
+  if (isNative) {
     options.abi = abi.rBinance;
   } else {
     options.abi = abi.rBep20;
@@ -518,7 +527,9 @@ export async function getBalanceOf(
     throw Error(`${errorPrefix}Cannot get balance on "${rTokenName}".`);
   }
 
-  if (rTokenName === constants.rBNB || rTokenName === constants.rASTR || rTokenName === constants.rMATIC || rTokenName === constants.rETH) {
+  const isNative: boolean = isNativeCoin(rTokenName, this);
+
+  if (isNative) {
     options.abi = abi.rBinance;
   } else {
     options.abi = abi.rBep20;
@@ -543,7 +554,9 @@ export async function getBorrowBalanceOf(
     throw Error(`${errorPrefix}Cannot get balance on "${rTokenName}".`);
   }
 
-  if (rTokenName === constants.rBNB || rTokenName === constants.rASTR || rTokenName === constants.rMATIC || rTokenName === constants.rETH) {
+  const isNative: boolean = isNativeCoin(rTokenName, this);
+
+  if (isNative) {
     options.abi = abi.rBinance;
   } else {
     options.abi = abi.rBep20;
@@ -601,7 +614,9 @@ export async function liquidateBorrow(
   };
 
   let parameters = [];
-  if (rTokenRepay === constants.rBNB || rTokenRepay === constants.rASTR) {
+
+  const isNative: boolean = isNativeCoin(rTokenRepay, this);
+  if (isNative) {
     parameters = [borrower, rTokenCollateralAddress];
     trxOptions.value = amount;
     trxOptions.abi = abi.rBinance;

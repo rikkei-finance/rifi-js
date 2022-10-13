@@ -3,7 +3,7 @@
  * @desc These methods are helpers for the Rifi class.
  */
 
-import { address, abi } from "./constants";
+import { address, abi, constants } from "./constants";
 import { AbiType } from "./types";
 import { BigNumber, ethers } from "ethers";
 
@@ -221,7 +221,7 @@ export function getNetNameWithChainId(chainId: number): string {
     80001: 'mumbai',
     137: 'polygon'
   };
-  return networks[chainId];
+  return networks[chainId] || 'bsc_mainnet';
 }
 
 export function parseUnits(value: number, decimals: number): BigNumber {
@@ -230,4 +230,16 @@ export function parseUnits(value: number, decimals: number): BigNumber {
     fixedAmout.substring(0, fixedAmout.length - 1),
     decimals
   );
+}
+
+export function isNativeCoin(rTokenName: string, _this: {_network: { name: string}}): boolean {
+  if (
+    (rTokenName === constants.rBNB && (_this._network.name === "bsc_mainnet" || _this._network.name === "bsc_testnet"))
+    || (rTokenName === constants.rASTR && (_this._network.name === "astar_mainnet" || _this._network.name === "shibuya"))
+    || (rTokenName === constants.rMATIC && (_this._network.name === "polygon" || _this._network.name === "mumbai"))
+    || (rTokenName === constants.rETH && (_this._network.name === "mainnet" || _this._network.name === "goerli" || _this._network.name === "rinkeby"))
+  ) {
+    return true;
+  }
+  return false;
 }

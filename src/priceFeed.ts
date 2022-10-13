@@ -10,6 +10,7 @@ import {
   constants, address, abi, rTokens, underlyings, decimals, opfAssets, decimalNetwork
 } from './constants';
 import { CallOptions } from './types';
+import { isNativeCoin } from './util';
 
 function validateAsset(
   asset: string,
@@ -50,9 +51,12 @@ async function rTokenExchangeRate(
 ): Promise<number> {
   const address = rTokenAddress;
   const method = 'exchangeRateCurrent';
+
+  await netId(this);
+  const isNative: boolean = isNativeCoin(rTokenName, this);
   const options = {
     _rifiProvider: this._provider,
-    abi: rTokenName === constants.rBNB || rTokenName === constants.rASTR || rTokenName === constants.rMATIC || rTokenName === constants.rETH ? abi.rBinance : abi.rBep20,
+    abi: isNative ? abi.rBinance : abi.rBep20,
   };
   const exchangeRateCurrent = await eth.read(address, method, [], options);
   const mantissa = 18 + underlyingDecimals - 8; // rToken always 8 decimals
