@@ -9,8 +9,8 @@ const privateKey =
 // const providerUrl = "https://mainnet.infura.io/v3/598f149bca12438caeb720bdd9aadb09";
 // const providerUrl = "https://matic-mumbai.chainstacklabs.com";
 // const providerUrl = "https://goerli.infura.io/v3/277345d9b43d4041975344c90edb09b9";
-// const providerUrl = "https://polygon-rpc.com/";
-const providerUrl = "https://divine-magical-aura.quiknode.pro/b3e070e79f4095189500f1e84e5394173390709b/";
+const providerUrl = "https://polygon-rpc.com/";
+// const providerUrl = "https://divine-magical-aura.quiknode.pro/b3e070e79f4095189500f1e84e5394173390709b/";
 // const addr = "0x2727DC45DC776a70BE546347f296CBFfEBfcA5Af";
 const rifi = new Rifi(providerUrl, { privateKey });
 
